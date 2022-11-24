@@ -1,0 +1,1 @@
+script.run("logic/ui/rule_des/ui_rule_des.lua")

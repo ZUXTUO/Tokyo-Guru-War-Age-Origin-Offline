@@ -1,0 +1,5 @@
+script.run("logic/ui/formation/formation_ui.lua")
+script.run("logic/ui/formation/formation_info_ui.lua")
+-- script.run("logic/ui/formation/hero_chose_ui.lua")
+script.run("logic/ui/formation/support_hero_ui.lua")
+script.run("logic/ui/formation/common_formation_ui.lua")

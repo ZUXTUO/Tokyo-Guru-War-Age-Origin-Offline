@@ -1,0 +1,13 @@
+gs_string_guild_boss = gs_string_guild_boss or {}
+gs_string_guild_boss[1] = '未加入社团'
+gs_string_guild_boss[2] = '没有参与次数'
+gs_string_guild_boss[3] = '活动异常'
+gs_string_guild_boss[4] = '今日战斗已经结束'
+gs_string_guild_boss[5] = '本周战斗已经结束'
+gs_string_guild_boss[6] = '战斗地图未找到'
+gs_string_guild_boss[7] = '非法操作'
+gs_string_guild_boss[8] = '未通关'
+gs_string_guild_boss[9] = '购买BUFF金币不够'
+gs_string_guild_boss[10] = '购买BUFF水晶不够'
+gs_string_guild_boss[11] = '购买BUFF达到上限次数'
+gs_string_guild_boss[12] = '配置出错'

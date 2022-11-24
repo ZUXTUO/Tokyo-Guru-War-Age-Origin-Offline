@@ -1,0 +1,7 @@
+script.run("logic/ui/ui_mask/mask_main.lua")
+script.run("logic/ui/ui_mask/mask_info.lua")
+script.run("logic/ui/ui_mask/mask_rarity_up.lua")
+script.run("logic/ui/ui_mask/mask_star_up.lua")
+script.run("logic/ui/ui_mask/mask_lvl_up.lua")
+script.run("logic/ui/ui_mask/mask_rarity_up_wnd.lua")
+script.run("logic/ui/ui_mask/mask_star_up_wnd.lua")

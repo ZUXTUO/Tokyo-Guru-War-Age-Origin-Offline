@@ -1,0 +1,12 @@
+gs_string_expedition_trial = gs_string_expedition_trial or {}
+gs_string_expedition_trial[1] = '非法操作'
+gs_string_expedition_trial[2] = '钻石不够'
+gs_string_expedition_trial[3] = 'BUFF已经购买'
+gs_string_expedition_trial[4] = '星数不够'
+gs_string_expedition_trial[5] = '未指定英雄'
+gs_string_expedition_trial[6] = '指定的英雄不存在'
+gs_string_expedition_trial[7] = '指定的英雄死亡'
+gs_string_expedition_trial[8] = '指定的英雄满血'
+gs_string_expedition_trial[9] = '没有英雄可以恢复血量'
+gs_string_expedition_trial[10] = '积分奖励已经领取过'
+gs_string_expedition_trial[11] = '积分不够'

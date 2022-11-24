@@ -1,0 +1,126 @@
+----
+---- Created by IntelliJ IDEA.
+---- User: PoKong_OS
+---- Date: 2015/3/6
+---- Time: 16:34
+---- To change this template use File | Settings | File Templates.
+----
+--
+--script.run("logic/app_config/app_config.lua");
+--
+--
+--UpdateDownload = {
+--	mainUI = nil,
+--};
+--
+--function UpdateDownload.Destroy()
+--	if UpdateDownload.mainUI ~= nil then
+--		UpdateDownload.mainUI:set_active(false);
+--	end
+--	UpdateDownload.mainUI = nil;
+--	UpdateDownload.progressBar = nil;
+--	UpdateDownload.progressBarTxt = nil;
+--end
+--
+--function UpdateDownload.start()
+--	local ui_path = "assetbundles/prefabs/ui/loading/updateload.assetbundle"
+--    ResourceLoader.LoadAsset(ui_path, UpdateDownload.asset_loaded, nil)
+--end
+--
+--function UpdateDownload.asset_loaded(pid, fpath, asset_obj, error_info)
+--	UpdateDownload.mainUI = asset_game_object.create(asset_obj);
+--	Root.SetRootUI(UpdateDownload.mainUI);
+--	UpdateDownload.progressBar = ngui.find_progress_bar(UpdateDownload.mainUI,"progress_bar");
+--	if UpdateDownload.progressBar ~= nil then
+--		UpdateDownload.progressBar:set_active(true);
+--		UpdateDownload.set_progress(0);
+--	end
+--	UpdateDownload.progressBarTxt = ngui.find_label(UpdateDownload.mainUI,"progress_font_label");
+--	if UpdateDownload.progressBarTxt ~= nil then
+--		UpdateDownload.set_fonts("正在连接游戏...");
+--	end
+--
+--	local texture = ngui.find_texture(UpdateDownload.mainUI, "Panel/Texture");
+--	if texture then
+----		texture:set_active(false);
+--	end
+--	UpdateDownload.start_file();
+--end
+--
+--function UpdateDownload.set_fonts(str)
+--	if UpdateDownload.progressBarTxt ~= nil and str ~= nil then
+--		UpdateDownload.progressBarTxt:set_active(true);
+--		UpdateDownload.progressBarTxt:set_text(tostring(str));
+--	end
+--end
+--
+--function UpdateDownload.set_progress(value)
+--	if type(value) ~= "number" or type(value) == "nil" then return end;
+--	local this_value = string.format("%6.2f", value);
+--	if UpdateDownload.progressBar ~= nil then
+--		UpdateDownload.progressBar:set_active(true);
+--		UpdateDownload.progressBar:set_value(this_value);
+--	end
+--end
+--
+----[[开始文件下载]]
+--function UpdateDownload.start_file()
+--	AutoUpdate.set_update_ip(AppConfig.get_socket_update_ip());
+--	AutoUpdate.set_version_url(AppConfig.get_update_version_url());
+--	AutoUpdate.set_port(AppConfig.get_socket_update_port());
+--	AutoUpdate.set_deviceid(AppConfig.get_socket_update_device_id());
+--	AutoUpdate.set_versionnumber(AppConfig.get_socket_update_version_number());
+--
+--	AutoUpdate.set_on_close_callback(UpdateDownload.on_close_callback);
+--	AutoUpdate.set_on_error_callback(UpdateDownload.on_error_callback);
+--	AutoUpdate.set_on_device_error_callback(UpdateDownload.on_device_error_callback);
+--
+--	AutoUpdate.set_on_downing_callback(UpdateDownload.on_downing);
+--	AutoUpdate.set_on_download_callback(UpdateDownload.on_download);
+--	AutoUpdate.set_on_complete_callback(UpdateDownload.on_complete);
+--
+--	-- this will start the auto update function
+--	AutoUpdate.init();
+--end
+--
+---- this function will be called once a file net close
+--function UpdateDownload.on_close_callback()
+--	UpdateDownload.progressBarTxt:set_text("网络连接关闭！");
+--end
+--
+---- this function will be called once a file net error
+--function UpdateDownload.on_error_callback()
+--	UpdateDownload.progressBarTxt:set_text("网络连接错误！");
+--end
+--
+---- this function will be called once a device_errror
+--function UpdateDownload.on_device_error_callback()
+--	UpdateDownload.progressBarTxt:set_text("游戏版本错误！");
+--end
+--
+---- this function will be called when a file is downloading
+--function UpdateDownload.on_downing(filepath, fsize, current)
+----	app.log(string.format("on_downing: %s %d %d", filepath, fsize, current));
+--	local n_current_kb =  math.ceil(current / 1024);
+--	local n_fsize_kb =  math.ceil(fsize / 1024);
+--	UpdateDownload.set_progress(n_current_kb / n_fsize_kb);
+--	UpdateDownload.set_fonts(string.format("正在更新：%s %d / %d KB",filepath,n_current_kb,n_fsize_kb));
+--end
+--
+---- this function will be called once a file have been downloaded
+--function UpdateDownload.on_download(filepath, fsize, current, down_count, finish_count)
+----	app.log(string.format("on_download: %s %d %d %d %d", filepath, fsize, current, down_count, finish_count));
+--end
+--
+---- this function will be called when all file have been downloadedl
+--function UpdateDownload.on_complete()
+----	app.log(string.format("on_download_complete: you can do what you want"));
+--	UpdateDownload.set_progress(1);
+--	UpdateDownload.set_fonts("更新完成，进入游戏。")
+--	UpdateDownload.Destroy();
+--	--[[recource_load]]
+--	script.run("logic/load/main.lua");
+--	Resourceload.Start();
+--end
+--
+--

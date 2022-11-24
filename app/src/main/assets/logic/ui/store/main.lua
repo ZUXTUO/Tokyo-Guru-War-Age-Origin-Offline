@@ -1,0 +1,9 @@
+script.run("logic/ui/store/vip_privilege_ui.lua");
+script.run("logic/ui/store/store_ui.lua");
+script.run("logic/ui/store/batch_buy_action.lua");
+script.run("logic/ui/store/activity_store_ui.lua");
+script.run("logic/ui/store/vip_packing_ui.lua");
+script.run("logic/ui/store/vip_packing_good_ui.lua");
+script.run("logic/ui/store/vip_packing_give_ui.lua");
+script.run("logic/ui/store/vip_packing_gift_ui.lua");
+script.run("logic/ui/store/vip_hint_ui.lua");

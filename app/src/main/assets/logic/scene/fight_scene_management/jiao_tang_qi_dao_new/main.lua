@@ -1,0 +1,2 @@
+script.run("logic/scene/fight_scene_management/jiao_tang_qi_dao_new/jiao_tang_qi_dao_fight_manager.lua");
+script.run("logic/scene/fight_scene_management/jiao_tang_qi_dao_new/jiao_tang_qi_dao_fight_fight_manager.lua");

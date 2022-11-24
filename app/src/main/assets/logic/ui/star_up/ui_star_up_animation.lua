@@ -1,0 +1,496 @@
+
+-- UiStarUpAnimation = Class("UiStarUpAnimation",UiBaseClass);
+
+-- local pathRes = {};
+-- pathRes.back = 'assetbundles/prefabs/ui/fight/panel_fight_bg_blue.assetbundle';
+
+
+-- --data:   {cardinfo = cardinfo}
+-- function UiStarUpAnimation.SetAndShow(data)
+--     app.log('UiStarUpAnimation.SetAndShow   discard')
+-- 	if UiStarUpAnimation.instance then
+-- 		UiStarUpAnimation.instance:SetData(data);
+-- 		UiStarUpAnimation.instance:UpdateUi();
+-- 	else
+-- 		UiStarUpAnimation.instance = UiStarUpAnimation:new(data);
+-- 	end
+-- end
+
+-- function UiStarUpAnimation.SetTouchCallback(callbackfunc,data)
+-- 	if UiStarUpAnimation.instance then
+-- 		UiStarUpAnimation.instance:_SetTouchCallback(callbackfunc, data)
+-- 	end
+-- end
+
+-- function UiStarUpAnimation.Destroy()
+--     if UiStarUpAnimation.instance then
+--         UiStarUpAnimation.instance:DestroyUi();
+--         UiStarUpAnimation.instance = nil;
+--     end
+-- end
+
+-- -------------------内部接口------------------------
+-- --初始化
+-- function UiStarUpAnimation:Init(data)
+-- 	self.pathRes = 'assetbundles/prefabs/ui/fight/ui_820_fight.assetbundle';
+--     self:SetData(data);
+-- 	UiBaseClass.Init(self, data);
+-- end
+
+
+-- --重新开始
+-- function UiStarUpAnimation:Restart(data)
+-- 	if UiBaseClass.Restart(self, data) then
+-- 	--todo 
+-- 	end
+-- end
+
+-- --初始化数据
+-- function UiStarUpAnimation:InitData(data)
+-- 	UiBaseClass.InitData(self, data);
+-- end
+
+-- --析构函数
+-- function UiStarUpAnimation:DestroyUi()
+--     self:Hide();
+--     if self.timer_id then
+--         timer.stop(self.timer_id);
+--         self.timer_id = nil;
+--     end
+--     UiBaseClass.DestroyUi(self);
+--     self.ui_back = nil;
+--     if self.smallcard then
+--         self.smallcard:DestroyUi();
+--         self.smallcard = nil;
+--     end
+-- end
+
+-- --显示ui
+-- function UiStarUpAnimation:Show()
+--     if UiBaseClass.Show(self) then
+-- 	    if not self.ui_back then
+--             return;
+--         end
+--         self.ui_back:set_active(true);
+-- 	end
+    
+-- end
+
+-- --隐藏ui
+-- function UiStarUpAnimation:Hide()
+--     if UiBaseClass.Hide(self) then
+-- 	    if self.ui_back then
+--             self.ui_back:set_active(false);
+--         end
+
+--         if self.timer_id then
+--             timer.stop(self.timer_id);
+--             self.timer_id = nil;
+--         end 
+-- 	end
+-- end
+
+-- --注册回调函数
+-- function UiStarUpAnimation:RegistFunc()
+--     UiBaseClass.RegistFunc(self);
+--     self.bindfunc['on_loaded'] = Utility.bind_callback(self, self.on_loaded);
+--     self.bindfunc['on_touch_back'] = Utility.bind_callback(self, self.on_touch_back);
+--     self.bindfunc['on_play_animation'] = Utility.bind_callback(self, self.on_play_animation);
+-- end
+
+-- --注销回调函数
+-- function UiStarUpAnimation:UnRegistFunc()
+--     UiBaseClass.UnRegistFunc(self);
+-- end
+
+-- --注册消息分发回调函数
+-- function UiStarUpAnimation:MsgRegist()
+--     UiBaseClass.MsgRegist(self);
+-- end
+
+-- --注销消息分发回调函数
+-- function UiStarUpAnimation:MsgUnRegist()
+--     UiBaseClass.MsgUnRegist(self);
+-- end
+
+-- --加载UI
+-- function UiStarUpAnimation:LoadUI()
+-- 	if UiBaseClass.LoadUI(self) then
+-- 	    --ResourceLoader.LoadAsset(pathRes.back, self.bindfunc['on_loaded'], self.panel_name);
+-- 	end
+-- end
+
+-- --资源加载回调
+-- function UiStarUpAnimation:on_loaded(pid, filepath, asset_obj, error_info)
+--     if filepath == pathRes.back then
+--     	self:InitBackUi(asset_obj);
+--     end
+-- end
+
+-- function UiStarUpAnimation:InitBackUi(obj)
+-- 	self.ui_back = asset_game_object.create(obj);
+--     self.ui_back:set_parent(Root.get_root_ui_2d());
+--     self.ui_back:set_local_scale(1,1,1);
+--     self.ui_back:set_name('ui_star_up_animation_back');
+-- end
+
+-- --寻找ngui对象
+-- function UiStarUpAnimation:InitUI(asset_obj)
+-- 	UiBaseClass.InitUI(self, asset_obj)
+--     self.ui:set_parent(Root.get_root_ui_2d());
+--     self.ui:set_local_scale(Utility.SetUIAdaptation());
+--     self.ui:set_name('ui_star_up_animation');
+
+--     self.small_card_item = ngui.find_button(self.ui, "big_card_item");
+--     self.fx = asset_game_object.find("big_card_item/fx");
+--     self.fx:set_active(false);
+--     self.obj_small_card_item = self.small_card_item:get_game_object();
+
+--     self.btn_background = ngui.find_button(self.ui, "centre_other/animation/mark");
+--     self.btn_background:set_on_click(self.bindfunc["on_touch_back"]);
+
+--     --升星
+--     self.cont_star_up = ngui.find_sprite(self.ui, "sp_bk/sheng_xing");
+--     self.star_up = {};
+--     self.star_up.lab_name = ngui.find_label(self.ui, "sp_bk/sheng_xing/lab_name");
+--     self.star_up.sp_star = {};
+--     self.star_up.sp_star_left = {};
+--     for i=1,5 do
+--         self.star_up.sp_star_left[i] = ngui.find_sprite(self.ui, "big_card_item/sp_back/content/human/contain_star/sp_star"..i.."/sp");
+--     	self.star_up.sp_star[i] = ngui.find_sprite(self.ui, "sp_bk/sheng_xing/contain_star/sp_star"..i.."/sp");
+--     end
+--     self.star_up.txt_exp = ngui.find_label(self.ui, "sp_bk/sheng_xing/txt_exp");
+--     self.star_up.lab_num = ngui.find_label(self.ui, "sp_bk/sheng_xing/lab_num");
+--     self.star_up.pro_back = ngui.find_progress_bar(self.ui, "sp_bk/sheng_xing/content/pro_di2");
+--     self.star_up.pro_front = ngui.find_progress_bar(self.ui, "sp_bk/sheng_xing/content/pro_di1");
+
+--     --升级
+--     self.cont_level_up = ngui.find_sprite(self.ui, "sp_bk/sheng_ji");
+--     self.level_up = {};
+--     self.level_up.lab_name = ngui.find_label(self.ui, "sp_bk/sheng_ji/lab_name");
+--     self.level_up.lab_level = ngui.find_label(self.ui, "sp_bk/sheng_ji/lab_level");
+--     self.level_up.lab_num = ngui.find_label(self.ui, "sp_bk/sheng_ji/lab_num");
+--     self.level_up.pro_back = ngui.find_progress_bar(self.ui, "sp_bk/sheng_ji/content/pro_di2");
+--     self.level_up.pro_front = ngui.find_progress_bar(self.ui, "sp_bk/sheng_ji/content/pro_di1");
+
+-- 	self:UpdateUi();
+-- end
+
+-- --刷新界面
+-- function UiStarUpAnimation:UpdateUi()
+-- 	if UiBaseClass.UpdateUi(self) then
+-- 	    if self.timer_id then
+--             timer.stop(self.timer_id);
+--             self.timer_id = nil;
+--         end
+--         self.fx:set_active(false);
+    
+--         self:UpdateUiStarUp();
+
+--         self:Show();
+-- 	end
+-- end
+
+-- --刷新升星
+-- function UiStarUpAnimation:UpdateUiStarUp()
+--     local oldLevel = self.cardinfo.oldLevel;
+--     local oldExp = self.cardinfo.oldExp;
+--     local oldNumber = self.cardinfo.oldNumber;
+--     local oldSouls = self.cardinfo.oldSouls;
+--     local oldcardinfo = CardHuman:new({level = oldLevel, cur_exp = oldExp, number = oldNumber, souls = oldSouls, res_group=self.panel_name});
+--     if self.smallcard then
+--         self.smallcard:DestroyUi();
+--     end
+--     self.smallcard = SmallCardUi:new({obj=self.obj_small_card_item, info = oldcardinfo, --[[atlas = self.smallPool]]});
+--     self.smallcard:SetTeamPosIcon(0)
+--     self.cont_level_up:set_active(false);
+--     self.cont_star_up:set_active(true);
+
+--     self.star_up.lab_name:set_text(self.cardinfo.name);
+--     for i=1,5 do
+--         self.star_up.sp_star[i]:set_active(i <= oldcardinfo.rarity);
+--     end
+--     local add_souls;
+--     local new_need = nil;
+--     local old_need = nil;
+--     local is_up = false;
+--     if self.cardinfo.neidan_level <= 0 then
+--         new_need = self.cardinfo.config.soul_count;
+--         if self.cardinfo:IsStarUp() then
+--             is_up = true;
+--             old_need = oldcardinfo.config.soul_count;
+--             add_souls = self.cardinfo.souls + old_need - self.cardinfo.oldSouls;
+--         else
+--             is_up = false;
+--             old_need = new_need;
+--             add_souls = self.cardinfo.souls - self.cardinfo.oldSouls;
+--         end
+--         self.star_up.txt_exp:set_text("点数");
+--     else
+--         local config = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.neidan_level);
+--         new_need = config.souls;
+--         if self.cardinfo:IsNeidanUp() then
+--             is_up = true;
+--             if self.cardinfo.neidan_level == 1 then
+--                 old_need = oldcardinfo.config.soul_count;
+--             else
+--                 old_need = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.neidan_level-1).souls;
+--             end
+--             add_souls = self.cardinfo.souls + old_need - self.cardinfo.oldSouls;
+--         else
+--             is_up = false;
+--             old_need = new_need;
+--             add_souls = self.cardinfo.souls - self.cardinfo.oldSouls;
+--         end
+--         self.star_up.txt_exp:set_text("潜能强化等级:"..tostring(self.cardinfo.neidan_level));
+--     end
+
+--     local total_add_souls = self:GetTotalAddSouls();
+--     self.star_up.lab_num:set_text("+"..tostring(total_add_souls).." "..tostring(self.cardinfo.oldSouls).."/"..tostring(old_need));
+--     self.star_up.pro_front:set_value(self.cardinfo.oldSouls/old_need);
+--     self.star_up.pro_back:set_value(self.cardinfo.oldSouls/old_need);
+--     -- local data = 
+--     -- {
+--     --     add_souls = add_souls,
+--     --     begin_soul = self.cardinfo.oldSouls,
+--     --     end_soul = self.cardinfo.souls,
+--     --     old_need = old_need,
+--     --     new_need = new_need,
+--     --     is_up = is_up,
+--     -- }
+--     -- self:SetStarUpAnimationData(data)
+--     --self.timer_id = timer.create(self.bindfunc['on_play_animation_star_up'],50,-1);
+--     self.curNumber = oldNumber;
+--     self.curNeidan_level = self.cardinfo.oldNeidan_level;
+--     --app.log_warning("self.curNeidan_level=="..self.curNeidan_level);
+--     self.curSouls = self.cardinfo.oldSouls;
+--     local need;
+--     if self.cardinfo.neidan_level <= 0 then
+--         need = self.cardinfo.soul_count;
+--     else
+--         need = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.neidan_level).souls;
+--     end
+--     self.endpro = self.cardinfo.souls/need;
+--     --app.log_warning("self.endpro=="..self.endpro);
+--     if self.cardinfo.oldNeidan_level <= 0 then
+--         need = ConfigHelper.GetRole(self.cardinfo.oldNumber).soul_count;
+--     else
+--         need = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.oldNeidan_level).souls;
+--     end
+--     self.curpro = self.cardinfo.oldSouls/need;
+--     --app.log_warning("self.curpro=="..self.curpro);
+
+--     self.timer_id = timer.create(self.bindfunc['on_play_animation'],50,-1);
+--     self.audio_id = AudioManager.PlayUiAudio(ENUM.EUiAudioType.ExpLoop);
+-- end
+
+-- function UiStarUpAnimation:SetData(data)
+-- 	self.cardinfo = data.cardinfo;
+--     self.have_touched = false;
+
+--     if self.cardinfo:IsStarUp() then
+--         self:_SetTouchCallback(UiHeroStarUpAnimation.SetAndShow, {roleData = self.cardinfo})
+--     else
+--         self:_SetTouchCallback(nil,nil);
+--     end
+-- end
+
+-- function UiStarUpAnimation:_SetTouchCallback(callbackfunc, data)
+-- 	self.callbackfunc = callbackfunc;
+-- 	self.callback_data = data;
+-- end
+
+-- function UiStarUpAnimation:on_touch_back()
+--     if not self.have_touched then
+--         self.have_touched = true;
+--         if self.timer_id then
+--             timer.stop(self.timer_id);
+--             self.timer_id = nil;
+--             AudioManager.StopUiAudio(self.audio_id);
+--             AudioManager.PlayUiAudio(ENUM.EUiAudioType.ExpEnd);
+--         end
+        
+--         self:ToTheEnd();
+--     else
+--         self:Hide();
+
+--         if self.callbackfunc then
+--             self.callbackfunc(self.callback_data);
+--         end
+--         UiStarUpAnimation.Destroy()
+--     end
+-- end
+
+-- function UiStarUpAnimation:ToTheEnd()
+--     for i=1,5 do
+--         self.star_up.sp_star_left[i]:set_active(i <= self.cardinfo.rarity);
+--         self.star_up.sp_star[i]:set_active(i <= self.cardinfo.rarity);
+--     end
+--     if self.cardinfo.rarity == 5 then
+--         self.star_up.txt_exp:set_text("潜能强化等级:"..tostring(self.cardinfo.neidan_level));
+--         local oldsouls = self.cardinfo.oldSouls;
+--         local souls = self.cardinfo.souls;
+--         local maxsouls = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.neidan_level).souls;
+--         if self.cardinfo.oldNeidan_level == self.cardinfo.neidan_level then
+--             local oldmaxsouls = ConfigManager.Get(EConfigIndex.t_neidan,self.cardinfo.oldNeidan_level).souls;
+--             self.star_up.pro_front:set_value(oldsouls/oldmaxsouls);
+--         else
+--             self.star_up.pro_front:set_value(0);
+--         end
+--         self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(souls).."/"..tostring(maxsouls));
+--         self.star_up.pro_back:set_value(souls/maxsouls);
+--     else
+--         self.star_up.txt_exp:set_text("点数");
+--         local oldsouls = self.cardinfo.oldSouls;
+--         local oldmaxsouls = ConfigHelper.GetRole(self.cardinfo.oldNumber).soul_count;
+--         local souls = self.cardinfo.souls;
+--         local maxsouls = self.cardinfo.soul_count;
+--         if self.cardinfo.oldNumber == self.cardinfo.number then
+--             self.star_up.pro_front:set_value(oldsouls/oldmaxsouls);
+--         else
+--             self.star_up.pro_front:set_value(0);
+--         end
+--         self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(souls).."/"..tostring(maxsouls));
+--         self.star_up.pro_back:set_value(souls/maxsouls);
+--     end
+--     self.smallcard:SetData(CardHuman:new({number = self.cardinfo.number}));
+-- end
+
+-- function UiStarUpAnimation:GetTotalAddSouls()
+--     local total_add_souls = 0;
+--     local curNumber = self.cardinfo.oldNumber;
+--     local cnt = 0;
+--     while true do
+--         if curNumber == self.cardinfo.number then
+--             total_add_souls = total_add_souls + self.cardinfo.souls;
+--             break;
+--         else
+--             total_add_souls = total_add_souls + ConfigHelper.GetRole(curNumber).soul_count;
+--             curNumber = ConfigHelper.GetRole(curNumber).star_up_number;
+--         end
+--         cnt = cnt + 1;
+--         if cnt > 1000 then
+--             break;
+--         end
+--     end
+--     self.total_add_souls = total_add_souls - self.cardinfo.oldSouls;
+--     return total_add_souls;
+-- end
+
+-- function UiStarUpAnimation:on_play_animation()
+--     --不升星
+--     for i=1,5 do
+--         self.star_up.sp_star_left[i]:set_active(i <= ConfigHelper.GetRole(self.curNumber).rarity);
+--         self.star_up.sp_star[i]:set_active(i <= ConfigHelper.GetRole(self.curNumber).rarity);
+--     end
+--     --app.log_warning("self.curNumber=="..self.curNumber);
+--     --app.log_warning("self.cardinfo.number=="..self.cardinfo.number);
+--     if self.curNumber == self.cardinfo.number then
+--         --升内丹
+--         if ConfigHelper.GetRole(self.curNumber).rarity == 5 then
+--             if self.curNeidan_level == 0 then
+--                 self.star_up.pro_front:set_value(0);
+--                 self.curNeidan_level = 1;
+--             end
+--             self.star_up.txt_exp:set_text("潜能强化等级:"..tostring(self.curNeidan_level));
+--             if self.curNeidan_level == self.cardinfo.oldNeidan_level then
+--                 local oldsouls = self.cardinfo.oldSouls;
+--                 local maxsouls = ConfigManager.Get(EConfigIndex.t_neidan,self.curNeidan_level).souls;
+--                 self.star_up.pro_front:set_value(oldsouls/maxsouls);
+--             else
+--                 self.star_up.pro_front:set_value(0);
+--             end
+
+--             if self.curNeidan_level == self.cardinfo.neidan_level then
+--                 if self.curpro + 0.01 >= self.endpro then
+--                     self.curpro = self.endpro;
+--                     timer.stop(self.timer_id);
+--                     self.timer_id = nil;
+--                     AudioManager.StopUiAudio(self.audio_id);
+--                     AudioManager.PlayUiAudio(ENUM.EUiAudioType.ExpEnd);
+--                     self.have_touched = true;
+--                     local need = ConfigManager.Get(EConfigIndex.t_neidan,self.curNeidan_level).souls;
+--                     local cursouls = self.cardinfo.souls;
+--                     self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--                 else
+--                     self.curpro = self.curpro + 0.01;
+--                     local need = ConfigManager.Get(EConfigIndex.t_neidan,self.curNeidan_level).souls;
+--                     local cursouls = math.floor(self.curpro * need);
+--                     self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--                 end
+                
+--                 self.star_up.pro_back:set_value(self.curpro);
+--             else
+--                 if self.curpro + 0.01 >= 1 then
+--                     self.curpro = 0;
+--                     self.curNeidan_level = self.curNeidan_level + 1;
+--                     self.fx:set_active(false);
+--                     self.fx:set_active(true);
+--                 else
+--                     self.curpro = self.curpro + 0.01;
+--                 end
+--                 local need = ConfigManager.Get(EConfigIndex.t_neidan,self.curNeidan_level).souls;
+--                 local cursouls = math.floor(self.curpro * need);
+--                 self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--                 self.star_up.pro_back:set_value(self.curpro);
+--             end
+            
+--         --不升内丹
+--         else
+--             --初始状态
+--             if self.curNumber == self.cardinfo.oldNumber then
+--                 local oldsouls = self.cardinfo.oldSouls;
+--                 local maxsouls = ConfigHelper.GetRole(self.curNumber).soul_count;
+--                 self.star_up.pro_front:set_value(oldsouls/maxsouls);
+--             --已升过一次星
+--             else
+--                 self.star_up.pro_front:set_value(0);
+--             end
+
+--             if self.curpro + 0.01 >= self.endpro then
+--                 self.curpro = self.endpro;
+--                 timer.stop(self.timer_id);
+--                 self.timer_id = nil;
+--                 AudioManager.StopUiAudio(self.audio_id);
+--                 AudioManager.PlayUiAudio(ENUM.EUiAudioType.ExpEnd);
+--                 self.have_touched = true;
+--                 local need = self.cardinfo.soul_count;
+--                 local cursouls = self.cardinfo.souls;
+--                 self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--             else
+--                 self.curpro = self.curpro + 0.01;
+--                 local need = ConfigHelper.GetRole(self.curNumber).soul_count;
+--                 local cursouls = math.floor(self.curpro * need);
+--                 self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--             end
+--             self.star_up.pro_back:set_value(self.curpro);
+--         end
+--     --升星
+--     else
+--         self.star_up.txt_exp:set_text("点数");
+--         --初始状态
+--         if self.curNumber == self.cardinfo.oldNumber then
+--             local oldsouls = self.cardinfo.oldSouls;
+--             local maxsouls = ConfigHelper.GetRole(self.curNumber).soul_count;
+--             self.star_up.pro_front:set_value(oldsouls/maxsouls);
+--         --已升过一次星
+--         else
+--             self.star_up.pro_front:set_value(0);
+--         end
+
+--         if self.curpro + 0.01 >= 1 then
+--             self.curpro = 0;
+--             self.star_up.pro_back:set_value(1);
+--             self.fx:set_active(false);
+--             self.fx:set_active(true);
+--             self.curNumber = ConfigHelper.GetRole(self.curNumber).star_up_number;
+--             self.smallcard:SetData(CardHuman:new({number = self.curNumber}));
+--         else
+--             self.curpro = self.curpro + 0.01;
+--             self.star_up.pro_back:set_value(self.curpro);
+--         end
+--         local need = ConfigHelper.GetRole(self.curNumber).soul_count;
+--         local cursouls = math.floor(self.curpro * need);
+--         self.star_up.lab_num:set_text("+"..tostring(self.total_add_souls).." "..tostring(cursouls).."/"..tostring(need));
+--     end
+-- end

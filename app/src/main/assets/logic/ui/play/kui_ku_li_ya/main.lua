@@ -1,0 +1,10 @@
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_hurdle_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_hurdle_info_ui.lua');
+-- script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_chose_hero_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_sweep_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_open_box_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_award_ui.lua');
+-- script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_rank_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_sweep_dlg_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_sweep_time_ui.lua');
+script.run('logic/ui/play/kui_ku_li_ya/kui_ku_li_ya_sweep_over_ui.lua');

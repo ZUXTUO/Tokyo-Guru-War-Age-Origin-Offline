@@ -1,0 +1,6 @@
+
+EDOWNLOADRESULT = 
+{
+    EDR_FAILED = -1,
+    EDR_SUCCESS = 0,
+}

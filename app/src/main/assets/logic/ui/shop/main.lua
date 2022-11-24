@@ -1,0 +1,8 @@
+script.run("logic/ui/shop/equip_frag_exchange_ui.lua")
+script.run("logic/ui/shop/equip_box_ui.lua")
+script.run("logic/ui/shop/shop_buy_ui.lua")
+script.run("logic/ui/shop/shop_ui.lua")
+script.run("logic/ui/shop/mystery_shop_popup_ui.lua")
+script.run("logic/ui/shop/shop_sell_item_ui.lua")
+script.run("logic/ui/shop/shop_refresh_ui.lua")
+script.run("logic/ui/shop/reward_preview_show_ui.lua")

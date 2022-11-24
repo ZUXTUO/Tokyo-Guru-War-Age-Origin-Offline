@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_width1">45.0dip</dimen>
+    <dimen name="text_width2">60.0dip</dimen>
+    <dimen name="text_size1">15.0sp</dimen>
+    <dimen name="text_size2">15.0sp</dimen>
+    <dimen name="text_size3">11.0sp</dimen>
+    <dimen name="checkBox_width">100.0dip</dimen>
+</resources>

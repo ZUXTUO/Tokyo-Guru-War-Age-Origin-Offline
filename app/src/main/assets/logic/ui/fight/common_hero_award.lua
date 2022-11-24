@@ -1,0 +1,396 @@
+-- CommonHeroAward = {};
+-- local bkPathRes = "assetbundles/prefabs/ui/fight/panel_fight_bg_purple.assetbundle";
+-- local pathRes = "assetbundles/prefabs/ui/egg/content_jiesuan.assetbundle";
+
+-- --------------------外部接口-----------------------
+-- -- hero_list 英雄列表    1个或10个
+-- -- btnDeploy 再抽次数		不要可以不传 bool
+-- -- btnShare 分享             不要可以不传 bool
+-- function CommonHeroAward.Start(hero_list,item_list,btnDeploy,btnShare)
+--     if CommonHeroAward.ui == nil then
+--     	CommonHeroAward.InitData(hero_list,item_list,btnDeploy,btnShare);
+--     	CommonHeroAward.InitUi();
+--     end
+-- end
+
+-- function CommonHeroAward.SetFinishCallback(callback, obj)
+--     CommonHeroAward.callbackFunc = callback;
+--     if CommonHeroAward.callbackFunc then
+--         CommonHeroAward.callbackObj = obj;
+--     end
+-- end
+
+-- function CommonHeroAward.SetDeployCallback(callback, obj, param)
+--     CommonHeroAward.deployCallbackFunc = callback;
+--     if CommonHeroAward.deployCallbackFunc then
+--         CommonHeroAward.deployCallbackObj = obj;
+--         CommonHeroAward.deployCallbackParam = param;
+--     end
+-- end
+
+-- function CommonHeroAward.SetShareCallback(callback, obj)
+--     CommonHeroAward.shareCallbackFunc = callback;
+--     if CommonHeroAward.shareCallbackFunc then
+--         CommonHeroAward.shareCallbackObj = obj;
+--     end
+-- end
+
+-- function CommonHeroAward.Destroy()
+--     if CommonHeroAward.ui then
+--         CommonHeroAward.ui:DestroyUi();
+--         CommonHeroAward.ui = nil;
+--     end
+-- end
+
+-- --------------------内部接口-----------------------
+-- --初始化数据
+-- function CommonHeroAward.InitData(hero_list,item_list,btnDeploy,btnShare)
+--     CommonHeroAward.ui = nil;
+--     CommonHeroAward.heroList = hero_list;
+--     CommonHeroAward.itemList = item_list or hero_list;
+--     CommonHeroAward.showNum = 1;
+--     CommonHeroAward.isDeploy = btnDeploy==10;
+--     CommonHeroAward.isShare = btnShare;
+--     CommonHeroAward.playAnim1Over = false;
+--     CommonHeroAward.playAnim2Over = true;
+--     CommonHeroAward.playAnim3Over = true;
+-- end
+
+-- --析构函数
+-- function CommonHeroAward.DestroyUi()
+--     CommonHeroAward.ui = nil;
+-- end
+
+-- --初始化UI
+-- function CommonHeroAward.InitUi()
+--     if not CommonHeroAward.ui then
+-- 		ResourceLoader.LoadAsset(pathRes,CommonHeroAward.on_loaded);
+--         ResourceLoader.LoadAsset(bkPathRes,CommonHeroAward.on_loaded);
+--     end
+-- end
+
+-- --资源加载回调
+-- function CommonHeroAward.on_loaded(pid, filepath, asset_obj, error_info)
+--     if filepath == pathRes then
+--         CommonHeroAward.FindNguiObject(asset_obj);
+--     elseif filepath == bkPathRes then
+--         CommonHeroAward.bkUi = asset_game_object.create(asset_obj);
+--         CommonHeroAward.bkUi:set_parent(Root.get_root_ui_2d());
+--         CommonHeroAward.bkUi:set_local_scale(1,1,1);
+--     end
+-- end
+
+-- --寻找ngui对象
+-- function CommonHeroAward.FindNguiObject(obj)
+--     CommonHeroAward.ui = asset_game_object.create(obj);
+--     CommonHeroAward.ui:set_parent(Root.get_root_ui_2d());
+--     CommonHeroAward.ui:set_local_scale(Utility.SetUIAdaptation());
+
+--     ------------------- ui_818
+
+--     -- 一个英雄
+--     CommonHeroAward.oneControl = {};
+--     CommonHeroAward.oneAll = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/odd_num");
+--     local control = CommonHeroAward.oneControl;
+--     control.anim = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1"):get_game_object();
+--     control.anim:set_active(false);
+--     -- 道具
+--     control.item = {};
+--     control.item.all = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/kug");
+--     control.item.all:set_active(false);
+--     control.item.sp = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/kug/sp_daoju");
+--     control.item.frame = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/kug/sp_frame");
+--     control.item.num = ngui.find_label(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/kug/lab_num2");
+--     control.item.name = ngui.find_label(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/kug/lab_word");
+--     -- 英雄
+--     control.human = {};
+--     control.human.btn = ngui.find_button(CommonHeroAward.ui,"ui_818_fight/odd_num/animation1/small_card_item");
+--     control.human.obj = SmallCardUi:new({obj = control.human.btn:get_game_object(), res_group=nil});
+--     control.human.obj:Show(false);
+
+--     -- 十个英雄
+--     CommonHeroAward.tenControl = {};
+--     CommonHeroAward.tenAll = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num");
+--     local control = CommonHeroAward.tenControl;
+--     control.item = {};
+--     control.human = {};
+--     control.anim = {};
+--     for i=1,10 do
+--         control.anim[i] = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i):get_game_object();
+--         control.anim[i]:set_active(false);
+-- 	    -- 道具
+--     	control.item[i] = {};
+--     	control.item[i].all = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/kug");
+--     	control.item[i].all:set_active(false);
+--     	control.item[i].sp = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/kug/sp_daoju");
+--     	control.item[i].frame = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/kug/sp_frame");
+--     	control.item[i].num = ngui.find_label(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/kug/lab_num2");
+--     	control.item[i].name = ngui.find_label(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/kug/lab_word");
+-- 	    -- 英雄
+--     	control.human[i] = {};
+--     	control.human[i].btn = ngui.find_button(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/small_card_item");
+--     	control.human[i].obj = SmallCardUi:new({obj = control.human[i].btn:get_game_object(), res_group=nil});
+--     	control.human[i].obj:Show(false);
+--         local sp = ngui.find_sprite(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/small_card_item/sp_di");
+--         sp:set_active(false);
+--         sp = ngui.find_label(CommonHeroAward.ui,"ui_818_fight/even_num/animation"..i.."/small_card_item/sp_back/lab");
+--         sp:set_active(false);
+--     end
+-- 	--再抽以及分享
+-- 	CommonHeroAward.btnDeploy = ngui.find_button(CommonHeroAward.ui, "ui_818_fight/btn_zai_chou");
+-- 	CommonHeroAward.btnDeploy:set_on_click("CommonHeroAward.OnDeployClick");
+-- 	CommonHeroAward.btnDeploy:set_active(false);
+-- 	CommonHeroAward.btnShare = ngui.find_button(CommonHeroAward.ui, "ui_818_fight/btn_share");
+-- 	CommonHeroAward.btnShare:set_on_click("CommonHeroAward.OnShareClick");
+-- 	CommonHeroAward.btnShare:set_active(false);
+-- 	CommonHeroAward.btnCancel = ngui.find_button(CommonHeroAward.ui, "ui_818_fight/mark");
+--     CommonHeroAward.btnCancel:set_on_click("CommonHeroAward.OnClose");
+-- 	CommonHeroAward.btnCancel:set_active(false);
+--     ------------------- ui_822
+--     CommonHeroAward.ui822 = ngui.find_panel(CommonHeroAward.ui,"ui_822_fight");
+--     CommonHeroAward.ui822:set_active(true);
+--     CommonHeroAward.ui822Fx = ngui.find_sprite(CommonHeroAward.ui,"ui_822_fight/fx");
+--     CommonHeroAward.heroHead = ngui.find_texture(CommonHeroAward.ui,"ui_822_fight/sp_di3/sp_bk1/sp_human");
+--     CommonHeroAward.heroNature = ngui.find_sprite(CommonHeroAward.ui,"ui_822_fight/sp_di3/sp_bk1/sp_nature");
+-- 	CommonHeroAward.heroName = ngui.find_label(CommonHeroAward.ui, "ui_822_fight/animation_content_jiesuan/star_lab/lab");
+--     CommonHeroAward.star = {};
+--     for i=1,5 do
+--     	CommonHeroAward.star[i] = ngui.find_sprite(CommonHeroAward.ui,"ui_822_fight/animation_content_jiesuan/star_lab/star/sp_star_di"..i.."/star");
+--     end
+-- 	CommonHeroAward.btnSkipAll = ngui.find_button(CommonHeroAward.ui, "ui_822_fight/content/btn_share");
+--     CommonHeroAward.btnSkipAll:set_on_click("CommonHeroAward.OnSkipAll");
+-- 	CommonHeroAward.btnSkip = ngui.find_button(CommonHeroAward.ui, "ui_822_fight/animation_content_jiesuan/sp_mark");
+--     CommonHeroAward.btnSkip:set_on_click("CommonHeroAward.OnSkip");
+
+-- 	local sp_anim = ngui.find_sprite(CommonHeroAward.ui, "ui_822_fight/animation_content_jiesuan");
+-- 	CommonHeroAward.anim = sp_anim:get_game_object();
+--     sp_anim = ngui.find_sprite(CommonHeroAward.ui, "ui_822_fight/fight_font_animation1/animation");
+--     CommonHeroAward.animFont = sp_anim:get_game_object();
+
+-- 	CommonHeroAward.UpdateUi();
+-- end
+
+-- --刷新界面
+-- function CommonHeroAward.UpdateUi()
+-- 	if not CommonHeroAward.ui then
+-- 		return
+-- 	end
+--     local hero_list = CommonHeroAward.itemList;
+-- 	local num = #hero_list;
+-- 	if num == 1 then
+-- 		CommonHeroAward.oneAll:set_active(true);
+-- 		CommonHeroAward.tenAll:set_active(false);
+--         local control = CommonHeroAward.oneControl;
+--         local id = hero_list[1].id;
+--         local num = hero_list[1].count;
+--         local cfData = PublicFunc.IdToConfig(id);
+--         if PropsEnum.IsRole(id) then
+--             control.human.obj:Show(true);
+--             local cfg = CardHuman:new({number=id,level=1});
+--             control.human.obj:SetData(cfg);
+--             control.human.obj.spRestraint:set_active(false);
+--             control.item.all:set_active(false);
+--         else
+--             control.human.obj:Show(false);
+--             control.item.all:set_active(true);
+--             --CommonHeroAward.ipImage:SetIcon(control.item.sp, id);
+--             PublicFunc.SetIconFrameSprite(control.item.frame, cfData.rarity);
+--             if PropsEnum.IsVaria(id) then
+--                 control.item.num:set_active(false);
+--                 control.item.name:set_text(tostring(num)..tostring(cfData.name));
+--             else
+--                 control.item.num:set_active(true);
+--                 control.item.num:set_text("x"..tostring(num));
+--                 control.item.name:set_text(tostring(cfData.name));
+--             end
+--         end
+-- 	else
+-- 		CommonHeroAward.oneAll:set_active(false);
+-- 		CommonHeroAward.tenAll:set_active(true);
+--         local control = CommonHeroAward.tenControl;
+--         for i=1,10 do
+--             if hero_list[i] then
+--                 local id = hero_list[i].id;
+--                 local num = hero_list[i].count;
+--                 local cfData = PublicFunc.IdToConfig(id);
+--                 if PropsEnum.IsRole(id) then
+--                     control.human[i].obj:Show(true);
+--                     local cfg = CardHuman:new({number=id,level=1});
+--                     control.human[i].obj:SetData(cfg);
+--                     control.human[i].obj.spRestraint:set_active(false);
+--                     control.item[i].all:set_active(false);
+--                 else
+--                     control.human[i].obj:Show(false);
+--                     control.item[i].all:set_active(true);
+--                     --CommonHeroAward.ipImage:SetIcon(control.item[i].sp, id);
+--                     PublicFunc.SetIconFrameSprite(control.item[i].frame, cfData.rarity);
+--                     if PropsEnum.IsVaria(id) then
+--                         control.item[i].num:set_active(false);
+--                         control.item[i].name:set_text(tostring(num)..tostring(cfData.name));
+--                     else
+--                         control.item[i].num:set_active(true);
+--                         control.item[i].num:set_text("x"..tostring(num));
+--                         control.item[i].name:set_text(tostring(cfData.name));
+--                     end
+--                 end
+--             end
+--         end
+-- 	end
+--     CommonHeroAward.UpdateCard();
+-- end
+
+-- function CommonHeroAward.UpdateCard()
+--     CommonHeroAward.timeId = nil;
+--     local num = CommonHeroAward.showNum;
+--     local data = CommonHeroAward.heroList[num];
+--     if not data then
+--         CommonHeroAward.OnSkipAll();
+--         return;
+--     end
+
+--     local cfg = PublicFunc.IdToConfig(data.id);
+--     item_manager.texturePadding(CommonHeroAward.heroHead,cfg.icon300);
+--     CommonHeroAward.heroName:set_text(cfg.name);
+--     for i=1,5 do
+--         if i <= cfg.rarity then
+--             CommonHeroAward.star[i]:set_active(true);
+--         else
+--             CommonHeroAward.star[i]:set_active(false);
+--         end
+--     end
+
+--     if CommonHeroAward.showNum ~= 1 then
+--         CommonHeroAward.DelayTimeId = timer.create("CommonHeroAward.Delay",500,1);
+--     else
+--         CommonHeroAward.anim:animator_play("animation_content_jiesuan");
+--         CommonHeroAward.animFont:animator_play("fight_font_animation1")
+--     end
+--     CommonHeroAward.showNum = num + 1;
+--     CommonHeroAward.playAnim3Over = true;
+-- end
+
+-- function CommonHeroAward.Delay()
+--     CommonHeroAward.DelayTimeId = nil;
+--     CommonHeroAward.ui822Fx:set_active(true);
+--     CommonHeroAward.anim:animator_play("animation_content_jiesuan");
+--     CommonHeroAward.animFont:animator_play("fight_font_animation1")
+-- end
+
+-- function CommonHeroAward.UpdateItem()
+--     local num = CommonHeroAward.showNum - 1;
+--     if num > 10 then
+--         CommonHeroAward.OnSkipAll();
+--         return;
+--     end
+--     local hero_list = CommonHeroAward.heroList;
+--     local count = #hero_list;
+--     if count == 1 then
+--         CommonHeroAward.oneControl.anim:set_active(true);
+--         -- CommonHeroAward.oneControl.anim:animator_play();
+--     else
+--         CommonHeroAward.tenControl.anim[num]:set_active(true);
+--         -- CommonHeroAward.tenControl.anim[num]:animator_play();
+--     end
+-- end
+
+-- function CommonHeroAward.OnSkip()
+--     if not CommonHeroAward.playAnim2Over then
+--         return;
+--     end
+--     if not CommonHeroAward.playAnim3Over then
+--         return;
+--     end
+--     if CommonHeroAward.DelayTimeId then
+--         timer.stop(CommonHeroAward.DelayTimeId);
+--         CommonHeroAward.DelayTimeId = nil;
+--     end
+--     if CommonHeroAward.showOver then
+--         CommonHeroAward.OnClose();
+--     else
+--         if CommonHeroAward.playAnim1Over then
+--             CommonHeroAward.playAnim1Over = false;
+--             CommonHeroAward.playAnim2Over = false;
+--             CommonHeroAward.anim:animator_play("animation_content_jiesuan2");
+--             CommonHeroAward.animFont:animator_play("fight_font_animation1_xiaoshi");
+--             CommonHeroAward.ui822Fx:set_active(false);
+--         else
+--             CommonHeroAward.anim:animator_play("animation_content_jiesuan_dingzhen");
+--             CommonHeroAward.animFont:animator_play("fight_font_animation1_dingzhen");
+--             CommonHeroAward.playAnim1Over = true;
+--         end
+--     end
+-- end
+
+-- function CommonHeroAward.OnSkipAll()
+--     CommonHeroAward.showOver = true;
+--     CommonHeroAward.btnCancel:set_active(true);
+--     CommonHeroAward.btnSkipAll:set_active(false);
+--     CommonHeroAward.ui822:set_active(false);
+--     CommonHeroAward.btnDeploy:set_active(CommonHeroAward.isDeploy);
+--     CommonHeroAward.btnShare:set_active(CommonHeroAward.isShare);
+--     local hero_list = CommonHeroAward.heroList;
+--     local num = #hero_list;
+--     if num == 1 then
+--         -- CommonHeroAward.oneControl.anim:animator_play();
+--         CommonHeroAward.oneControl.anim:set_active(true);
+--     else
+--         for i=1,10 do
+--             CommonHeroAward.tenControl.anim[i]:set_active(true);
+--         end
+--     end
+-- end
+
+-- function CommonHeroAward.OnAnimEnd()
+--     CommonHeroAward.playAnim2Over = true;
+--     CommonHeroAward.playAnim3Over = false;
+--     CommonHeroAward.UpdateItem();
+--     CommonHeroAward.timeId = timer.create("CommonHeroAward.UpdateCard",500,1);
+-- end
+
+-- function CommonHeroAward.OnClose(t)
+--     CommonHeroAward.showOver = nil;
+--     CommonHeroAward.playAnim1Over = false;
+--     CommonHeroAward.playAnim2Over = false;
+--     CommonHeroAward.playAnim3Over = false;
+--     CommonHeroAward.showNum = 1;
+--     local oldCallback = CommonHeroAward.callbackFunc;
+--     local oldCallObj = CommonHeroAward.callbackObj;
+--     if CommonHeroAward.callbackFunc then
+--         CommonHeroAward.callbackFunc(CommonHeroAward.callbackObj);
+--     end
+--     if oldCallback == CommonHeroAward.callbackFunc and oldCallObj == CommonHeroAward.callbackObj then
+--         CommonHeroAward.callbackFunc = nil;
+--         CommonHeroAward.callbackObj = nil;
+--     end
+--     CommonHeroAward.deployCallbackFunc = nil;
+--     CommonHeroAward.deployCallbackObj = nil;
+--     CommonHeroAward.deployCallbackParam = nil;
+--     CommonHeroAward.shareCallbackFunc = nil;
+--     CommonHeroAward.shareCallbackObj = nil;
+--     if CommonHeroAward.ui then 
+--         CommonHeroAward.ui:set_active(false);
+--         CommonHeroAward.ui = nil;
+--     end
+--     if CommonHeroAward.bkUi then 
+--         CommonHeroAward.bkUi:set_active(false);
+--         CommonHeroAward.bkUi = nil;
+--     end
+-- end
+
+-- function CommonHeroAward.OnDeployClick()
+--     if CommonHeroAward.deployCallbackFunc then
+--         CommonHeroAward.deployCallbackFunc(CommonHeroAward.deployCallbackObj, CommonHeroAward.deployCallbackParam);
+--     end
+--     CommonHeroAward.OnClose(t);
+-- end
+
+-- function CommonHeroAward.OnShareClick()
+--     if CommonHeroAward.shareCallbackFunc then
+--         CommonHeroAward.shareCallbackFunc(CommonHeroAward.shareCallbackObj);
+--     end
+--     CommonHeroAward.OnClose(t);
+-- end
+
+-- function g_hero_award_ani_callback(obj,str)
+--     Utility.CallFunc(str);
+-- end

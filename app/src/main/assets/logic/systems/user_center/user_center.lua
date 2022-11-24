@@ -1,0 +1,1997 @@
+----
+---- Created by IntelliJ IDEA.
+---- User: pokong
+---- Date: 2015/10/28
+---- Time: 12:26
+---- To change this template use File | Settings | File Templates.
+----
+--
+--UserCenter = {
+--	--[[内部初始化]]
+--	accountid = 0;
+--	token = 0;
+--
+--	--[[外部传过来的明文信息]]
+--	login_str = "ghoul";--[[登陆时传入到JAR的参数：qq,wx，用于腾讯登陆判断]]
+--	user_name = "";--[[本地帐号]]
+--	user_pwd = "";--[[本地密码 MD5加密]]
+--	user_code = "";--[[验证码]]
+--	user_type = 0;--[[通过帐号判断出来的类型 --0无效 1 设备， 2： 手机 ， 3 邮箱 4. 普通帐号]]
+--	user_name_temp = "";--[[本地帐号TEMP]]
+--	user_pwd_temp = "";--[[本地密码 MD5加密 TEMP]]
+--	user_code_temp = "";--[[验证码TEMP]]
+--	user_type_temp = 0;--[[通过帐号判断出来的类型 --0无效 1 设备， 2： 手机 ， 3 邮箱 4. 普通帐号]]
+--	use_account_url = "";--[[当前使用的帐号验证URL]]
+--	used_account_urllist = {};--[[帐号验证使用过的例表]]
+--	use_account_url_max_num = 5;--[[每个URL使用次数]]
+--
+--	seend_code_tel = "";--[[申请验证码TEL]]
+--	seend_code_call_back = nil;--[[申请验证码回调]]
+--	check_code_tel = "";--[[查看验证码TEL]]
+--	check_code_code = "";--[[查看验证码CIDE]]
+--	check_code_userdata = "";--[[查看验证码自定义字段]]
+--	check_code_call_back = nil;--[[查看验证码回调]]
+--
+--    bind_mail_str = "";--[[申请绑定邮箱]]
+--    bind_mail_call_back = nil;--[[申请绑定邮箱回调]]
+--
+--	--[[注册返回 用处不大，现在仅用于客户端表现]]
+--	reg_ret = 0;
+--	reg_token = "";
+--	reg_msg = "";
+--	reg_accout = "";
+--	reg_accoutid = "";
+--	reg_pswd_md5 = "";
+--	reg_is_bind = 0;--[[0注册 1绑定]]
+--	reg_account_type = 0;--[[帐号的类型 -- 1 设备， 2： 手机 ， 3 邮箱 4. 普通帐号 5.公司SDK（特例）]]
+--
+--	--[[升级正式帐号反回]]
+--	bind_ret = 0;
+--	bind_account_type = 0;
+--	bind_request_type = 0;
+--	bind_msg = "";
+--	bind_is_bind = "";
+--	bind_account = "";
+--	bind_accountid = "";
+--	bind_pswd_md5 = "";
+--
+--	--[[公司SDK登陆后信息]]
+--	digisky_accountid = "";
+--	digisky_token = "";
+--
+--	--[[登录成功后信息]]
+--	accountid = "";
+--	token = "";
+--	exten_val = "";--[[自定义JSON串，应用宝会传很重要的数据回来]]
+--	login_times = 0;--[[登录次数，判断是不是第一次]]
+--	account_request_type = 0;-- 1 设备， 2： 手机 ， 3 邮箱 4.普通帐号
+--	--[[帐号绑定信息，用于判断是不是有手机注册
+--	--struct reg_account_info
+--{
+--	short acc_type;
+--	string account; //帐号名，可以判断是不是手机号码
+--	string info;
+--}
+--	--
+--	-- ]]
+--	bind_accounts = {};
+--
+--	is_game_list_useing = false;--[[得到服务器例表HTTP是否在使用]]
+--	is_regis_useing = false;--[[注册HTTP是否在使用]]
+--	is_login_useing = false;--[[登录HTTP是否在使用]]
+--	is_sdk_useing = false;--[[SDK是否在使用，同时只能使用一次]]
+--
+--
+--	--[[购买商品]]
+--	buy_is_useing = false;--[[是否在使用支付]]
+--	buy_index = 0;--[[商品index]]
+--	buy_id = "";--[[商品ID]]
+--	buy_num = "";--[[商品数量]]
+--	buy_price = 0;--[[支付金额 人民币]]
+--	buy_name = "";--[[商名]]
+--	buy_discount = "";--[[描述]]
+--	buy_order_id = "";--[[支付单号]]
+--	buy_call_back = nil;--[[支付回调]]
+--};
+--
+----------------------------------------------对外接口-----------------------------------------------------
+----[[设定登陆str]]
+--function UserCenter.set_login_str(str)
+--	if str == nil or str == "" then return end;
+--	UserCenter.login_str = str;
+--end
+--
+----[[得到登陆str]]
+--function UserCenter.get_login_str()
+--	return UserCenter.login_str;
+--end
+--
+----[[得到明文帐号]]
+--function UserCenter.get_user_name()
+--	return UserCenter.user_name;
+--end
+----[[得到密码MD5]]
+--function UserCenter.get_pwd_md5()
+--	return UserCenter.user_pwd;
+--end
+--
+----[[得到帐号登录成功后的accountid]]
+--function UserCenter.get_accountid()
+--	return UserCenter.accountid;
+--end
+----[[得到帐号登录成功后的TOKEN]]
+--function UserCenter.get_accessToken()
+--	return UserCenter.token;
+--end
+--
+----[[得到公司帐号登录成功后的accountid]]
+--function UserCenter.get_digisky_accountid()
+--	return UserCenter.digisky_accountid;
+--end
+----[[得到帐号登录成功后的TOKEN]]
+--function UserCenter.get_digisky_accessToken()
+--	return UserCenter.digisky_token;
+--end
+----[[得到帐号登录成功后的type:-- 帐号的类型 -- 1 设备， 2： 手机 ， 3 邮箱 4. 第三方 5.昵称帐号 ]]
+--function UserCenter.get_account_type()
+--	return UserCenter.account_request_type;
+--end
+--
+----[[打开用户中心]]
+--function UserCenter.open_user_center()
+--	app.log("user center >>> open");
+--	if AppConfig.get_check_official() then
+--		--[[游戏内界面]]
+--	else
+--		user_center.open_user_center(1);
+--	end
+--end
+--
+----[[打开客服中心]]
+--function UserCenter.open_user_center_kefu()
+--	app.log("user center open >>> kufu");
+--	if AppConfig.get_check_official() then
+--		--[[游戏内界面]]
+--	else
+--		user_center.open_user_center(4);
+--	end
+--end
+--
+----[[切换帐号]]
+--function UserCenter.switch_account()
+--	app.log("user center >>> switch");
+--	if AppConfig.get_check_official() then
+--		--[[游戏内界面]]
+--	else
+--		user_center.switch_account();
+--	end
+--end
+--
+----[[得到帐号URL]]
+--function UserCenter.fileter_account_url()
+--	local url_list = AppConfig.get_account_url();
+--	app.log("url_list="..#url_list);
+--	for i=1,table.getn(url_list) do
+--		app.log("筛选帐号验证服URL="..url_list[i]);
+--		local used_index = 0;
+--		--[[查看有没有使用过]]
+--		for j=1,table.getn(UserCenter.used_account_urllist) do
+--			local temp = UserCenter.used_account_urllist[j];
+--			if temp.url == url_list[i] then
+--				used_index = j;
+--				break;
+--			end
+--		end
+--
+--		if used_index ~= 0 then
+--			--[[使用过 次数还可以用]]
+--			app.log("使用过="..UserCenter.used_account_urllist[used_index].num);
+--			if UserCenter.used_account_urllist[used_index].num < UserCenter.use_account_url_max_num then
+--				UserCenter.used_account_urllist[used_index].num = UserCenter.used_account_urllist[used_index].num + 1;
+--				app.log("url_list="..url_list[i]);
+--				UserCenter.use_account_url = url_list[i];--[[取一个URL]]
+--				app.log("UserCenter.use_account_url="..UserCenter.use_account_url);
+--				return url_list[i];
+--			end
+--		else
+--			--[[没有使用过]]
+--			app.log("没有使用过");
+--			local inset_table = {};
+--			inset_table.url = url_list[i];
+--			inset_table.num = 1;
+--			table.insert(UserCenter.used_account_urllist,inset_table);
+--			app.log("url_list="..url_list[i]);
+--			UserCenter.use_account_url = url_list[i];--[[取一个URL]]
+--			app.log("UserCenter.use_account_url="..UserCenter.use_account_url);
+--			return url_list[i];
+--		end
+--
+--	end
+--
+--	--[[没有URL]]
+--	UserCenter.use_account_url = "";--[[取一个URL]]
+--	return "";
+--end
+--
+----[[重置成功URL的重试次数]]
+--function UserCenter.reset_used_url_num()
+--	for i=1,table.getn(UserCenter.used_account_urllist) do
+--		local temp = UserCenter.used_account_urllist[i];
+--		if temp.url == UserCenter.use_account_url then
+--			UserCenter.used_account_urllist[i].num = 0;
+--			return;
+--		end
+--	end
+--end
+--
+----[[提交第三方SDK需要提供的信息]]
+--function UserCenter.get_sdk_push_info(event_name)
+--	if g_dataCenter then
+--		if g_dataCenter.player then
+--			local table_info = {};
+--			table_info.roleId = g_dataCenter.player.playerid;
+--			table_info.roleName = g_dataCenter.player.name;
+--			table_info.roleLevel = g_dataCenter.player.level;
+--			table_info.zoneId = systems_data.get_enter_server_id();
+--			table_info.zoneName = tostring(systems_data.get_game_server_info_id(systems_data.get_enter_server_id()));
+--			table_info.balance = g_dataCenter.player.gold;
+--			if event_name ~= nil then
+--				table_info.event = tostring(event_name);
+--			end
+--			UserCenter.submit_extend_info(table_info);
+--		end
+--	end
+--end
+--
+----[[本地信息临时化]]
+--function UserCenter.local_info_temp(is_true)
+--	if is_true then
+--		UserCenter.user_name_temp = UserCenter.user_name;
+--		UserCenter.user_pwd_temp = UserCenter.user_pwd;
+--		UserCenter.user_code_temp = UserCenter.user_code;
+--		UserCenter.user_type_temp = UserCenter.user_type;
+--	else
+--		UserCenter.user_name = UserCenter.user_name_temp;
+--		UserCenter.user_pwd = UserCenter.user_pwd_temp;
+--		UserCenter.user_code = UserCenter.user_code_temp;
+--		UserCenter.user_type = UserCenter.user_type_temp;
+--	end
+--end
+--
+----[[初始化]]
+--function UserCenter.init_user_center()
+--	app.log("user center init");
+--
+--	Root.push_web_info("sys_023","平台帐号登录开始,init_user_center");
+--	--[[公司日志：游戏启动信息]]
+--	SystemLog.AppStartClose(23);
+--
+----	UserCenter.guest_login();
+----	UserCenter.register("1@qq.com","123")
+----	UserCenter.account_login("1@qq.com","123")
+----	do return end;
+--
+--	--[[必需要一个帐号URL]]
+--	if UserCenter.fileter_account_url() == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "帐号验证信息例表失败！请稍后重试！",
+--			{str = "是", func = Root.quit}
+--		);
+--		return;
+--	end
+--
+--	if AppConfig.get_check_official() and not AppConfig.get_check_digisky() then--[[官方]]
+--		-----------------------------[[自己的登陆流程 str]]---------------------------------
+--		--[[如果本地有帐号，就进行登录]]
+--		local loacl_user_list = LoginFile.get_new_user();
+--		if loacl_user_list ~= nil then
+--			if loacl_user_list.user_type == 1 then
+--				app.log("游客登录");
+--				UserCenter.guest_login();
+--			else
+--				app.log("帐号登录");
+--				UserCenter.account_login(loacl_user_list.name,loacl_user_list.pwd);
+--			end
+--		else
+--			app.log("游客登录");
+--			UserCenter.guest_login();
+--		end
+--		-----------------------------[[自己的登陆流程 end]]---------------------------------
+--		--[[IAP 放到msg_store.gc_sync_store_data同步商城信息的时候进初始化]]
+--	else
+--		--[[第三方登陆]]
+--		if Root.get_os_type() == 11 or Root.get_os_type() == 8 then
+--			--[[第三方SDK]]
+--			--[[初始化SDK登录URL，虽然SDK可以写死，但还是使用动态解析出来的URL]]
+--			local table_info = {};
+--			table_info.change_login_url = UserCenter.use_account_url..AppConfig.get_account_login_path();--[[修改登录地址]]
+--			table_info.change_pay_url = UserCenter.use_account_url..AppConfig.get_account_server_pay_path();--[[修改支付地址]]
+--			--[[系统必要信息]]
+--			local need_info = UserCenter.get_need_info();
+--			local json_info = pjson.encode(need_info);
+--			table_info.custom = json_info;--[[自定义串]]
+--
+--			UserCenter.submit_extend_info(table_info);
+--
+--			user_center.init_user_center(AppConfig.get_app_id(),AppConfig.get_user_center_key());--[[用户中心初始化]]
+--			user_center.set_login_listener("UserCenter.on_login");--[[登录回调]]
+--			user_center.set_logout_listener("UserCenter.on_logout");--[[等出回调]]
+--			user_center.set_payment_listener("UserCenter.on_payment");--[[支付回调]]
+--
+--			--[[平台帐登陆]]
+--			UserCenter.sdk_login();
+--
+----		elseif Root.get_os_type() == 8 then
+----			SystemHintUI.SetAndShow(ESystemHintUIType.one, "IOS正在开发中！",
+----				{str = "确认", func = Root.quit}
+----			);
+--		else
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one, "第三方帐号只能在安卓手机上面登陆！",
+--				{str = "确认", func = Root.quit}
+--			);
+--		end
+--	end
+--end
+--
+----[[平台帐登陆]]
+--function UserCenter.sdk_login()
+--	if not UserCenter.is_sdk_useing then
+--		UserCenter.is_sdk_useing = true;
+--		app.log("UserCenter.sdk_login="..UserCenter.login_str);
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			--[[判断参数是不是checklogin]]
+--			local x,y = string.find(UserCenter.login_str,"checkLogin");
+--			if x ~= nil or y ~= nil then
+--				app.log("@@@>checkLogin");
+--				user_center.login("checkLogin");
+--			else
+--				app.log("@@@>"..UserCenter.login_str);
+--				user_center.login(UserCenter.login_str);
+--			end
+--		else
+--			user_center.login(UserCenter.login_str);
+--		end
+--	end
+--end
+--
+----[[平台帐号陆出]]
+--function UserCenter.sdk_logout()
+--	if not UserCenter.is_sdk_useing then
+--		UserCenter.is_sdk_useing = true;
+--		user_center.logout();
+--	end
+--end
+--
+----[[申请发送验证码]]
+--function UserCenter.seed_code(s_tel,callback_fun)
+--	if s_tel == nil or s_tel == "" or callback_fun == nil then return false end;
+--
+--	--[[是不是手机号]]
+--	if not PublicFunc.check_str_is_phone(s_tel) then
+--		return false;
+--	end
+--
+--	UserCenter.seend_code_tel = s_tel;
+--	UserCenter.seend_code_call_back = callback_fun;
+--
+--	--[[发送申请验证码]]
+--	UserCenter.seedcode_seed();
+--end
+--
+----[[CHECK验证码]]
+--function UserCenter.check_code(s_tel,s_code,userdata,callback_fun)
+--	if s_tel == nil or s_tel == "" or callback_fun == nil or s_code == nil then return false end;
+--
+--	--[[是不是手机号]]
+--	if not PublicFunc.check_str_is_phone(s_tel) then
+--		return false;
+--	end
+--
+--	UserCenter.checkseend_code_tel = s_tel;
+--	UserCenter.check_code_code = s_code;
+--	if userdata == nil then
+--		UserCenter.check_code_userdata = "";
+--	else
+--		UserCenter.check_code_userdata = userdata;
+--	end
+--	UserCenter.check_code_call_back = callback_fun;
+--
+--	UserCenter.check_code_seed();
+--end
+--
+----[[申请邮箱验证]]
+--function UserCenter.bind_mail(s_mail,callback_fun)
+--    if s_mail == nil or s_mail == "" or callback_fun == nil then return false end;
+--
+--    --[[是不是邮箱]]
+--    if not PublicFunc.check_str_is_email(s_mail) then
+--        return false;
+--    end
+--
+--    UserCenter.bind_mail_str = s_mail;
+--    UserCenter.bind_mail_call_back = callback_fun;
+--
+--    --[[申请邮箱绑定]]
+--    UserCenter.bindmail_seed();
+--end
+--
+----[[游客登录]]
+--function UserCenter.guest_login()
+--	app.log("UserCenter.guest_login");
+--
+--	Root.push_web_info("sys_024","官方游客登陆");
+--
+--	if UserCenter.is_login_useing then
+--		app.log("UserCenter.is_login_useing");
+--		return false;
+--	end
+--	UserCenter.is_login_useing = true;
+--
+--	--[[取一个登录URL]]
+--	if UserCenter.use_account_url == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "帐号服地址为空，请重进游戏！",
+--			{str = "退出", func = Root.quit}
+--		);
+--		return false;
+--	end
+--
+--	local table_info = UserCenter.get_need_info();
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--	table_info.type = 2;
+--	local json_info = pjson.encode(table_info);
+--
+--	app.log("guest_login ="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--	ghttp.post(
+--		UserCenter.use_account_url,
+--		"UserCenter.guest_on_success",
+--		"UserCenter.guest_on_error",
+--		AppConfig.get_account_login_path(),
+--		json_info);
+--
+--	return true;
+--end
+--
+----[[公司SDK登录]]
+--function UserCenter.digisky_login()
+--	app.log("UserCenter.digisky_login");
+--
+--	Root.push_web_info("sys_0244","官方SDK登陆");
+--
+--	if UserCenter.is_login_useing then
+--		app.log("UserCenter.is_login_useing");
+--		return false;
+--	end
+--	UserCenter.is_login_useing = true;
+--
+--	--[[取一个登录URL]]
+--	if UserCenter.use_account_url == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "帐号服地址为空，请重进游戏！",
+--			{str = "退出", func = Root.quit}
+--		);
+--		return false;
+--	end
+--
+--	--[[公司数据]]
+--	UserCenter.digisky_accountid = UserCenter.accountid;
+--	UserCenter.digisky_token = UserCenter.token;
+--
+--	local table_info = UserCenter.get_need_info();
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 66公司SDK登陆]]
+--	table_info.type = 1;
+--	table_info.sdk_id = UserCenter.accountid;
+--	table_info.sdk_token = UserCenter.token;
+--	table_info.app_id = AppConfig.get_app_id();
+--	local json_info = pjson.encode(table_info);
+--
+--	app.log("digisky_login ="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--	ghttp.post(
+--		UserCenter.use_account_url,
+--		"UserCenter.digisky_on_success",
+--		"UserCenter.digisky_on_error",
+--		AppConfig.get_account_login_path(),
+--		json_info);
+--
+--	return true;
+--end
+--
+----[[升级为正式帐号
+----	如果username=帐号 那么pwd=pwd code=""
+----	如果username=手机 那么pwd=pwd code=code
+---- ]]
+--function UserCenter.guest_register(str_username,str_pwd,str_code)
+--	Root.push_web_info("sys_026","官方游客升级为正式帐号");
+--
+--	app.log("UserCenter.guest_register="..str_username..">"..str_pwd);
+--	if UserCenter.is_regis_useing then
+--		app.log("UserCenter.is_regis_useing");
+--		return;
+--	end
+--	if str_username == nil or str_username == "" or str_pwd == nil or str_pwd == "" then
+--		return false;
+--	end
+--
+--	local user_name_type = UserCenter.check_user_name(str_username);
+--
+--	if user_name_type == 0 then
+--		app.log("str_username 帐号为空");
+--		LoginModule.mark:Hide();
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "请输入正确的帐号！",
+--			{str = "是", func = Root.empty_func}
+--		);
+--		return false;
+--	end
+--
+--	UserCenter.local_info_temp(true);--[[存临时信息]]
+--
+--	UserCenter.user_name = str_username;
+--	UserCenter.user_pwd = str_pwd;
+--	UserCenter.user_code = str_code;
+--	UserCenter.user_type = user_name_type;
+--
+--	UserCenter.guest_register_send();
+--	return true;
+--end
+--
+----[[帐号注册]]
+--function UserCenter.register(str_username,str_pwd)
+--	app.log("UserCenter.register="..str_username..">"..str_pwd);
+--	if UserCenter.is_regis_useing then
+--		app.log("UserCenter.is_regis_useing");
+--		return;
+--	end
+--	if str_username == nil or str_username == "" or str_pwd == nil or str_pwd == "" then
+--		return false;
+--	end
+--
+--	local user_name_type = UserCenter.check_user_name(str_username);
+--
+--	if user_name_type == 0 then
+--		app.log("str_username 帐号为空");
+--		LoginModule.mark:Hide();
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "请输入正确的帐号！",
+--			{str = "是", func = Root.empty_func}
+--		);
+--		return false;
+--	end
+--
+--	UserCenter.local_info_temp(true);--[[存临时信息]]
+--
+--	UserCenter.user_name = str_username;
+--	UserCenter.user_pwd = str_pwd;
+--	UserCenter.user_type = user_name_type;
+--
+--	UserCenter.register_send();
+--	return true;
+--end
+--
+----[[帐号登录]]
+--function UserCenter.account_login(str_username,str_pwd)
+--	app.log("UserCenter.account_login="..str_username..">"..str_pwd);
+--
+--
+--	if UserCenter.is_regis_useing then
+--		app.log("UserCenter.is_regis_useing");
+--		return;
+--	end
+--	if str_username == nil or str_username == "" or str_pwd == nil or str_pwd == "" then
+--		return false;
+--	end
+--
+--	local user_name_type = UserCenter.check_user_name(str_username);
+--
+--	if user_name_type == 0 then
+--		app.log("str_username 帐号为空");
+--		LoginModule.mark:Hide();
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "请输入正确的帐号！",
+--			{str = "是", func = Root.empty_func}
+--		);
+--		return false;
+--	end
+--
+--	UserCenter.local_info_temp(true);--[[存临时信息]]
+--
+--	UserCenter.user_name = str_username;
+--	UserCenter.user_pwd = str_pwd;
+--	UserCenter.user_type = user_name_type;
+--
+--	UserCenter.login_send();
+--	return true;
+--end
+--
+--
+----[[购买商品 单位为元]]
+--function UserCenter.pay(index, id, num, price, name, discount, call_back)
+--	--[[UserCenter.pay ---->index=1,id=3,num=6480,price=648,name=6480钻石,discount=100]]
+--	app.log("UserCenter.pay ---->index="..index..",id="..id..",num="..num..",price="..price..",name="..name..",discount="..discount);
+--
+--	--[[不能为空信息]]
+--	if index == nil or index == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "index为空",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--		return;
+--	end
+--
+--	if id == nil or id == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "id为空",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--		return;
+--	end
+--
+--	if num == nil or num == "" or num == 0 then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "数量为空",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--		return;
+--	end
+--
+--	if tonumber(price) == nil or price == 0 then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "价格为空",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--		return;
+--	end
+--
+--	if discount == nil or discount == "" then
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "描述为空",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--		return;
+--	end
+--
+----	app.log("type(call_back)="..type(call_back));
+----	if type(call_back) ~= "function" then
+----		SystemHintUI.SetAndShow(ESystemHintUIType.one, "回调错误",
+----			{str = "确认", func = Root.empty_func}
+----		);
+----		return;
+----	end
+--
+--	--[[只能在手机上面测试]]
+--
+--	if Root.get_os_type() == 8 or Root.get_os_type() == 11 then
+--		if UserCenter.buy_is_useing then
+--			--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "已经申请支付中....",
+--			--			{str = "确认", func = Root.empty_func}
+--			--		);
+--		end
+--		UserCenter.buy_is_useing = true;
+--
+--		UserCenter.buy_index = index;
+--		UserCenter.product_id = id;
+--		UserCenter.buy_num = num;
+--		UserCenter.buy_price = price;
+--		UserCenter.buy_name = name;
+--		UserCenter.buy_discount = discount;
+--		UserCenter.buy_call_back = call_back;
+--
+--		--[[是不是公司平台SDK IOS]]
+--		if AppConfig.get_check_digisky() and Root.get_os_type() == 8 then
+--			--[[IOS]]
+--			iap.buy(UserCenter.buy_index);
+--		else
+--			--[[安卓通用]]
+--
+--			--[[新加公司安卓数据块：现在安卓只开通支付宝与联运，易联支付暂时不加]]
+--			local pay_type = 11;--[[//10-充值卡支付  11-支付宝支付  12-appstore支付   13-google支付  14-联运   15-易联支付]]
+--			if AppConfig.get_check_official() then
+--				pay_type = 11;
+--			else
+--				pay_type =  14;
+--			end
+--			local temp_digisky_payinfo = UserCenter.get_digisky_payinfo(pay_type);
+--
+--			--[[向服务器发送请求，返回定单号]]
+--			msg_store.cg_buy_store_goods(index, id, num, price, discount,
+--				temp_digisky_payinfo.appId,
+--				temp_digisky_payinfo.serverId,
+--				temp_digisky_payinfo.accountId,
+--				temp_digisky_payinfo.charId,
+--				temp_digisky_payinfo.payType,
+--				temp_digisky_payinfo.secondType,
+--				temp_digisky_payinfo.bill,
+--				temp_digisky_payinfo.ext);
+--		end
+--
+--	else
+--		SystemHintUI.SetAndShow(ESystemHintUIType.one, "请在手机上面支付！",
+--			{str = "确认", func = Root.empty_func}
+--		);
+--	end
+--end
+--
+----------------------------------------------------内部方法 atr--------------------------------------------------
+--
+----[[WEB PUSH必要信息]]
+--function UserCenter.get_need_info()
+--	local temp = {};
+--	temp.u3d_device_id = AppConfig.get_deviceuniqueidentifier();
+--	temp.ver_flag = AppConfig.get_package_version();
+--	temp.channel_id = AppConfig.get_platformchannel_id();
+--	temp.android_id = app.get_device_info_by_key("android_id");
+--	temp.idfa = app.get_device_info_by_key("idfa");
+--	temp.mac = app.get_device_info_by_key("mac");
+--	temp.package_id = AppConfig.get_package_id();
+--
+--	if temp.u3d_device_id == nil or temp.u3d_device_id == "" then
+--		temp.u3d_device_id = "0000";
+--	end
+--	if temp.ver_flag == nil or temp.ver_flag == "" then
+--		temp.ver_flag = "0000";
+--	end
+--	if temp.channel_id == nil or temp.channel_id == "" then
+--		temp.channel_id = "0000";
+--	end
+--	if temp.android_id == nil or temp.android_id == "" then
+--		temp.android_id = "";
+--	end
+--	if temp.idfa == nil or temp.idfa == "" then
+--		temp.idfa = "";
+--	end
+--	if temp.mac == nil or temp.mac == "" then
+--		temp.mac = "0000";
+--	else
+--		temp.mac = string.lower(temp.mac);
+--		temp.mac = string.gsub(temp.mac, ":","");
+--	end
+--	if temp.package_id == nil or temp.package_id == "" then
+--		temp.package_id = "0000";
+--	end
+--
+--	return temp;
+--
+--end
+--
+----[[公司支付信息
+---- pay_type://10-充值卡支付  11-支付宝支付  12-appstore支付   13-google支付  14-联运   15-易联支付
+---- ios_type:sandbox=1沙盒测试，sandbox=0正式环境
+---- ]]
+--function UserCenter.get_digisky_payinfo(pay_type,ios_sandbox_type,ios_identifier, ios_receiptData)
+--	local temp_table = {};
+--	temp_table.appId = AppConfig.get_app_id();
+--	temp_table.serverId = AppConfig.get_digisky_game_id();--[[服务器要更新这个值，以服务器值为准]]
+--	temp_table.accountId = UserCenter.get_accountid();
+--	temp_table.charId = AppConfig.get_child_ID();
+--	--[[//10-充值卡支付  11-支付宝支付  12-appstore支付   13-google支付  14-联运   15-易联支付]]
+--	temp_table.payType = pay_type;
+--	temp_table.secondType = 3;
+--
+--	temp_table.bill = "";
+--	--IOS
+--	if pay_type == 12 then
+--		local ios_temp = {};
+--		ios_temp.identifier = tostring(ios_identifier);--[[交易单据号]]
+--		ios_temp.receiptData = tostring(ios_receiptData);--[[交易收据]]
+--		ios_temp.sandbox = ios_sandbox_type;--[[sandbox=1沙盒测试，sandbox=0正式环境]]
+--		temp_table.bill = pjson.encode(ios_temp);
+--	end
+--
+--	temp_table.ext = "";
+--
+--	return temp_table;
+--end
+--
+----[[通过帐号名判断帐号类型：2手机 3邮箱 4昵称]]
+--function UserCenter.check_user_name (user_name)
+--
+--	if user_name == nil or user_name == "" then
+--		return 0;
+--	end
+--
+--	if PublicFunc.check_str_is_phone(user_name) then
+--		--[[手机]]
+--		return  2;--[[帐号的类型 -- 1 设备， 2： 手机 ， 3 邮箱 4. 第三方 5.昵称帐号 ]]
+--	end
+--
+--	if PublicFunc.check_str_is_email(user_name) then
+--		--[[邮箱]]
+--		return 3;--[[帐号的类型 -- 1 设备， 2： 手机 ， 3 邮箱 4. 第三方 5.昵称帐号 ]]
+--	end
+--
+--	--[[昵称帐号]]
+--	return 5;
+--end
+----[[通过帐号类型判断绑定类型]]
+--function UserCenter.get_guest_reg_type_num(user_name)
+--	local user_type = UserCenter.check_user_name (user_name);
+--	if user_type == 2 then --[[手机]]
+--		--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 8;
+--	end
+--	if user_type == 3 then --[[邮箱]]
+--		--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 7;
+--	end
+--	if user_type == 5 then --[[昵称]]
+--		--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 13;
+--	end
+--	return 0;
+--end
+----[[通过帐号类型判断注册类型]]
+--function UserCenter.get_reg_type_num(user_name)
+--	local user_type = UserCenter.check_user_name (user_name);
+--	if user_type == 2 then --[[手机]]
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 6;
+--	end
+--	if user_type == 3 then --[[邮箱]]
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 4;
+--	end
+--	if user_type == 5 then --[[昵称]]
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 9;
+--	end
+--	return 0;
+--end
+----[[通过帐号类型判断登录类型]]
+--function UserCenter.get_login_type_num(user_name)
+--	local user_type = UserCenter.check_user_name (user_name);
+--	if user_type == 2 then --[[手机]]
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 5;
+--	end
+--	if user_type == 3 then --[[邮箱]]
+--	--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 3;
+--	end
+--	if user_type == 5 then --[[昵称]]
+--		--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		return 10;
+--	end
+--	return 0;
+--end
+--
+----[[发送申请验证码]]
+--function UserCenter.seedcode_seed()
+--
+--	local table_info = UserCenter.get_need_info();
+--	table_info.type = 11;
+--	table_info.account = UserCenter.seend_code_tel;
+--	local json_info = pjson.encode(table_info);
+--
+--	if UserCenter.use_account_url ~= "" then
+--		app.log("seed_code ="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.seendcode_on_success",
+--			"UserCenter.seendcode_on_error",
+--			AppConfig.get_account_login_path(),
+--			json_info);
+--	end
+--end
+--
+----[[发送验证码回调]]
+--function UserCenter.seendcode_on_success(t)
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("UserCenter.seendcode_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--
+--	local temp_table = pjson.decode(t.result);
+--	app.log("seendcode_on_success="..table.tostring(temp_table));
+--
+--	--[[
+--public static final int ERROR_SMS = 84208036; //短信网站错误
+--public static final int ERROR_SMS_OUTTIME = 84208037; //短信过期
+--public static final int ERROR_SMS_SEED = 84208038; //申请验证失败
+---- ]]
+--	app.log("通知UI层 = seedcode"..temp_table.ret);
+--	Utility.CallFunc(UserCenter.seend_code_call_back,temp_table.ret);
+--end
+--function UserCenter.seendcode_on_error(t)
+--	Root.push_web_info("sys_071","申请验证码失败");
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	LoginModule.mark:Hide();
+--	app.log("UserCenter.seendcode_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "申请验证码失败("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.seedcode_seed},{str = "否", func = function() Utility.CallFunc(UserCenter.seend_code_call_back,-1); end}
+--	);
+--end
+--
+----[[申请邮箱绑定]]
+--function UserCenter.bindmail_seed()
+--
+--    local table_info = UserCenter.get_need_info();
+--    table_info.type = 20;
+--    table_info.mail = UserCenter.bind_mail_str;
+--    table_info.accountid = UserCenter.accountid;
+--    table_info.token = UserCenter.token;
+--    local json_info = pjson.encode(table_info);
+--
+--    if UserCenter.use_account_url ~= "" then
+--        app.log("seed_code ="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--        ghttp.post(
+--            UserCenter.use_account_url,
+--            "UserCenter.bindmail_on_success",
+--            "UserCenter.bindmail_on_error",
+--            AppConfig.get_account_login_path(),
+--            json_info);
+--    end
+--end
+--
+----[[申请邮箱验证回调]]
+--function UserCenter.bindmail_on_success(t)
+--    --	Root.push_web_info("sys_070","申请验证码成功");
+--
+--    --[[重置成功URL的重试次数]]
+--    UserCenter.reset_used_url_num();
+--
+--    app.log("UserCenter.bindmail_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--
+--    local temp_table = pjson.decode(t.result);
+--    app.log("bindmail_on_success="..table.tostring(temp_table));
+--
+--    app.log("通知UI层 = seedcode"..temp_table.ret);
+--    Utility.CallFunc(UserCenter.bind_mail_call_back,temp_table.ret);
+--end
+--function UserCenter.bindmail_on_error(t)
+----    Root.push_web_info("sys_071","申请验证码失败");
+--
+--    --[[刷新一个URL]]
+--    UserCenter.fileter_account_url();
+--
+--
+--    LoginModule.mark:Hide();
+--    app.log("UserCenter.bindmail_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--    SystemHintUI.SetAndShow(ESystemHintUIType.two, "申请绑定邮箱失败("..t.err_code..")，请重试！",
+--        {str = "是", func = UserCenter.bindmail_seed},{str = "否", func = function() Utility.CallFunc(UserCenter.bind_mail_call_back,-1); end}
+--    );
+--end
+--
+--function UserCenter.check_code_seed()
+----	Root.push_web_info("sys_071","验证验证码");
+--
+--	local table_info = UserCenter.get_need_info();
+--	table_info.type = 12;
+--	table_info.account = UserCenter.seend_code_tel;
+--	table_info.passwd = UserCenter.check_code_code;
+--	table_info.userdata = UserCenter.check_code_userdata;
+--	local json_info = pjson.encode(table_info);
+--
+--	if UserCenter.use_account_url ~= "" then
+--		app.log("seed_code ="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.checkcode_on_success",
+--			"UserCenter.checkcode_on_error",
+--			AppConfig.get_account_login_path(),
+--			json_info);
+--	end
+--end
+----[[CHECK验证码回调]]
+--function UserCenter.checkcode_on_success(t)
+--	Root.push_web_info("sys_074","验证验证码成功");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("UserCenter.checkcode_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--
+--	local temp_table = pjson.decode(t.result);
+--	app.log("checkcode_on_success="..table.tostring(temp_table));
+--
+--	--[[
+--	public static final int ERROR_SMS = 84208036; //短信网站错误
+--	public static final int ERROR_SMS_OUTTIME = 84208037; //短信过期
+--	public static final int ERROR_SMS_SEED = 84208038; //申请验证失败
+--	-- ]]
+--	app.log("通知UI层 = checkcode"..temp_table.ret);
+--	if temp_table.ret ~= 0 then
+--		Utility.CallFunc(UserCenter.check_code_call_back,temp_table.ret);
+--		return;
+--	end
+--
+--	--[[写入本地文件]]
+--	local user_info = LoginFile.get_info_by_name(temp_table.account);
+--	if user_info ~= nil then
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, temp_table.acc_type,user_info.server_id);
+--	else
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, temp_table.acc_type,0);
+--	end
+--	Utility.CallFunc(UserCenter.check_code_call_back,temp_table.ret);
+--end
+--function UserCenter.checkcode_on_error(t)
+--	Root.push_web_info("sys_075","验证证码失败");
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	LoginModule.mark:Hide();
+--	app.log("UserCenter.checkcode_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "验证证码失败("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.checkcode_seed},{str = "否", func = function() Utility.CallFunc(UserCenter.check_code_call_back,temp_table.ret); end}
+--	);
+--end
+--
+----[[游客登陆回调]]
+--function UserCenter.guest_on_success(t)
+--	Root.push_web_info("sys_027","官方游客登陆成功");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	UserCenter.is_login_useing = false;
+--	app.log("UserCenter.guest_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--
+--	local temp_table = pjson.decode(t.result);
+--	app.log("guest_on_success="..table.tostring(temp_table));
+--
+--	--[[如果已经绑定过帐号了，就显登录UI]]
+--	if tostring(temp_table.ret) == tostring(84208004) then
+--
+--		for k,v in pairs(temp_table.bind_accounts) do
+--			UserCenter.user_name = tostring(v.account);--[[得到服务器传过来的帐号]]
+--			break;
+--		end
+--
+--		app.log("此设备已经绑定帐号 通知UI层 = login"..temp_table.ret.." UserCenter.user_name="..UserCenter.user_name);
+--		LoginModule.LoginMsg("login",temp_table.ret);
+--		return;
+--	end
+--
+--	if temp_table.ret ~= 0 then
+--		app.log("游客登录失败 通知UI层 = login"..temp_table.ret);
+--		LoginModule.LoginMsg("login",temp_table.ret);
+--		return;
+--	end
+--
+--	UserCenter.user_name = temp_table.accountid;
+--	UserCenter.accountid = temp_table.accountid;
+--	UserCenter.token = temp_table.token;
+--	UserCenter.account_request_type = 1;
+--
+--	--[[写入本地文件]]
+--	local user_info = LoginFile.get_info_by_name(temp_table.accountid);
+--	if user_info ~= nil then
+--		LoginFile.update_user(UserCenter.user_name, "", 1,user_info.server_id);
+--	else
+--		LoginFile.update_user(UserCenter.user_name, "", 1,0);
+--	end
+--
+--	app.log("游客登录成功 通知UI层 = login"..temp_table.ret);
+--	LoginModule.LoginMsg("login",temp_table.ret);
+--end
+--function UserCenter.guest_on_error(t)
+--	Root.push_web_info("sys_028","官方游客登陆失败");
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	UserCenter.is_login_useing = false;
+--	LoginModule.mark:Hide();
+--	app.log("UserCenter.guest_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "游客登录网络异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.guest_login},{str = "否", func = Root.quit}
+--	);
+--end
+--
+----[[公司SDK登陆回调]]
+--function UserCenter.digisky_on_success(t)
+----	Root.push_web_info("sys_0277","官方SDK登陆成功");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	UserCenter.is_login_useing = false;
+--	app.log("UserCenter.digisky_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--
+--	local temp_table = pjson.decode(t.result);
+--	app.log("guest_on_success="..table.tostring(temp_table));
+--
+--	if temp_table.ret ~= 0 then
+--		app.log("公司SDK登录失败 通知UI层 = login"..temp_table.ret);
+--		LoginModule.LoginMsg("login",temp_table.ret);
+--		return;
+--	end
+--
+--	UserCenter.user_name = temp_table.accountid;
+--	UserCenter.accountid = temp_table.accountid;
+--	UserCenter.token = temp_table.token;
+--	UserCenter.account_request_type = 5;
+--
+--	--[[写入本地文件]]
+----	local user_info = LoginFile.get_info_by_name(temp_table.accountid);
+----	if user_info ~= nil then
+----		LoginFile.update_user(UserCenter.user_name, "", 1,user_info.server_id);
+----	else
+----		LoginFile.update_user(UserCenter.user_name, "", 1,0);
+----	end
+--
+--	--[[登陆成功后处理与通知UI]]
+--	UserCenter.on_login_ok();
+--end
+--function UserCenter.digisky_on_error(t)
+--	Root.push_web_info("sys_028","官方SDK登陆失败");
+--	--[[公司日志：游戏启动信息]]
+--	SystemLog.AppStartClose(28);
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	UserCenter.is_login_useing = false;
+--	LoginModule.mark:Hide();
+--	app.log("UserCenter.guest_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "登录异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.sdk_login},{str = "否", func = Root.quit}
+--	);
+--end
+--
+----[[升级帐号注册发送信息]]
+--function UserCenter.guest_register_send()
+--	--[[随机取一个登录URL]]
+--	if UserCenter.use_account_url ~= "" then
+--		UserCenter.is_regis_useing = true;
+--		local table_info = UserCenter.get_need_info();
+--		table_info.type = UserCenter.get_guest_reg_type_num(UserCenter.user_name);
+--		if table_info.type == 0 then
+--			app.log("table_info.type = 0, 帐号类型错误");
+--		end
+--		table_info.account = UserCenter.user_name;
+--		table_info.passwd = UserCenter.user_pwd;
+--		table_info.code = UserCenter.user_code;
+--		table_info.accountid = UserCenter.accountid;
+--		table_info.token = UserCenter.token;
+--		local json_info = pjson.encode(table_info);
+--
+--		app.log("guest_register_send="..UserCenter.use_account_url);
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.guest_register_on_success",
+--			"UserCenter.guest_register_on_error",
+--			AppConfig.get_account_login_path(),
+--			json_info);
+--	end
+--end
+----[[升级帐号注册回调]]
+--function UserCenter.guest_register_on_success(t)
+--	Root.push_web_info("sys_0260","官方游客升级为正式帐号成功回调");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("UserCenter.guest_register_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--	UserCenter.is_regis_useing = false;
+--	local temp_table = pjson.decode(t.result);
+--	app.log("guest_register_on_success="..table.tostring(temp_table));
+--
+--	--[[失败]]
+--	if temp_table.ret ~= 0 then
+--		app.log("升级正式帐号失败 通知UI层 = account_reg"..temp_table.ret);
+--		UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--		LoginModule.LoginMsg("account_reg",temp_table.ret);
+--		Root.push_web_info("sys_032","官方游客升级为正式帐号失败guest_register_on_success");
+--		return;
+--	end
+--
+--	Root.push_web_info("sys_031","官方游客升级为正式帐号成功");
+--
+--	--[[干掉游客帐号]]
+--	LoginFile.kill_guest();
+--
+--	--[[写入本地文件]]
+--	local user_info = LoginFile.get_info_by_name(temp_table.account);
+--	if user_info ~= nil then
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, UserCenter.user_type,user_info.server_id);
+--	else
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, UserCenter.user_type,0);
+--	end
+--
+--	UserCenter.bind_ret = temp_table.ret;
+--	UserCenter.bind_account_type = temp_table.account_type;
+--	UserCenter.bind_request_type = temp_table.request_type;
+--	UserCenter.bind_msg = temp_table.msg;
+--	UserCenter.bind_is_bind = temp_table.is_bind;
+--	UserCenter.bind_account = temp_table.account;
+--	UserCenter.bind_accountid = temp_table.accountid;
+--	UserCenter.bind_pswd_md5 = temp_table.pswd_md5;
+--
+--	app.log("升级正式帐号成功 通知UI层 = account_reg "..temp_table.ret);
+--	LoginModule.LoginMsg("account_reg",temp_table.ret);
+--end
+--function UserCenter.guest_register_on_error(t)
+--	Root.push_web_info("sys_032","官方游客升级为正式帐号失败guest_register_on_error");
+--
+--	UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	app.log("UserCenter.register_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	LoginModule.mark:Hide();
+--	UserCenter.is_regis_useing = false;
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "升级正式帐号网络异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.guest_register_send},{str = "否", func = Root.empty_func}
+--	);
+--end
+--
+----[[帐号注册发送信息]]
+--function UserCenter.register_send()
+--	Root.push_web_info("sys_033","官方帐号注册");
+--
+--	--[[登录URL]]
+--	if UserCenter.use_account_url ~= "" then
+--		UserCenter.is_regis_useing = true;
+--		local table_info = UserCenter.get_need_info();
+--		--[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定 13昵称绑定 9昵称注册 10昵称登录 ]]
+--		table_info.type = UserCenter.get_reg_type_num(UserCenter.user_name);
+--		if table_info.type == 0 then
+--			app.log("table_info.type = 0, 帐号类型错误");
+--		end
+--		table_info.account = UserCenter.user_name;
+--		table_info.passwd = UserCenter.user_pwd;
+--		local json_info = pjson.encode(table_info);
+--
+--		app.log("register_send="..UserCenter.use_account_url);
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.register_on_success",
+--			"UserCenter.register_on_error",
+--			AppConfig.get_account_login_path(),
+--			json_info);
+--	end
+--end
+----[[帐号注册回调]]
+--function UserCenter.register_on_success(t)
+--	app.log("register_on_success");
+--
+--	Root.push_web_info("sys_034","官方帐号注册回调");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("UserCenter.register_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--	UserCenter.is_regis_useing = false;
+--	local temp_table = pjson.decode(t.result);
+--	app.log("register_on_success="..table.tostring(temp_table));
+--
+--	if temp_table.ret ~= 0 then
+--		app.log("注册失败 通知UI层 = account_reg "..temp_table.ret);
+--		UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--		LoginModule.LoginMsg("account_reg",temp_table.ret);
+--		Root.push_web_info("sys_036","官方帐号注册失败");
+--
+--		return;
+--	end
+--
+--	Root.push_web_info("sys_035","官方帐号注册成功");
+--
+--	UserCenter.account_request_type = UserCenter.user_type;
+--
+--	--[[写入本地文件]]
+--	local user_info = LoginFile.get_info_by_name(temp_table.account);
+--	if user_info ~= nil then
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, UserCenter.user_type,user_info.server_id);
+--	else
+--		LoginFile.update_user(temp_table.account, temp_table.pswd_md5, UserCenter.user_type,0);
+--	end
+--
+--	UserCenter.reg_ret = temp_table.ret;
+--	UserCenter.reg_token = temp_table.token;
+--	UserCenter.reg_msg = temp_table.msg;
+--	UserCenter.reg_accout = temp_table.account;
+--	UserCenter.reg_accoutid = temp_table.accountid;
+--	UserCenter.reg_pswd_md5 = temp_table.pswd_md5;
+--	UserCenter.reg_account_type = UserCenter.user_type;
+--
+--	app.log("注册成功 通知UI层 = account_reg="..temp_table.account);
+--	LoginModule.LoginMsg("account_reg",temp_table.ret);
+--end
+--function UserCenter.register_on_error(t)
+--	Root.push_web_info("sys_036","官方帐号注册失败");
+--
+--	UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	app.log("UserCenter.register_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	LoginModule.mark:Hide();
+--	UserCenter.is_regis_useing = false;
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "注册帐号网络异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.register_send},{str = "否", func = Root.quit}
+--	);
+--end
+--
+--
+----[[帐号登录发送]]
+--function UserCenter.login_send()
+--	app.log("login_send"..UserCenter.use_account_url);
+--	Root.push_web_info("sys_035","官方帐号登陆login_send");
+--
+--	--[[取一个登录URL]]
+--	if UserCenter.use_account_url ~= "" then
+--		UserCenter.is_login_useing = true;
+--		local table_info = UserCenter.get_need_info();
+--		table_info.type = UserCenter.get_login_type_num(UserCenter.user_name);
+--		if table_info.type == 0 then
+--			app.log("table_info.type = 0, 帐号类型错误");
+--		end
+--		table_info.account = UserCenter.user_name;
+--		table_info.passwd = UserCenter.user_pwd;
+--		local json_info = pjson.encode(table_info);
+--
+--		app.log("UserCenter.login_send="..UserCenter.use_account_url..AppConfig.get_account_login_path());
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.login_on_success",
+--			"UserCenter.login_on_error",
+--			AppConfig.get_account_login_path(),
+--			json_info);
+--	end
+--end
+----[[帐号登录回调]]
+--function UserCenter.login_on_success(t)
+--	Root.push_web_info("sys_0250","官方帐号登陆回调login_on_success");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("UserCenter.login_on_success path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--	UserCenter.is_login_useing = false;
+--	local temp_table = pjson.decode(t.result);
+--	app.log("login_on_success="..table.tostring(temp_table));
+--
+--	--[[登录失败]]
+--	if temp_table.ret ~= 0 then
+--		app.log("登录失败 通知UI层 = login "..temp_table.ret);
+--		UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--		LoginModule.LoginMsg("login",temp_table.ret);
+--		Root.push_web_info("sys_030","官方帐号登陆失败login_on_success");
+--
+--		return;
+--	end
+--
+--	Root.push_web_info("sys_029","官方帐号登陆成功");
+--
+--
+--	UserCenter.user_name = temp_table.account;
+--	UserCenter.accountid = temp_table.accountid;
+--	UserCenter.token = temp_table.token;
+--	UserCenter.account_request_type = temp_table.account_type;
+--	UserCenter.login_times = temp_table.login_times;
+--	UserCenter.bind_accounts = temp_table.bind_accounts;
+--
+--	--[[写入本地文件]]
+--	local user_info = LoginFile.get_info_by_name(UserCenter.user_name);
+--	if user_info ~= nil then
+--		LoginFile.update_user(UserCenter.user_name, UserCenter.user_pwd, UserCenter.user_type,user_info.server_id);
+--	else
+--		LoginFile.update_user(UserCenter.user_name, UserCenter.user_pwd, UserCenter.user_type,0);
+--	end
+--
+--	--[[登录成功]]
+--	app.log("登录成功 通知UI层 = login "..temp_table.ret);
+--	LoginModule.LoginMsg("login",temp_table.ret);
+--end
+--function UserCenter.login_on_error(t)
+--	Root.push_web_info("sys_030","官方帐号登陆失败login_on_error");
+--	UserCenter.local_info_temp(false);--[[还原帐号信息]]
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	app.log("UserCenter.register_on_error  path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	if LoginModule.mark then
+--		LoginModule.mark:Hide();
+--	end
+--	UserCenter.is_login_useing = false;
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "帐号登陆网络异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.login_send},{str = "否", func = Root.quit}
+--	);
+--end
+--
+--
+----[[得到服务器例表 必需登录成功后]]
+--function UserCenter.get_game_list()
+--	Root.push_web_info("sys_037","得到服务器例表开始");
+--
+--	app.log("get_game_list");
+--	if UserCenter.is_game_list_useing then
+--		app.log("UserCenter.is_game_list_useing is useing");
+--		return;
+--	end;
+--
+--	if UserCenter.use_account_url ~= "" then
+--
+--		UserCenter.is_game_list_useing = true;
+--
+--		local table_info = UserCenter.get_need_info();
+--		table_info.accountid = UserCenter.get_accountid();
+--		table_info.token = UserCenter.get_accessToken();
+--		local table_json = UserCenter.pack(table_info);
+--		app.log("table_json="..tostring(table_json));
+--
+--		app.log("get_game_list url ="..UserCenter.use_account_url..AppConfig.get_account_server_list_path());
+--		ghttp.post(
+--			UserCenter.use_account_url,
+--			"UserCenter.on_success_server_list",
+--			"UserCenter.on_error_server_list",
+--			AppConfig.get_account_server_list_path(),
+--			table_json);
+--	end
+--
+--end
+--
+----[[得到服务器例表的回调]]
+--function UserCenter.on_success_server_list(t)
+--	Root.push_web_info("sys_038","得到服务器例表回调成功");
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	app.log("on_success_server_list path="..t.path..".fsize="..t.fsize..".result="..t.result);
+--	UserCenter.is_game_list_useing = false;
+--
+--	local temp_table = pjson.decode(t.result);
+--	app.log("on_success_server_list="..table.tostring(temp_table));
+--
+--	systems_data.init_game_server_list();
+--
+--	systems_data.set_game_server_notice(temp_table.notice_url);
+--	systems_data.set_game_server_channel_id(temp_table.channel_id);
+--	systems_data.set_game_server_ret(temp_table.ret);
+--	systems_data.set_game_server_list(temp_table.server_list);
+--	systems_data.set_played_servers(temp_table.played_servers);
+--	systems_data.set_played_server_info(temp_table.played_server_info);
+--
+--	app.log("得到服务器例表成功 通知UI层 UserCenter.on_success_server_list=== "..temp_table.ret);
+--	LoginModule.LoginMsg("get_server_list",temp_table.ret);
+--end
+--
+----[[得到服务器例表的回调]]
+--function UserCenter.on_error_server_list(t)
+--	Root.push_web_info("sys_039","得到服务器例表回调失败");
+--
+--	--[[刷新一个URL]]
+--	UserCenter.fileter_account_url();
+--
+--	UserCenter.is_game_list_useing = false;
+--	LoginModule.mark:Hide();
+--	app.log("on_error_server_list===path="..t.path..".err_code="..t.err_code..".err_str="..t.err_str);
+--	SystemHintUI.SetAndShow(ESystemHintUIType.two, "获取服务器例表网络异常("..t.err_code..")，请重试！",
+--		{str = "是", func = UserCenter.get_game_list}, {str = "否", func = Root.quit});
+--end
+--
+----[[腾讯私有：充值上次]]
+--function UserCenter.r_pay_id_call_back()
+--	--[[自定义JSON串]]
+--	local table_info = {};
+--	table_info.order_id = UserCenter.buy_order_id;
+--	table_info.product_id = UserCenter.product_id;
+--	local json_str = pjson.encode(table_info);
+--	--[[第三方支付]]
+--	UserCenter.payment(UserCenter.buy_price,UserCenter.product_id,UserCenter.buy_name,systems_data.get_enter_server_id(),Root.get_player_id(),Root.get_account_id(),json_str);
+--end
+--
+----[[支付ID回调]]
+--function UserCenter.pay_id_call_back(buy_order_id)
+--	app.log("gc_push_pay_order id ="..buy_order_id);
+--	if buy_order_id == nil or buy_order_id == "" then return end;
+--	UserCenter.buy_order_id = buy_order_id;
+--
+--	--[[官网 自己的支付，并且不使用公司的SDK]]
+--	if AppConfig.get_check_official() and not AppConfig.get_check_digisky() then
+--		app.log("官网");
+--		if AppConfig.get_check_appstore()  then
+--			app.log("官网IOS="..UserCenter.buy_index);
+--			--[[IOS]]
+--			iap.buy(UserCenter.buy_index);
+--		else
+--			app.log("官网android");
+--			--[[安卓官网支付宝支付]]
+--			UserCenter.alipay_pay(UserCenter.buy_price, UserCenter.buy_name, UserCenter.buy_discount, UserCenter.buy_order_id, UserCenter.buy_call_back);
+--		end
+--	else
+--		--[[腾讯：充值后就扣完，所以不需要特别处理了]]
+----		if AppConfig.get_check_tencent() then
+----			app.log("QQ PAY="..UserCenter.buy_price.."="..UserCenter.buy_order_id);
+----			--[[腾讯扣款 amt：金额，不能为0, order_id：自定义订单号]]
+----			UserCenter.tencent_pay(UserCenter.buy_price,UserCenter.buy_order_id);
+----		else
+--			--[[自定义JSON串]]
+--			local table_info = {};
+--			table_info.order_id = UserCenter.buy_order_id;--[[老SDK]]
+--			table_info.product_id = UserCenter.product_id;--[[老SDK]]
+--
+--			---------------------新的SDK-------------------------
+--			if AppConfig.get_check_tencent() then--[[腾讯处理微信与QQ]]
+--				table_info.paytype = UserCenter.login_str();
+--			else
+--				table_info.paytype = "";
+--			end
+--
+--			table_info.money = tonumber(UserCenter.buy_price / 100); --[[公司SDK单位：元]]
+--			table_info.money = 1; --[[公司SDK单位：元]]
+--			table_info.productId = UserCenter.product_id;--[[]]
+--			table_info.productName = UserCenter.buy_name;--[[]]
+--			table_info.productDesc = UserCenter.buy_name;--[[]]
+--			table_info.rate = tonumber(1);--[[转换比，像QQ是1:10]]
+--			table_info.roleId = Root.get_player_id();--[[]]
+--			table_info.roleName = Root.get_player_name();--[[]]
+--			table_info.roleLevel = tostring(g_dataCenter.player.level);--[[]]
+--			table_info.zoneId = systems_data.get_enter_server_id();--[[]]
+--
+--			local server_info = systems_data.get_game_server_info_id(systems_data.get_enter_server_id());
+--			if server_info.id ~= nil then
+--				table_info.zoneName = server_info.id;--[[]]
+--			else
+--				table_info.zoneName = "null";--[[]]
+--			end
+--
+--			table_info.balance = 0;--[[QQ用的余额]]
+--			table_info.partyName = tostring(g_dataCenter.player.groupid);--[[]]
+--			table_info.vipLevel = tostring(g_dataCenter.player.level);--[[]]
+--			table_info.orderId = UserCenter.buy_order_id;--[[]]
+--			table_info.orderChannel = AppConfig.get_package_id();--[[]]
+--
+--			local json_str = pjson.encode(table_info);
+--			--[[第三方支付]]
+--			UserCenter.payment(UserCenter.buy_price,UserCenter.product_id,UserCenter.buy_name,systems_data.get_enter_server_id(),Root.get_player_id(),Root.get_account_id(),json_str);
+----		end
+--	end
+--end
+--
+----[[官网支付宝  不要连续点击，应该是保证至少2秒的点击间隔  而全且点击后应该全屏锁，等回调再解开]]
+--function UserCenter.alipay_pay(money, name, desc, order_id, call_back)
+--	app.log(string.format("UserCenter.alipay_pay,money=%s,name=%s,order_id=%s,call_back=%s",tostring(money),tostring(name),tostring(desc),tostring(order_id),tostring(call_back)));
+--	--以下如果存在中文，请使用utf-8格式编码
+--	local money = money;
+--	money = money / 100;--[[分转元]]
+--	local name = tostring(name);
+--	local desc = tostring(desc);
+--	--订单号：从服务器处获取，需要保证唯一，否则将无法支付或支付后无法到帐
+--	--注意：被用户取消支付的订单号在一定周期内不能再次使用，表现为"订单号1未完成支付时用户取消支付，再使用订单号1支付时会返回支付错误。"
+--	local private_key = "MIICeQIBADANBgkqhkiG9w0BAQEFAASCAmMwggJfAgEAAoGBALI9csz77qkibbiEYtRF0FsKZLrOdQCi4YAzz0IHIMNJ7cZFyVsSJmKDVIQNfiXB1sQtQLTCLez1jdFNIQ6fF3kxBUxScLvF222Y+2TloysqIBlB6kVt8dk+0L13fHlVSHplnSCrhCyCaPD3Hlbd1uTb1MpfNoPQBHS66vjGHH3DAgMBAAECgYEApl5c7aCqYAzWxUgsx15y4MeOxh83buSZ/4RcjJECr8Ytvsgc7ni+g216UdgWSz/nKy3iG9az7140hYyssm0lBlc1RKy5nDsN6esr3Ezyn7MOPA1kjAZmG97v291HLZMsdXuroPV4O6m5hAMyXU3rRSoZ1S4M8kC4QvJTM6Vkn8ECQQDZ6DYa1JJMHeo7NAbf5bNs8u/ii27ZUnkT9XtPO6j/rTeQHZrqGq2pO3z7f5HAB3sCO1PwEIG5zkLqJIAl+b9bAkEA0WYOOVutP2B0AvEZ/SyEHosGVoM9t9nFWrus9+m41rpYCujptB2kq/4BaduZk0lzGe8sPo+eF/m/vZDcyxavuQJBANbI8nujx8hLPFO6xoPuz9q14wm0UkDX8AxiTXcd4UiTHk9pPwc94KsMvfbQGYPkW7UpcWURgCz7SC2uaLoF4D0CQQC/Uha283t0h4UX1wBe4JiKa43L57exTmjSQN2F2edHUhT1St+U8OyvNLJH7RwBhb+Dt5JeSswwrcExy7TgXgcJAkEAxAuSLKNDgf8IRbQmET/LqWC1PTopCR849Zq29bv6UtSGDaN84NK+43SYltfyA3PnehI3c3bRu1s2akrGBPiD4A==";
+--	local partner = "2088801184219754";
+--	local seller_id = "wangying@xindong100.com";
+--	--[[只能用外网地址，SDK需要回调]]
+----	local notify_url = UserCenter.use_account_url.."pay_call_back_alipay/pay_notify.do";--[[正式地址]]
+--	local notify_url = UserCenter.use_account_url..AppConfig.get_account_server_pay_path();--[[正式地址]]
+--
+--	app.log("notify_url="..notify_url);
+--
+--	local t = {
+--		private_key = private_key,
+--		partner = partner,
+--		seller_id = seller_id,
+--		total_fee = string.format("%.2f", money),
+--		body = desc,
+--		service = "mobile.securitypay.pay",
+--		_input_charset = "utf-8",
+--		out_trade_no = order_id,
+--		subject = name,
+--		payment_type = "1",
+--
+--		notify_url = notify_url,
+--		app_id = AppConfig.get_app_id(),
+--		appenv = nil,
+--		it_b_pay = nil, --"30m",
+--		show_url = nil, --"m.alipay.com",
+--	};
+--	alipay.pay(pjson.encode(t), "UserCenter.alipay_send_call_back");
+--end
+------[[官网支付宝查看帐号是否存在]]
+----function UserCenter.alipay_check_account_exist()
+----	return alipay.check_account_exist();
+----end
+------[[官网支付宝得到版本号]]
+----function UserCenter.alipay_get_version()
+----	return alipay.get_version();
+----end
+----[[官网支付宝支付回调]]
+--function UserCenter.alipay_send_call_back(t)
+--	app.log("官网支付宝支付回调");
+--	UserCenter.buy_is_useing = false;
+--	t = pjson.decode(t);
+--	local result_status_info = {
+--		["9000"] = "支付成功",
+--		["8000"] = "正在处理中",
+--		["4000"] = "订单支付失败",
+--		["6001"] = "用户中途取消",
+--		["6002"] = "网络连接出错"
+--	};
+--	app.log("status: " .. tostring(t.ResultStatus) ..",".. tostring(t.status) );
+--	local status = t.ResultStatus or t.status;
+--	app.log("result_status_info: " .. tostring(result_status_info[status]) );
+--	app.log("result: " .. tostring(t.result));
+--	app.log("memo:   " .. tostring(t.memo));
+--
+--	if UserCenter.buy_call_back then
+--		local call_back = UserCenter.buy_call_back
+--		if call_back == nil then
+--			app.log("UserCenter.buy_call_back is null!");
+--			return;
+--		end
+--
+--		if type(call_back) == "string" then
+--			call_back = _G[call_back]
+--		end
+--
+--		if status == "9000" then
+--			call_back(true);
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one, tostring(result_status_info[status]),
+--				{str = "确定", func = function() call_back(true,UserCenter.order_id) end}
+--			);
+--			do return end;
+--		elseif status == "8000" or status == "4000" or status == "6002" then
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one, tostring(result_status_info[status]..",避免重复支付，请稍后重试！"),
+--				{str = "确定", func = function() call_back(false,UserCenter.order_id) end}
+--			);
+--		end
+--		call_back(false);
+--	end
+--end
+--
+----------------------------------------------------第三方SDK atr--------------------------------------------------
+----[[第三方JSON串上传]]
+--function UserCenter.submit_extend_info(table_info)
+--	app.log("user center JSON"..table.tostring(table_info));
+--	local json_info = pjson.encode(table_info);
+--	user_center.submit_extend_info(json_info);
+--end
+--
+----[[SDK登录回调
+---- result: 0成功（有可能不是0为成功） 其他全是错的 -1登录失败 -2用户自己关闭 其他情况SDK自己管理
+---- msg
+---- accountid
+---- accessToken
+---- exten_val传回的扩展数据，Json String 应用宝会用到
+---- ]]
+--function UserCenter.on_login(state, msg, accountid, token, exten_val)
+--	app.log(string.format("UserCenter.on_logined ok, state=%d, msg=%s, accountid=%s, token=%s, exten_val=%s",state, msg, accountid, token, exten_val));
+--
+--	--[[腾讯处理:点击释放]]
+--	if AppConfig.get_check_tencent() then
+--		if LoginTencentLogin then
+--			LoginTencentLogin.set_is_check(false);
+--		end
+--	end
+--
+--	UserCenter.is_sdk_useing = false;
+--
+--	--[[先显示进入游戏界面，腾讯单独处理]]
+--	LoginModule.Show(LoginModule.eEnterGame);
+--
+--	if state == "-1" then
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"登录失败，请重新登录！",
+--				{str = "确认", func = Root.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		else
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.two,"登录失败，请重新登录！",
+--				{str = "是", func = UserCenter.sdk_login}, {str = "否", func = Root.quit});
+--		end
+--	elseif state == "-2" then
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"未获得到帐号信息，请重新登录！",
+--				{str = "确认", func = Root.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		else
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.two,"未获得到帐号信息，请重新登录！",
+--				{str = "是", func = UserCenter.sdk_login}, {str = "否", func = Root.quit});
+--		end
+--	elseif state == "4" then
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"微信未安装或版本太低！",
+--				{str = "确认", func = Root.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		end
+--	elseif state == "5" then
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"用户取消授权！",
+--				{str = "确认", func = Root.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		end
+--	elseif state == "6" then
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"需要重新登录！",
+--				{str = "确认", func = UserCenter.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		end
+--	elseif state == "0" then
+--		--[[标示=成功]]
+--		if accountid == nil or accountid == "" or token == nil or token == "" then
+--			app.log("token is nill!!!");
+--			--[[腾讯处理]]
+--			if AppConfig.get_check_tencent() then
+--				--[[登录失败]]
+--				SystemHintUI.SetAndShow(ESystemHintUIType.one,"未知信息错误，请重新登录！",
+--					{str = "确认", func = Root.empty_func});
+--				LoginModule.Show(LoginModule.eTencentLogin);
+--			else
+--				--[[登录失败]]
+--				SystemHintUI.SetAndShow(ESystemHintUIType.two,"未知信息错误，请重新登录！",
+--					{str = "是", func = UserCenter.sdk_login}, {str = "否", func = Root.quit});
+--			end
+--		else
+--			app.log("accountid="..tostring(accountid)..">>>>".."token="..tostring(token));
+--			app.log("exten_val="..tostring(exten_val));
+--			--[[成功]]
+--			UserCenter.user_name = accountid;
+--			UserCenter.accountid = accountid;
+--			UserCenter.token = token;
+--			UserCenter.exten_val = exten_val;
+--			UserCenter.account_request_type = 4;--[[帐号的类型 -- 1 设备， 2： 手机 ， 3 邮箱 4. 第三方 5.昵称帐号 ]]
+--
+--			--[[公司平台SDK需要通过WEB验证流程]]
+--			if AppConfig.get_check_digisky() then
+--				Socket.user_center_ConnectGameServer();--[[公司帐号流程]]
+----				UserCenter.digisky_login();--[[自己WEB流程]]
+--				return;
+--			else
+--				--[[登陆成功后处理与通知UI]]
+--				UserCenter.on_login_ok();
+--			end
+--
+--		end
+--	else
+--		--[[腾讯处理]]
+--		if AppConfig.get_check_tencent() then
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one,"登录异常ID："..tostring(state).."，请重新登录！",
+--				{str = "确认", func = Root.empty_func});
+--			LoginModule.Show(LoginModule.eTencentLogin);
+--		else
+--			--[[登录失败]]
+--			SystemHintUI.SetAndShow(ESystemHintUIType.two,"登录异常ID："..tostring(state).."，请重新登录！",
+--				{str = "是", func = UserCenter.sdk_login}, {str = "否", func = Root.quit});
+--		end
+--	end
+--end
+--
+----[[登陆成功后处理与通知UI]]
+--function UserCenter.on_login_ok()
+--	--[[腾讯处理]]
+--	if AppConfig.get_check_tencent() then
+--		LoginFileTencent.set_txt(UserCenter.get_login_str());
+--	end
+--
+--	--[[公司平台SDK需要通过WEB验证流程]]
+--	if AppConfig.get_check_digisky() then
+--		--[[客户中心初始化]]
+--		local temp_player_json = {};
+--		temp_player_json.playerid = tostring(UserCenter.accountid);
+--
+--		local temp_json = {};
+--		temp_json.type = "addInfo";
+--		temp_json.ext = pjson.encode(temp_player_json);
+--
+--		user_center.submit_extend_info(pjson.encode(temp_json));
+--		--user_center.add_info("playerid",tostring(accountid));
+--	end
+--
+--	--[[回调游戏登录]]
+--	--GameBegin.usercenter_login_callback();
+--
+--	--[[重置成功URL的重试次数]]
+--	UserCenter.reset_used_url_num();
+--
+--	--[[登录成功]]
+--	app.log("登录成功 通知UI层 = login "..0);
+--	LoginModule.LoginMsg("login",0);
+--end
+--
+----[[登出回调]]
+--function UserCenter.on_logout()
+--	--[[腾讯处理:点击释放]]
+--	if AppConfig.get_check_tencent() then
+--		if LoginTencentLogin then
+--			LoginTencentLogin.set_is_check(false);
+--		end
+--	end
+--
+--	UserCenter.is_sdk_useing = false;
+--	app.log("UserCenter.on_logouted");
+--	GameBegin.usercenter_logout_callback();
+--end
+--
+----[[腾讯查询余额]]
+--function UserCenter.cneent_balance(is_loop)
+--	--[[腾讯处理]]
+--	if AppConfig.get_check_tencent() and UserCenter.exten_val ~= "" then
+--		--[[传回给ACCOUNT exten_val，用于支付的关键数据]]
+--		--[[//腾讯SDK信息]]
+--		--[[
+--		 struct tencent_sdk_info
+--			{
+--				string type;		//类型："qq","wx"
+--				string openId;		//从手Q登录态或微信登录态中获取的openid的值
+--				string openkey;		//从手Q登录态中获取的pay_token的值或微信登录态中获取的access_token 的值
+--				string pf;			//平台来源，登录获取的pf值
+--				string pfKey;		//登录获取的pfkey值
+--				string zoneid;		//账户分区ID_角色ID，客户端只传角色ID，服务器加上分区ID
+--		};
+--		]]
+--		local temp_table = UserCenter.unpack(UserCenter.exten_val);
+--
+--
+--		--[[判断参数是不是checklogin]]
+--		local login_type = "";
+--		local x,y = string.find(UserCenter.login_str,"checkLogin");
+--		if x ~= nil or y ~= nil then
+--			login_type = string.sub(UserCenter.login_str,y+1,string.len(UserCenter.login_str));
+--		else
+--			login_type = UserCenter.login_str;
+--		end
+--
+--		if is_loop then
+--			app.log("1腾讯查询余额="..UserCenter.login_str);
+--			msg_store.cg_tencent_balance(1,login_type,temp_table.openId,temp_table.payToken,temp_table.pf,temp_table.pfKey);
+--		else
+--			app.log("0腾讯查询余额="..UserCenter.login_str);
+--			msg_store.cg_tencent_balance(0,login_type,temp_table.openId,temp_table.payToken,temp_table.pf,temp_table.pfKey);
+--		end
+--
+--	end
+--end
+--
+----[[腾讯扣款 amt：金额，不能为O,order_id：自定义订单号]]
+--function UserCenter.tencent_pay(amt,order_id)
+----	if amt == nil or amt == 0 then return end;
+----	if order_id == nil then return end;
+----	--[[腾讯处理]]
+----	if AppConfig.get_check_tencent() and UserCenter.exten_val ~= "" then
+----		--[[传回给ACCOUNT exten_val，用于支付的关键数据]]
+----		--[[//腾讯SDK信息]]
+----		--[[
+----		 struct tencent_sdk_info
+----			{
+----				string type;		//类型："qq","wx"
+----				string openId;		//从手Q登录态或微信登录态中获取的openid的值
+----				string openkey;		//从手Q登录态中获取的pay_token的值或微信登录态中获取的access_token 的值
+----				string pf;			//平台来源，登录获取的pf值
+----				string pfKey;		//登录获取的pfkey值
+----				string zoneid;		//账户分区ID_角色ID，客户端只传角色ID，服务器加上分区ID 服务器组装
+----		};
+----		]]
+----
+----		app.log("msg_store.cg_tencent_pay");
+----
+----		local temp_table = UserCenter.unpack(UserCenter.exten_val);
+----		msg_store.cg_tencent_pay(amt,order_id,UserCenter.login_str,temp_table.openId,temp_table.payToken,temp_table.pf,temp_table.pfKey);
+----	end
+--end
+--
+----[[第三方支付购买
+---- money int 钱
+---- product_id 物品ID
+---- product_name 物品名
+---- serverid 服务器ID
+---- charid 角色ID（如果没有就传一个固定值）
+---- accountid 帐号ID = player id
+---- json_str 自定义JSON，主要是用于传名为order_id的定单号，因为平台是JAVA生成，而现在是自己生成
+---- ]]
+--function UserCenter.payment(money,product_id,product_name,serverid,charid,accountid,json_str)
+--	app.log(string.format("UserCenter.payment money=%s,product_id=%s,product_name=%s,serverid=%s,charid=%s,accountid=%s,json_str=%s",tostring(money),tostring(product_id),tostring(product_name),tostring(serverid),tostring(charid),tostring(accountid),tostring(json_str)));
+--	if money == nil or product_id == nil or product_name == nil or serverid == nil or charid == nil or accountid == nil or json_str == nil then
+--		app.log("UserCenter.payment have something is nil!");
+--		return;
+--	end
+----	money = 1;
+--	user_center.payment(money,tostring(product_id),tostring(product_name),tostring(serverid),tostring(charid),tostring(accountid),tostring(json_str));
+--end
+--
+----[[第三方支付回调
+---- state
+---- msg
+---- money
+---- orderid
+---- ]]
+--function UserCenter.on_payment(state,msg,money,orderid)
+--	UserCenter.buy_is_useing = false;
+--	app.log(string.format("on_payment,state=%s, money=%s, orderid=%s, msg=%s",tostring(state), tostring(msg), tostring(money), tostring(orderid)));
+--
+--	if UserCenter.buy_call_back then
+--		local call_back = UserCenter.buy_call_back
+--		if type(call_back) == "string" then
+--			call_back = _G[call_back]
+--		end
+--
+--		if state == "0" then
+----			SystemHintUI.SetAndShow(ESystemHintUIType.one, "支付成功",
+----				{str = "确定", func = function() call_back(true,UserCenter.order_id) end}
+----			);
+--			call_back("0");
+--
+--			--[[腾讯查询余额]]
+--			UserCenter.cneent_balance(true);
+--		else
+--			--[[UC只有成功才回调，因为退出也会回调，所以取消]]
+--			if AppConfig.get_check_uc() then
+--				call_back("-2");
+--			else
+--				call_back("-1");
+--			end
+--		end
+--	end
+--
+--end
+--
+----[[腾讯SDK支付回调]]
+--function UserCenter.tencent_pay_call_back(state,msg,money,orderid)
+--	if UserCenter.buy_call_back then
+--		local call_back = UserCenter.buy_call_back
+--		if type(call_back) == "string" then
+--			call_back = _G[call_back]
+--		end
+--
+--		if state == "0" then
+--			SystemHintUI.SetAndShow(ESystemHintUIType.one, "支付成功，请等待到帐，没有到帐前请不要重复充值！\n如果一直没有到帐，请联系GM处理！",
+--				{str = "确定", func = function() call_back(true,UserCenter.order_id) end}
+--			);
+--			call_back(true);
+--		else
+--			call_back(false);
+--		end
+--	end
+--end
+--
+----------------------------------------------------第三方SDK end--------------------------------------------------
+--
+----[[传输数据封装]]
+--function UserCenter.pack(table_info)
+--	if type(table_info) == "table" then
+--		return pjson.encode(table_info);
+--	else
+--		return nil;
+--	end
+--end
+----[[传输数据解包]]
+--function UserCenter.unpack(json_str)
+--	if json_str == nil or json_str == "" then return nil end;
+--	return pjson.decode(json_str);
+--end
+--
+----[[实名认证]]
+--function UserCenter.get_realname_auth(check)
+--	local is_realname_auth = g_dataCenter.player:GetIsRealNameAuth()
+--	if is_realname_auth == -1 or  true == check then
+--		--请求数据
+--		local json_data = {
+--		      cmdId  = 1001,
+--		      appId = AppConfig.get_app_id(),
+--		      openid = Root.get_account_id(),
+--		      accountType = 0,
+--		}
+--		ghttp.post_body_data(AppConfig.get_realname_auth_cmd_url(),pjson.encode(json_data),"UserCenter.on_get_realname_auth_error","UserCenter.on_get_realname_auth_succ")
+--	elseif is_realname_auth == 0 then
+--		--已认证
+--	elseif is_realname_auth == 1 then
+--		--未认证
+--	end
+--end
+--
+--function UserCenter.on_get_realname_auth_error(error_str)
+--	app.log("on_get_realname_auth_error:"..error_str)
+--end
+--
+--function UserCenter.on_get_realname_auth_succ(result)
+--	--[[{"code":0,"msg":"success.","result":1}
+--	code：0-操作成功  其它失败
+--	msg：错误说明
+--	result：0-已实名认证  1-未实名认证]]
+--	local result_json = pjson.decode(result)
+--	app.log("on_get_realname_auth_succ:"..table.tostring(result_json))
+--	if result_json.code == 0 then
+--		g_dataCenter.player:SetIsRealNameAuth(result_json.result)
+--		--通知UI
+--		PublicFunc.msg_dispatch(player.gc_check_realname_auth)
+--	else
+--		app.log("获取实名认证信息失败.."..tostring(result_json.code))
+--	end
+--end

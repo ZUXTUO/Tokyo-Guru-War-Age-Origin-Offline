@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <SurfaceView android:id="@id/surfaceview" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <Button android:id="@id/cancel" android:layout_width="60.0dip" android:layout_height="wrap_content" android:text="取消" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+    <Button android:id="@id/queren" android:layout_width="60.0dip" android:layout_height="wrap_content" android:text="完成" android:layout_toLeftOf="@id/cancel" android:layout_alignParentBottom="true" />
+    <Button android:id="@id/bofang_bt" android:layout_width="60.0dip" android:layout_height="wrap_content" android:text="播放" android:layout_toLeftOf="@id/queren" android:layout_alignParentBottom="true" />
+    <Button android:id="@id/luXiang_bt" android:layout_width="60.0dip" android:layout_height="wrap_content" android:text="录像" android:layout_toLeftOf="@id/bofang_bt" android:layout_alignParentBottom="true" />
+    <TextView android:textColor="#ffff0000" android:id="@id/time" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10.0dip" android:text="1秒" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+</RelativeLayout>
