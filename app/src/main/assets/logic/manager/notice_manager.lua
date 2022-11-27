@@ -10,38 +10,49 @@ NoticeManager = {
 -- 内部可以用this指向NoticeManager，简化代码书写
 local this = NoticeManager;
 
+--有新手教程
+function NoticeManager.GetTeach()
+	GameInfoForThis.IsTeach = true;
+end
+--无新手教程
+function NoticeManager.NoTeach()
+	GameInfoForThis.IsTeach = false;
+end
+
 --[[ 广播通知
 参数：	Type		通知类型
 		...			传递的参数
 --]]
 function NoticeManager.Notice( Type, ... )
 	if Type == nil then return end;
-	local Listener = this.NoticeListener[ Type ];
-	if Listener ~= nil then
-		local Callbacker, Success, Error, Func = nil, true, "", nil;
-		for Index = 1, #Listener do
-			Callbacker = Listener[ Index ];
-			if Callbacker ~= nil and Callbacker.callback ~= nil then
-				Func = nil
-				if type( Callbacker.callback ) == "string" then
-					Func = _G[Callbacker.callback];
-				elseif type( Callbacker.callback ) == "function" then
-					Func = Callbacker.callback;
-				end
-				if Func then
-					Success, Error = pcall( Func, ... );
-					if Success == false then app.log( Error ) end;
-					if Callbacker.times > 0 then
-						Callbacker.times = Callbacker.times - 1;
+	if GameInfoForThis.IsTeach == true then --检测是否进行
+		local Listener = this.NoticeListener[ Type ];
+		if Listener ~= nil then
+			local Callbacker, Success, Error, Func = nil, true, "", nil;
+			for Index = 1, #Listener do
+				Callbacker = Listener[ Index ];
+				if Callbacker ~= nil and Callbacker.callback ~= nil then
+					Func = nil
+					if type( Callbacker.callback ) == "string" then
+						Func = _G[Callbacker.callback];
+					elseif type( Callbacker.callback ) == "function" then
+						Func = Callbacker.callback;
+					end
+					if Func then
+						Success, Error = pcall( Func, ... );
+						if Success == false then app.log( Error ) end;
+						if Callbacker.times > 0 then
+							Callbacker.times = Callbacker.times - 1;
+						end
 					end
 				end
+				Callbacker = nil;
 			end
-			Callbacker = nil;
-		end
-		-- 移除次数用完的回调
-		for Index = #Listener, 1, -1 do
-			if Listener[ Index ].times == 0 then
-				table.remove( Listener, Index );
+			-- 移除次数用完的回调
+			for Index = #Listener, 1, -1 do
+				if Listener[ Index ].times == 0 then
+					table.remove( Listener, Index );
+				end
 			end
 		end
 	end
@@ -70,32 +81,34 @@ function NoticeManager.BeginListen( Type, Callback, Times, Priority )
 	if Priority == nil 	then Priority = 0 end;
 
 	local bExist 	= false;
-	local Listener 	= this.NoticeListener[ Type ];
-	if Listener ~= nil then
-		for Index, Callbacker in pairs( Listener ) do
-			if Callbacker.callback == Callback then
-				this.SerialNumberMax	= this.SerialNumberMax + 1;
-				Callbacker.times 		= Times;
-				Callbacker.priority 	= Priority;
-				Callbacker.serial_number= this.SerialNumberMax;
-				bExist = true; break;
+	if GameInfoForThis.IsTeach == true then --检测是否进行
+		local Listener 	= this.NoticeListener[ Type ];
+		if Listener ~= nil then
+			for Index, Callbacker in pairs( Listener ) do
+				if Callbacker.callback == Callback then
+					this.SerialNumberMax	= this.SerialNumberMax + 1;
+					Callbacker.times 		= Times;
+					Callbacker.priority 	= Priority;
+					Callbacker.serial_number= this.SerialNumberMax;
+					bExist = true; break;
+				end
 			end
+		else
+			Listener = {}; bExist = false;
+			this.NoticeListener[ Type ] = Listener;
 		end
-	else
-		Listener = {}; bExist = false;
-		this.NoticeListener[ Type ] = Listener;
-	end
-	if bExist == false then
-		this.SerialNumberMax = this.SerialNumberMax + 1;
-		table.insert( Listener, {
-			callback = Callback,
-			times = Times, priority = Priority,
-			serial_number = this.SerialNumberMax } );
-	end
+		if bExist == false then
+			this.SerialNumberMax = this.SerialNumberMax + 1;
+			table.insert( Listener, {
+				callback = Callback,
+				times = Times, priority = Priority,
+				serial_number = this.SerialNumberMax } );
+		end
 
-	-- 根据优先级排序
-	if #Listener > 1 then
-		table.sort( Listener, this.SortCallback );
+		-- 根据优先级排序
+		if #Listener > 1 then
+			table.sort( Listener, this.SortCallback );
+		end
 	end
 end
 
@@ -105,13 +118,14 @@ end
 --]]
 function NoticeManager.EndListen( Type, Callback )
 	if Type == nil or Callback == nil then return end;
-
-	local Listener = this.NoticeListener[ Type ];
-	if Listener ~= nil then
-		for Index = #Listener, 1, -1 do
-			if  Listener[ Index ].callback == Callback then
-				Listener[ Index ].callback = nil;
-				table.remove( Listener, Index ); break;
+	if GameInfoForThis.IsTeach == true then --检测是否进行
+		local Listener = this.NoticeListener[ Type ];
+		if Listener ~= nil then
+			for Index = #Listener, 1, -1 do
+				if  Listener[ Index ].callback == Callback then
+					Listener[ Index ].callback = nil;
+					table.remove( Listener, Index ); break;
+				end
 			end
 		end
 	end
@@ -121,20 +135,22 @@ end
 参数：	Type	通知类型，不传递参数或nil为清除所有收听
 --]]
 function NoticeManager.ClearListen( Type )
-	if Type == nil then
-		for Type, Listener in pairs( this.NoticeListener ) do
-			for Index, Callbacker in pairs( Listener ) do
-				Callbacker.callback = nil;
+	if GameInfoForThis.IsTeach == true then --检测是否进行
+		if Type == nil then
+			for Type, Listener in pairs( this.NoticeListener ) do
+				for Index, Callbacker in pairs( Listener ) do
+					Callbacker.callback = nil;
+				end
 			end
-		end
-		this.NoticeListener = {};
-	else
-		local Listener = this.NoticeListener[ Type ];
-		if Listener ~= nil then
-			for Index, Callbacker in pairs( Listener ) do
-				Callbacker.callback = nil;
+			this.NoticeListener = {};
+		else
+			local Listener = this.NoticeListener[ Type ];
+			if Listener ~= nil then
+				for Index, Callbacker in pairs( Listener ) do
+					Callbacker.callback = nil;
+				end
+				this.NoticeListener[ Type ] = nil;
 			end
-			this.NoticeListener[ Type ] = nil;
 		end
 	end
 end

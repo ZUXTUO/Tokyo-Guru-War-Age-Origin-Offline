@@ -58,6 +58,7 @@ GameInfoForThis = {
 	NoteInfo = "欢迎回到《东京战纪》，致那段已经逝去的青春。\n本游戏为残端，免费分享，无任何盈利，请勿随意外传。";
 	SceneInfo = nil;		--logic\message\message_enum.lua
 	--LoadNum = 0;	--载入流程（测试）
+    IsTeach = true;
 }
 
 asset_loader.enable_shared_atlas_load(true);

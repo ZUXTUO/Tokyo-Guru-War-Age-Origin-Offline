@@ -86,18 +86,20 @@ function Hurdle:CheckAnimIdCanFight(hurdleType)
 	end
 	local playerLevel = g_dataCenter.player:GetLevel();
 	local levelList = self:GetGroupHurdleConfigList_NoKey(self.group_anim_id[hurdleType]);
-	if playerLevel < levelList[1].need_level then
-		return false;
+	if not levelList == nil then
+		if playerLevel < levelList[1].need_level then
+			return false;
+		end
+		local hurdleInfo = levelList[1];
+    	if hurdleType == EHurdleType.eHurdleType_elite then
+    	    if hurdleInfo.type_param > 0 then
+    	        local otherInfo = self:GetHurdleByHurdleid(hurdleInfo.type_param);
+            	if not otherInfo then
+                	return false;
+            	end
+        	end
+    	end
 	end
-	local hurdleInfo = levelList[1];
-    if hurdleType == EHurdleType.eHurdleType_elite then
-        if hurdleInfo.type_param > 0 then
-            local otherInfo = self:GetHurdleByHurdleid(hurdleInfo.type_param);
-            if not otherInfo then
-                return false;
-            end
-        end
-    end
 	return true;
 end
 
@@ -304,6 +306,8 @@ end
 
 --[[返回一张没有key的表]]
 function Hurdle:GetGroupHurdleConfigList_NoKey(groupid)
+	return self.configGroup[groupid];
+	--[[
 	if not PublicStruct.ShuZhiCeShi and self.configGroup[groupid] then
 		return self.configGroup[groupid];
 	else
@@ -341,6 +345,7 @@ function Hurdle:GetGroupHurdleConfigList_NoKey(groupid)
 		end
 		return self.configGroup[groupid];
 	end
+	]]
 end
 
 --返回完成关卡的道具种类

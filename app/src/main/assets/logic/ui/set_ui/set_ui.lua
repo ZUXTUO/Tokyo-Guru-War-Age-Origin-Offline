@@ -325,7 +325,8 @@ function UiSet:UpdateUi()
         self.playerlvl:set_text("等级:"..level)
         
         local exp = g_dataCenter.player.exp; 
-        local curNeedExp = ConfigManager.Get(EConfigIndex.t_player_level,level).exp;
+        --local curNeedExp = ConfigManager.Get(EConfigIndex.t_player_level,level).exp;
+        local curNeedExp = 0;
         self.playerexp:set_value(exp/curNeedExp)
         
         if level == 100 then

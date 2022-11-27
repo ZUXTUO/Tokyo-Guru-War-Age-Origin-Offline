@@ -40,6 +40,7 @@ local playerInfo = {
 
 Player = Class("Player",nil,playerInfo)
 
+--用户数据
 function Player:Init()
 	self.playerid = 0;
 	self.groupid = 0;
@@ -47,8 +48,8 @@ function Player:Init()
 	self.image = 0;
 	self.ap = 0;
 	self.bp = 0;
-	self.exp = 0;
-	self.level = 1;
+	self.exp = 99999999;
+	self.level = 150;
 	self.vip = 10;
 	self.vipexp = 9999999;
 	self.vipstar = 9999999;
