@@ -606,7 +606,7 @@ EffectManager = {
     -- 1:low, 2:middle, 3: high (default)
 
     -- 最大特效数量（控制非必要特效资源）
-    referenceFPS = 30;
+    referenceFPS = 60;
     maxEffectEntityCnt = 1000,
 
     activedEffectEntityCnt = 0,

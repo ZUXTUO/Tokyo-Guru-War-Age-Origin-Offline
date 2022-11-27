@@ -82,7 +82,6 @@ function GameBegin.init()
     end
 
 	--[[判断巅峰展示]]
-	app.log("巅峰展示");
 	--if isEnterShow then
 		EnterShow.Start(GameBegin.login_bg_destroy, 0);
 	--else

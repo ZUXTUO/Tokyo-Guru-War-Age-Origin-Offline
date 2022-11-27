@@ -152,6 +152,10 @@ function PrologueBattleFightManager:OnShowFightResultUI()
     elseif 60020001 == FightScene.GetCurHurdleID() then
         LocalFile.WritePrologueRecord(3)
         EnterShow.CallStartBack()
+        app.log("[[序章0-1结束]]");
+        SceneManager.PushMainCityScene();
+        app.log("进入主城");
+        GameBegin.login_bg_destroy();
     end
 end
 

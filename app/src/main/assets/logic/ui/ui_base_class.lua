@@ -189,7 +189,7 @@ end
 
 --初始化UI
 function UiBaseClass:InitUI(asset_obj)
-    --app.log("loading界面隐藏");
+    app.log("loading界面隐藏");
     if asset_obj then
         self.ui = asset_game_object.create(asset_obj);
     end

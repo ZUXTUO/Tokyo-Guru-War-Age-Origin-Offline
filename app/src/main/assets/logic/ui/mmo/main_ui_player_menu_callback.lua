@@ -912,11 +912,13 @@ function MainUIPlayerMenu:UpdatePlayerUi()
     if cf then
         roleid = g_dataCenter.player.image
     else
+        --[[
         local defTeam = g_dataCenter.player:GetDefTeam()
         local cardInfo = g_dataCenter.package:find_card(ENUM.EPackageType.Hero, defTeam[1])
         if cardInfo then
             roleid = cardInfo.number
         end
+        ]]
     end
 
     local cfg = PublicFunc.GetHeroHeadCfg(roleid)

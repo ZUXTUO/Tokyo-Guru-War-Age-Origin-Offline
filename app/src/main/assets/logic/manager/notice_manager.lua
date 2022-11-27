@@ -158,7 +158,3 @@ function NoticeManager.SortCallback( A, B )
 
 	return Result;
 end
-
-
-
-

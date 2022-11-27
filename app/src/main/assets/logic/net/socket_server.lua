@@ -649,7 +649,7 @@ function Socket.OnGameConnect(object)
 	else
 	--[[进入游戏消息]]
 		app.log("ENTER 进入游戏消息");
-	 	Socket.enter_game();
+	 	--Socket.enter_game();
 	end
 
 end
@@ -742,7 +742,7 @@ function Socket.enter_game()
 		
 		app.log("帐号验证登陆");
 		client_proxy.cp_enter_game(enter_game_info);
-		
+
 	--else
 		--SystemHintUI.SetAndShow(ESystemHintUIType.one, "连接服务器异常，请重新连接！",
 			--{ str = "是", func = Socket.Init }

@@ -986,9 +986,9 @@ end
 --        //请求自己的英雄扭蛋数据
 function msg_activity.cg_niudan_request_role_info()
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_niudan_request_role_info(robot_s)")
-    end
+    --end
     nmsg_activity.cg_niudan_request_role_info(Socket.socketServer);
 end
 function msg_activity.gc_niudan_sync_role_info(byfreeTime,CDLeftTime,useOnceTimes,userTenTimes,todayDiscountTimes)
@@ -1008,9 +1008,9 @@ end
 --        //请求自己的装备扭蛋数据
 function msg_activity.cg_niudan_request_equip_info()
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_niudan_request_equip_info(robot_s)")
-    end
+    --end
     nmsg_activity.cg_niudan_request_equip_info(Socket.socketServer);
 end
 function msg_activity.gc_niudan_sync_equip_info(byfreeTime,CDLeftTime,useOnceTimes,userTenTimes,todayDiscountTimes,todayUseMoneyTenTimes)
@@ -1024,9 +1024,9 @@ function msg_activity.cg_niudan_use(type,bTen)
     if not PublicFunc.lock_send_msg(msg_activity.cg_niudan_use,key) then return end
 
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_niudan_use(robot_s, "..tostring(type)..", "..tostring(bTen)..")")
-    end
+    --end
     nmsg_activity.cg_niudan_use(Socket.socketServer,type,bTen);
     GLoading.Show(GLoading.EType.msg)
 end
@@ -1034,11 +1034,12 @@ function msg_activity.gc_niudan_use(result, type, bTen, vecReward,vecRealReward)
     GLoading.Hide(GLoading.EType.msg)
     local key = tostring(type)..tostring(bTen)
     PublicFunc.unlock_send_msg(msg_activity.cg_niudan_use,key)
-
+    --[[
     if tonumber(result) ~= 0 then
         PublicFunc.GetErrorString(result)     
         return;
     end
+    ]]
     GWriteEgg(type, bTen, vecReward);
     app.log("gc_niudan_use1")
     -- 扭蛋结果通知
@@ -1051,10 +1052,12 @@ function msg_activity.cg_niudan_exchange_equip(index, count)
     nmsg_activity.cg_niudan_exchange_equip(Socket.socketServer, index, count);
 end
 function msg_activity.gc_niudan_exchange_equip(result,index,count)
+    --[[
     if tonumber(result) ~= 0 then
         PublicFunc.GetErrorString(result)     
         return;
     end
+    ]]
     PublicFunc.msg_dispatch(msg_activity.gc_niudan_exchange_equip, result, index, count);
 end
 
@@ -1066,9 +1069,9 @@ function msg_activity.cg_activity_request_state()
         activity_reward_local.cg_activity_request_state()
     else 
         --if not Socket.socketServer then return end
-        if AppConfig.script_recording then
+        --if AppConfig.script_recording then
             PublicFunc.RecordingScript("nmsg_activity.cg_activity_request_state(robot_s)")
-        end
+        --end
         nmsg_activity.cg_activity_request_state(Socket.socketServer);
     end
      
@@ -1085,9 +1088,9 @@ function msg_activity.cg_login_request_my_data()
         activity_reward_local.cg_login_request_my_data()
     else 
         --if not Socket.socketServer then return end
-        if AppConfig.script_recording then
+        --if AppConfig.script_recording then
             PublicFunc.RecordingScript("nmsg_activity.cg_login_request_my_data(robot_s)")
-        end
+        --end
         nmsg_activity.cg_login_request_my_data(Socket.socketServer);
     end
 end
@@ -1102,18 +1105,20 @@ function msg_activity.cg_login_get_reward(index)
         activity_reward_local.cg_login_get_reward(index)
     else 
         --if not Socket.socketServer then return end
-        if AppConfig.script_recording then
+        --if AppConfig.script_recording then
             PublicFunc.RecordingScript("nmsg_activity.cg_login_get_reward(robot_s, "..tostring(index)..")")
-        end
+        --end
         nmsg_activity.cg_login_get_reward(Socket.socketServer, index)
     end
 end
 function msg_activity.gc_login_get_reward(result, index, reward)
+    --[[
     if tonumber(result) ~= 0 then
         GLoading.Hide(GLoading.EType.msg)
         PublicFunc.GetErrorString(result)        
         return;
     end
+    ]]
     g_dataCenter.activityReward:loginReward(index, reward)
 end
 
@@ -1125,9 +1130,9 @@ function msg_activity.cg_hurdle_request_my_data()
         activity_reward_local.cg_hurdle_request_my_data()
     else 
         --if not Socket.socketServer then return end
-        if AppConfig.script_recording then
+        --if AppConfig.script_recording then
             PublicFunc.RecordingScript("nmsg_activity.cg_hurdle_request_my_data(robot_s)")
-        end
+        --end
         nmsg_activity.cg_hurdle_request_my_data(Socket.socketServer);
     end
 end
@@ -1145,11 +1150,13 @@ function msg_activity.cg_hurdle_get_reward(index)
     end
 end
 function msg_activity.gc_hurdle_get_reward(result, index, reward)
+    --[[
     if tonumber(result) ~= 0 then
         GLoading.Hide(GLoading.EType.msg)
         PublicFunc.GetErrorString(result)        
         return;
     end
+    ]]
     g_dataCenter.activityReward:hurdleReward(index, reward)
 end
 
@@ -1164,11 +1171,13 @@ function msg_activity.cg_exchange_gold()
     end
 end
 function msg_activity.gc_exchange_gold(result,vecReward)
+    --[[
     if tonumber(result) ~= 0 then
         local bsuccess,strError = PublicFunc.GetErrorString(result,false)
         PublicFunc.GetErrorString(result)
         return;
     end
+    ]]
     FloatTip.Float("获得金币："..vecReward[1].count)
     PublicFunc.msg_dispatch(msg_activity.gc_exchange_gold,vecReward[1].count);
     AudioManager.PlayUiAudio(ENUM.EUiAudioType.ShopMoney)
@@ -1181,9 +1190,9 @@ end
 --[[请求配置数据]]
 function msg_activity.cg_get_everyday_recharge_data()
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_get_everyday_recharge_data(robot_s)")
-    end
+    --end
     nmsg_activity.cg_get_everyday_recharge_data(Socket.socketServer)
 end
 
@@ -1228,13 +1237,15 @@ end
 --[[领取礼包结果]]
 function msg_activity.gc_get_everyday_recharge_gift_bag_ret(result, giftbag)
     GLoading.Hide(GLoading.EType.msg)
+    --[[
     if tonumber(result) ~= 0 then
         local bsuccess,strError = PublicFunc.GetErrorString(result,false)
         FloatTip.Float(strError)
         return
     else
+    ]]
         CommonAward.Start(giftbag)
-    end
+    --end
 end	
 
 --[[服务器推送公告信息]]
@@ -1265,9 +1276,9 @@ end
 -- 等级基金
 function msg_activity.cg_get_level_fund_state( )
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_get_level_fund_state(robot_s)")
-    end
+    --end
     nmsg_activity.cg_get_level_fund_state(Socket.socketServer)
 end
 
@@ -1307,9 +1318,9 @@ end
 
 function msg_activity.cg_get_recruit_states( )
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("msg_activity.cg_get_recruit_states(robot_s)")
-    end
+    --end
     nmsg_activity.cg_get_recruit_states(Socket.socketServer);
 end
 
@@ -1580,9 +1591,9 @@ end
 
 function msg_activity.cg_kuikuliya_request_all_floor_data()
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_kuikuliya_request_all_floor_data(robot_s)")
-    end
+    --end
     nmsg_activity.cg_kuikuliya_request_all_floor_data(Socket.socketServer);
 end
 
@@ -1638,11 +1649,13 @@ function msg_activity.cg_get_all_buy_state(day)
 end
 
 function msg_activity.gc_get_all_buy_state(result, day, item_1_num, is_buy_1, item_2_num, is_buy_2)
-     GLoading.Hide(GLoading.EType.msg)
+    GLoading.Hide(GLoading.EType.msg)
+    --[[
     if tonumber(result) ~= 0 then
         PublicFunc.GetErrorString(result)
         return
     end
+    ]]
     g_dataCenter.activityReward:SetServerBuyState(day, item_1_num, is_buy_1 == 1, item_2_num, is_buy_2 == 1)
     PublicFunc.msg_dispatch(msg_activity.gc_get_all_buy_state)
 end
@@ -1771,9 +1784,9 @@ end
 ----------------------分享活动----------------------------------
 function msg_activity.cg_share_activity_state()
     --if not Socket.socketServer then return end
-    if AppConfig.script_recording then
+    --if AppConfig.script_recording then
         PublicFunc.RecordingScript("nmsg_activity.cg_share_activity_state(robot_s)")
-    end
+    --end
     nmsg_activity.cg_share_activity_state(Socket.socketServer)
 end
 
@@ -1851,10 +1864,12 @@ end
 --[[领取积分英雄宝箱奖励返回]]
 function msg_activity.gc_score_hero_get_box_reward(result, index, vecReward)
     GLoading.Hide(GLoading.EType.msg)
+    --[[
     if tonumber(result) ~= 0 then
         PublicFunc.GetErrorString(result)
         return
     end
+    ]]
     CommonAward.Start(vecReward)
     g_dataCenter.activityReward:SetScoreBoxIsGet(index)
     PublicFunc.msg_dispatch(msg_activity.gc_score_hero_get_box_reward)

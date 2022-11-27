@@ -51,59 +51,54 @@ function EnterShow.Start(startLoadCallback, enterGameCallback)
        _last_record = _record
     end
 
-    if _record == -1 then
-        -- Wait http.get result...
-    elseif _record == 0 then
-        PeakShowFightManager.Begin()
-    else
-        --序章1
-        if _record == 1 then
-            SceneManager.BeginPlayFirstStory()
-            EnterShow.CallStartLoadback()
-        --序章2
-        elseif _record == 2 then
-            SceneManager.BeginPlaySecondStory()
-            EnterShow.CallStartLoadback()
-        --进入游戏
-        elseif _record == 3 then
-            EnterShow.CallStartBack()
-        end
 
+    if _record == -1 then
+    elseif _record == 0 then
+        app.log("GameBegin 巅峰展示");
+        --GameBegin.login_bg_destroy();
+        --SceneManager.PushMainCityScene();
+        PeakShowFightManager.Begin()
+    elseif _record == 1 then--序章1
+        app.log("EnterShow.Start [1] 序章1");
+        SceneManager.BeginPlayFirstStory()
+        EnterShow.CallStartLoadback()
+    elseif _record == 2 then--序章2
+        app.log("EnterShow.Start [2] 序章2");
+        SceneManager.BeginPlaySecondStory()
+        EnterShow.CallStartLoadback()
+    elseif _record == 3 then--进入游戏
+        app.log("EnterShow.Start [3] 进入游戏");
+        EnterShow.CallStartBack()
+
+        --g_dataCenter.player.gold = 999999;
+        --g_dataCenter.player.crystal = 999999;
+        --g_dataCenter.player.red_crystal = 999999;
+
+        GameBegin.login_bg_destroy();
+        SceneManager.PushMainCityScene();
+
+        --[[
+        app.log("前往主城");
+        GameInfoForThis.LoadNum = 1;
+        GameInfoForThis.SceneInfo = "61000000";
+        client_proxy.pc_enter_game(0);--主城预制体搭建主要函数
+        GameBegin.login_bg_destroy();
+        ]]
     end
 end
 
 function EnterShow.CallStartLoadback()
-    --if EnterShow.startLoadCallback then
+    if EnterShow.startLoadCallback then
         EnterShow.startLoadCallback()
-        --EnterShow.startLoadCallback = nil
-    --end
+        EnterShow.startLoadCallback = nil
+    end
 end
 
 function EnterShow.CallStartBack()
-	Socket.Init();
-	
-	--[[
-	app.log("前往主城");
-	--GameInfoForThis.LoadNum = 1;
-	GameInfoForThis.SceneInfo = "61000000";
-	client_proxy.pc_enter_game(0);--主城预制体搭建主要函数
-	GameBegin.login_bg_destroy();
-	--]]
-	
-	--app.log("前往大乱斗");
-	--local group_loader_index = ResourceLoader.CreateGroupLoader()
-	--LoadScene(EnterShow.CallLog, nil, nil, nil, group_loader_index);
-
-	--[[
-	SystemHintUI.SetAndShow(ESystemHintUIType.one, "后面的内容还在测试中，敬请期待",
-        { str = "退出", func = Root.quit }
-    );
-	--]]
-
-    if EnterShow.enterGameCallback then
+    --if EnterShow.enterGameCallback then
         --EnterShow.enterGameCallback()
         EnterShow.enterGameCallback = nil
-    end
+    --end
 end
 
 function EnterShow.CallLog()

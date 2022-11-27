@@ -251,7 +251,7 @@ end
 
 
 function ResourceLoader.__GO(index)
-    app.log("set fps 30")
+    app.log("set fps 60")
     -- app.set_frame_rate(30)
 
     app.log("enter co......")
