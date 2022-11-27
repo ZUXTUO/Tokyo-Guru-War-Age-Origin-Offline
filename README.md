@@ -13,7 +13,7 @@ entershow.lua       EnterShow.Start函数牵连初始进入场景信息。
 notice_manager.lua  传入的通知可跳过新手引导，但也会让新手引导卡住。
 
 
-
+# -----------------------------------------------------
 
 # Project
 Tokyo Guru War Age Origin Source Code
