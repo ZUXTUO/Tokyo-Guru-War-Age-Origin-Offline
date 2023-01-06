@@ -225,13 +225,13 @@ function UiLevel:OnLoadUI()
         local levelInfo = ConfigHelper.GetHurdleConfig(self.goLevel);
         self.curSection = level:SectionIdToIndex(levelInfo.groupid);
         self.curLevel = self.goLevel;
-        self.selectTab = levelInfo.hurdle_type;
+        --self.selectTab = levelInfo.hurdle_type;
     --获取途径跳到打关卡界面
     elseif self.goLevelChallenge then
         local levelInfo = ConfigHelper.GetHurdleConfig(self.goLevelChallenge);
         self.curSection = level:SectionIdToIndex(levelInfo.groupid);
         self.curLevel = self.goLevelChallenge;
-        self.selectTab = levelInfo.hurdle_type;
+        --self.selectTab = levelInfo.hurdle_type;
     elseif self.goSelectTab then
         self.selectTab = self.goSelectTab;
         local curGroup = level:GetCurGroup(self.selectTab);
@@ -243,7 +243,7 @@ function UiLevel:OnLoadUI()
         local levelInfo = ConfigHelper.GetHurdleConfig(self.fightLevel);
         self.curSection = level:SectionIdToIndex(levelInfo.groupid);
         self.curLevel = self.fightLevel;
-        self.selectTab = levelInfo.hurdle_type;
+        --self.selectTab = levelInfo.hurdle_type;
         self.fightLevel = nil;
         self.fightSelectTab = nil;
     --战斗后回来
@@ -265,19 +265,21 @@ function UiLevel:OnLoadUI()
                 "selectTab="..tostring(self.selectTab).." curGroup="..tostring(curGroup).." curSection="..
                 tostring(self.curSection).." curLevel="..tostring(self.curLevel)..table.tostring(level.curGroup))
         end
-        self.selectTab = levelInfo.hurdle_type;
+        --self.selectTab = levelInfo.hurdle_type;
     else
         local levelInfo = ConfigHelper.GetHurdleConfig(self.curLevel);
         self.curSection = level:SectionIdToIndex(levelInfo.groupid);
-        self.selectTab = levelInfo.hurdle_type;
+        --self.selectTab = levelInfo.hurdle_type;
     end
+    --[[
     if self.curSection > g_open_level_count then
         self.curSection = g_open_level_count;
         local sectionInfo = self.sectionList[self.selectTab][self.curSection];
         self.curLevel = level:GetCurFightLevelID(sectionInfo.id);
     end
-    -- app.log("selectTab="..tostring(self.selectTab).." curGroup="..tostring(curGroup).." curSection="..
-    --             tostring(self.curSection).." curLevel="..tostring(self.curLevel))
+    --]]
+    app.log("selectTab="..tostring(self.selectTab).." curGroup="..tostring(curGroup).." curSection="..
+                tostring(self.curSection).." curLevel="..tostring(self.curLevel))
     -- 先加载章节底图	
     local sectionInfo = self.sectionList[self.selectTab][self.curSection];
     local sectionConfig = ConfigManager.Get(EConfigIndex.t_hurdle_group,sectionInfo.id);

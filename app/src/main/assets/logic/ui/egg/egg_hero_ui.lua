@@ -636,7 +636,8 @@ function EggHeroUi:on_buy_1(t)
     else
         buyType = self.EggType;
     end
-    if g_dataCenter.egg.useOnceHeroTimes == 0 and GuideManager.IsGuideRuning() then
+    --if g_dataCenter.egg.useOnceHeroTimes == 0 and GuideManager.IsGuideRuning() then
+    if g_dataCenter.egg.useOnceHeroTimes == 0 then
         self.isGuide = true
         app.log("第一次抽卡，释放假扭蛋");
         local heroCid = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteID_guide_first_egg_hero_id).data -- 第一个英雄

@@ -74,6 +74,10 @@ function EnterShow.Start(startLoadCallback, enterGameCallback)
         --g_dataCenter.player.crystal = 999999;
         --g_dataCenter.player.red_crystal = 999999;
 
+        g_player_local.cg_rand_name();--随机名称
+        g_player_local.cg_set_name();--设置角色名
+        g_player_local.cg_create_player_info();--创建本地角色
+        
         GameBegin.login_bg_destroy();
         SceneManager.PushMainCityScene();
 
