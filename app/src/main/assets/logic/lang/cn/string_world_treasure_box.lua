@@ -1,0 +1,12 @@
+gs_string_world_treasure_box = gs_string_world_treasure_box or {}
+gs_string_world_treasure_box['open_count_down'] = '开启倒计时'
+gs_string_world_treasure_box['close_count_down'] = '结束倒计时'
+gs_string_world_treasure_box['mysterious_treasure_box_not_free'] = '神秘宝箱未解锁，不能开启'
+gs_string_world_treasure_box['open_treasure_box_limit'] = '宝箱打开数量达到上限'
+gs_string_world_treasure_box[1] = '找不到卡片'
+gs_string_world_treasure_box[2] = '世界宝箱未开启'
+gs_string_world_treasure_box[3] = '世界宝箱地图未找到'
+gs_string_world_treasure_box[4] = '已经在世界宝箱地图'
+gs_string_world_treasure_box[5] = '正在死亡CD'
+gs_string_world_treasure_box[6] = '非法操作'
+gs_string_world_treasure_box[7] = '完美复活钻石不够'

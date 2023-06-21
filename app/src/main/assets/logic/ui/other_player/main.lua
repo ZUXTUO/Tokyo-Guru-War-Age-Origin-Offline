@@ -1,0 +1,1 @@
+script.run("logic/ui/other_player/other_player_ui.lua");

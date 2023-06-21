@@ -1,0 +1,12 @@
+gs_string_egg = gs_string_egg or {}
+gs_string_egg['ten_high'] = '确定要抽取十次高级扭蛋么'
+gs_string_egg['one_high'] = '确定要抽取一次高级扭蛋么'
+gs_string_egg['ten_low'] = '确定要抽取十次好友扭蛋么'
+gs_string_egg['one_low'] = '确定要抽取一次好友扭蛋么'
+gs_string_egg['ten'] = '10次'
+gs_string_egg['one'] = '1次'
+gs_string_egg['material_high'] = '绯钻石'
+gs_string_egg['material_low'] = '好友点'
+gs_string_egg['ge'] = '个'
+gs_string_egg['need'] = '需要消耗'
+gs_string_egg['have'] = '您拥有'

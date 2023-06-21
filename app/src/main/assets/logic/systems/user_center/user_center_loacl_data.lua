@@ -1,0 +1,64 @@
+----
+---- Created by IntelliJ IDEA.
+---- User: pokong
+---- Date: 2016/1/20
+---- Time: 10:41
+---- To change this template use File | Settings | File Templates.
+----
+--
+--user_center_loacl_data = {};
+--
+--
+--function user_center_loacl_data.login(type)
+--    --[[1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定]]
+--    local reg_table = {
+--        ret = 0,
+--        msg = '',
+--        account = '123123',
+--        account_type = 1,-- 1 设备， 2： 手机 ， 3 邮箱 4. 三方
+--        is_bind = 0,   -- 1: 绑定返回  0： 注册返回
+--        request_type = 1  -- 1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定
+--    };
+--    local login_table = {
+--        ret = 0,
+--        msg = "",
+--        token = "xxxxxxxxxxxx",
+--        accountid = '123123123123',
+--        account_type = 1, -- 1 设备， 2： 手机 ， 3 邮箱 4. 三方
+--        request_type = 1  -- 1第三方登陆 2游客登录 3邮箱登录 4邮箱注册 5手机登陆 6手机注册 7邮箱绑定 8手机绑定
+--    };
+--    local return_table = {};
+--    if type == 1 then
+--        login_table.request_type = type;
+--        login_table.account_type = 4;
+--        return_table = login_table;
+--    elseif type == 2 then
+--        login_table.request_type = type;
+--        login_table.account_type = 1;
+--        return_table = login_table;
+--    elseif type == 3 then
+--        login_table.request_type = type;
+--        login_table.account_type = 3;
+--        return_table = login_table;
+--    elseif type == 4 then
+--        reg_table.request_type = type;
+--        return_table = reg_table;
+--    elseif type == 5 then
+--        login_table.request_type = type;
+--        login_table.account_type = 2;
+--        return_table = login_table;
+--    elseif type == 6 then
+--        reg_table.request_type = type;
+--        return_table = reg_table;
+--    elseif type == 7 then
+--        reg_table.request_type = type;
+--        reg_table.is_bind = 1;
+--        return_table = reg_table;
+--    elseif type == 8 then
+--        reg_table.request_type = type;
+--        reg_table.is_bind = 1;
+--        return_table = reg_table;
+--    end
+--
+--    UserCenter.on_login(0, return_table, "", "", "");
+--end

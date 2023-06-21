@@ -1,0 +1,1 @@
+script.run("logic/ui/ui_institute/institute_ui.lua")

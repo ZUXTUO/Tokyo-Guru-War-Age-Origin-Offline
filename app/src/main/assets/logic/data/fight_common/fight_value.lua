@@ -1,0 +1,42 @@
+--id	策划注释	生命值	攻击力	防御力	暴击率	免爆率	暴击伤害	破击率	格挡几率	格挡伤害加成	吸血率	反弹率	攻击速度加成	闪避率	生命恢复率	冷却冷却缩减	治疗效果加成	对锐属性英雄伤害加成	对坚属性英雄伤害加成	对疾属性英雄伤害加成	对特属性英雄伤害加成	对全属性英雄伤害加成	对锐属性英雄伤害减免	对坚属性英雄伤害减免	对疾属性英雄伤害减免	对特属性英雄伤害减免	对全属性英雄伤害减免	全能	英雄突破等级	呼叫队友加成	英雄天赋等级	徽章星级	徽章连协星级
+g_Config.t_fight_value_key_ = {
+	id=1,
+	max_hp=2,
+	atk_power=3,
+	def_power=4,
+	crit_rate=5,
+	anti_crite=6,
+	crit_hurt=7,
+	broken_rate=8,
+	parry_rate=9,
+	parry_plus=10,
+	bloodsuck_rate=11,
+	rally_rate=12,
+	attack_speed=13,
+	dodge_rate=14,
+	res_hp=15,
+	cool_down_dec=16,
+	treat_plus=17,
+	restraint1_damage_plus=18,
+	restraint2_damage_plus=19,
+	restraint3_damage_plus=20,
+	restraint4_damage_plus=21,
+	restraint_all_damage_plus=22,
+	restraint1_damage_reduct=23,
+	restraint2_damage_reduct=24,
+	restraint3_damage_reduct=25,
+	restraint4_damage_reduct=26,
+	restraint_all_damage_reduct=27,
+	quan_neng=28,
+	break_through_level=29,
+	call_team=30,
+	talent_level=31,
+	badge_star=32,
+	badge_team_star=33,
+}
+g_Config.t_fight_value = {
+	[1] = "{1,0.15,3.74157867,12.10103832,15,15,15,15,15,15,15,15,15,15,15,15,15,45,45,45,45,45,45,45,45,45,45,0,0,0,0,0,0,}",
+	[2] = "{2,0.15,3.74157867,12.10103832,15,15,15,15,15,15,15,15,15,15,15,15,15,45,45,45,45,45,45,45,45,45,45,0,0,0,0,0,0,}",
+}
+return {key = g_Config.t_fight_value_key_, data = g_Config.t_fight_value } 
+ -- 

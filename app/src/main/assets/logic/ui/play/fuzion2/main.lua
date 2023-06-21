@@ -1,0 +1,7 @@
+script.run("logic/ui/play/fuzion2/fuzion2_main_ui.lua")
+script.run("logic/ui/play/fuzion2/fuzion2_fight_rank_ui.lua")
+script.run("logic/ui/play/fuzion2/fuzion2_rank_ui.lua")
+script.run("logic/ui/play/fuzion2/fuzion2_fight_ui.lua")
+-- script.run("logic/ui/play/fuzion2/fuzion2_match_ui.lua")
+script.run("logic/ui/play/fuzion2/fuzion2_team_ui.lua")
+script.run("logic/ui/play/fuzion2/fuzion2_buff_time_ui.lua")

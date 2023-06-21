@@ -1,0 +1,1 @@
+ script.run("logic/ui/quest_web_view/ui_quest_web_view.lua")

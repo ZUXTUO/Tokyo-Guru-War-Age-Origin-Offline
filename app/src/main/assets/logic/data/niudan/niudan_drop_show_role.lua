@@ -1,0 +1,41 @@
+--角色编号	备注	头像资源	x位置	y位置	x大小	y大小
+g_Config.t_niudan_drop_show_role_key_ = {
+	id=1,
+	tex_path=2,
+	px=3,
+	py=4,
+	sx=5,
+	sy=6,
+}
+g_Config.t_niudan_drop_show_role = {
+	[30001100] = "{30001100,'assetbundles/prefabs/ui/image/icon/drama_dh/longzezhengdao_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30002100] = "{30002100,'assetbundles/prefabs/ui/image/icon/drama_dh/tailang_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30003200] = "{30003200,'assetbundles/prefabs/ui/image/icon/drama_dh/wanzhangshuyi_dh.assetbundle',-248,40,3.14,2.75,}",
+	[30004200] = "{30004200,'assetbundles/prefabs/ui/image/icon/drama_dh/dikoulangzi_dh.assetbundle',-241,-15,3.14,2.75,}",
+	[30005000] = "{30005000,'assetbundles/prefabs/ui/image/icon/drama_dh/jinmu_dh8.assetbundle',-200,-14,3.14,2.75,}",
+	[30006000] = "{30006000,'assetbundles/prefabs/ui/image/icon/drama_dh/xiweijin_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30007200] = "{30007200,'assetbundles/prefabs/ui/image/icon/drama_dh/naji_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30008200] = "{30008200,'assetbundles/prefabs/ui/image/icon/drama_dh/wulimeixiang_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30010200] = "{30010200,'assetbundles/prefabs/ui/image/icon/drama_dh/pingzizhang_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30011200] = "{30011200,'assetbundles/prefabs/ui/image/icon/drama_dh/zhenhuxiao_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30012200] = "{30012200,'assetbundles/prefabs/ui/image/icon/drama_dh/anjiunaibai_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30016200] = "{30016200,'assetbundles/prefabs/ui/image/icon/drama_dh/wudaodongxiang_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30018200] = "{30018200,'assetbundles/prefabs/ui/image/icon/drama_dh/pingdi_dh.assetbundle',-200,-60,3.14,2.75,}",
+	[30019000] = "{30019000,'assetbundles/prefabs/ui/image/icon/drama_dh/dikouchushi_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30020300] = "{30020300,'assetbundles/prefabs/ui/image/icon/drama_dh/lingwushizao_dh1.assetbundle',-256,64,4.8356,4.235,}",
+	[30021200] = "{30021200,'assetbundles/prefabs/ui/image/icon/drama_dh/bochuanzhong_dh.assetbundle',-241,-37,3.14,2.75,}",
+	[30022200] = "{30022200,'assetbundles/prefabs/ui/image/icon/drama_dh/yueshanxi_dh.assetbundle',-235,-19,3.14,2.75,}",
+	[30023200] = "{30023200,'assetbundles/prefabs/ui/image/icon/drama_dh/yamengangtailang_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30024200] = "{30024200,'assetbundles/prefabs/ui/image/icon/drama_dh/yujingjun_dh.assetbundle',-286,-8,3.14,2.75,}",
+	[30025300] = "{30025300,'assetbundles/prefabs/ui/image/icon/drama_dh/shendailishi_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30026200] = "{30026200,'assetbundles/prefabs/ui/image/icon/drama_dh/zhenhuwuxu_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30027300] = "{30027300,'assetbundles/prefabs/ui/image/icon/drama_dh/wudaoxundu_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30028300] = "{30028300,'assetbundles/prefabs/ui/image/icon/drama_dh/sifanglianshi2_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30029300] = "{30029300,'assetbundles/prefabs/ui/image/icon/drama_dh/moyuan_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30054300] = "{30054300,'assetbundles/prefabs/ui/image/icon/drama_dh/dashoubayun_dh2.assetbundle',-200,-14,3.14,2.75,}",
+	[30058100] = "{30058100,'assetbundles/prefabs/ui/image/icon/drama_dh/zhongdaokangjian_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30059100] = "{30059100,'assetbundles/prefabs/ui/image/icon/drama_dh/dixingjiayi_dh.assetbundle',-200,-14,3.14,2.75,}",
+	[30060100] = "{30060100,'assetbundles/prefabs/ui/image/icon/drama_dh/cunsongxihui_dh.assetbundle',-200,-14,3.14,2.75,}",
+}
+return {key = g_Config.t_niudan_drop_show_role_key_, data = g_Config.t_niudan_drop_show_role } 
+ -- 

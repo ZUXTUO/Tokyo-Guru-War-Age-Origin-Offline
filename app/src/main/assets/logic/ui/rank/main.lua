@@ -1,0 +1,8 @@
+script.run("logic/ui/rank/rank_enum.lua")
+script.run("logic/ui/rank/rank_item_ui.lua")
+script.run("logic/ui/rank/rank_ui.lua")
+script.run("logic/ui/rank/rank_list.lua")
+script.run("logic/ui/rank/rank_list_item.lua")
+script.run("logic/ui/rank/rank_base_ui.lua")
+script.run("logic/ui/rank/rank_guild_boss.lua")
+script.run("logic/ui/rank/rank_pop_panel.lua")

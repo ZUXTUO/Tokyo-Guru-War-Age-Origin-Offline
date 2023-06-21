@@ -1,0 +1,13 @@
+--script.run('logic/ui/play/qing_tong_ji_di/ui_3v3_matching.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_3d.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_enter_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_rank_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_room_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_award_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_hero_chose_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/qing_tong_ji_di_fight_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/three_human_kill_detail_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/moba_fight_tips_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/moba_enter_tips_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/moba_matching_ui.lua');
+script.run('logic/ui/play/qing_tong_ji_di/moba_ready_enter_ui.lua');

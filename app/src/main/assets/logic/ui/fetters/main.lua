@@ -1,0 +1,1 @@
+script.run("logic/ui/fetters/fetters_ui.lua")

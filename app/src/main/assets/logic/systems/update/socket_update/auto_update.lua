@@ -1,0 +1,343 @@
+----[[
+--  auto update lib
+----]]
+--
+--AutoUpdate = {
+--	ip = "192.168.2.9";
+--	versionUrl = "logic/update/version.txt";
+--	port = 0;
+--	deviceId = 0;
+--	check_max_num = 0;--[[自动重连最大次数]]
+--	connect_num_now = 0;--[[连接文件服务器当前次数]]
+--	check_filelist_num_now = 0;--[[获取文件例表当前次数]]
+--
+--	is_connect = false;--[[是否已经连接上]]
+--	is_check = false;--[[是否已经开始check]]
+--	is_get_filelist = false;--[[是否得到文件更新例表]]
+--
+--	on_close_callback = nil;
+--	on_error_callback = nil;
+--	on_device_error_callback = nil;
+--
+--	on_downing_callback = nil;
+--	on_download_callback = nil;
+--	on_complete_callback = nil;
+--
+--	versionNumber = 0;
+--	versionLstIndex = 1;
+--	versionLst = {};
+--
+--	update_callback = nil;
+--};
+--
+----[[清理]]
+--function AutoUpdate.clear()
+--	AutoUpdate.connect_num_now = 0;
+--	AutoUpdate.check_filelist_num_now = 0;
+--end
+--
+--function AutoUpdate.init()
+--	--set file update listener
+--	AutoUpdate.connect_num_now = AutoUpdate.connect_num_now + 1;
+--
+--	UpdateDownload.set_fonts("Connect....  "..AutoUpdate.connect_num_now);
+--
+--	gupdate.set_op_listener("AutoUpdate.on_connect", "AutoUpdate.on_close", "AutoUpdate.on_error", "AutoUpdate.on_device_error", "AutoUpdate.on_op_version");
+--	gupdate.set_device_id(AutoUpdate.deviceId);
+--
+--	--init
+--	AutoUpdate.read_version();
+--
+--	--step 1
+--	gupdate.async_connect(AutoUpdate.ip, AutoUpdate.port);
+--	timer.create("AutoUpdate.async_connect", 1000, 1);
+--end
+--
+--function AutoUpdate.async_connect()
+--	if AutoUpdate.is_connect then return end;
+--	if AutoUpdate.connect_num_now >= AppConfig.get_check_max_num() then
+--		UpdateDownload.set_fonts("Connect Fail！Please contact GM and Try again later！");
+--		return;
+--	end
+--	AutoUpdate.connect_num_now = AutoUpdate.connect_num_now + 1;
+--	UpdateDownload.set_fonts("Connect....  "..AutoUpdate.connect_num_now);
+--	gupdate.close_connect();
+--	gupdate.async_connect(AutoUpdate.ip, AutoUpdate.port);
+--	timer.create("AutoUpdate.async_connect", 1000, 1);
+--end
+--
+--function AutoUpdate.on_connect()
+--	AutoUpdate.is_connect = true;
+--	--step 1 response
+--	app.log("[AutoUpdate.on_connect] on_connect");
+--	timer.create("AutoUpdate.start_check_op", 200, 1);
+--end
+--
+--
+--function AutoUpdate.on_close()
+--	app.log("[AutoUpdate.on_close] on_close");
+--
+--	if AutoUpdate.on_close_callback ~= nil then
+--		AutoUpdate.on_close_callback();
+--	end
+--end
+--
+--
+--function AutoUpdate.on_error()
+--	app.log("[AutoUpdate.on_error] on_error");
+--
+--	if AutoUpdate.on_error_callback ~= nil then
+--		AutoUpdate.on_error_callback();
+--	end
+--end
+--
+--
+--function AutoUpdate.on_device_error()
+--	app.log("[AutoUpdate.on_device_error] on_device_error");
+--
+--	if AutoUpdate.on_device_error_callback ~= nil then
+--		AutoUpdate.on_device_error_callback();
+--	end
+--end
+--
+--
+--function AutoUpdate.filter_op_list(list)
+--	local new_list = {};
+--
+--	for i = #list, 1, -1 do
+--		if AutoUpdate.lst_exist(new_list, list[i].path) ~= true then
+--			table.insert(new_list, 1, list[i]);
+--		end
+--	end
+--
+--	return new_list;
+--end
+--
+--
+--function AutoUpdate.version_list_handle()
+--	if AutoUpdate.versionLstIndex > #AutoUpdate.versionLst then
+--		if AutoUpdate.on_complete_callback ~= nil then
+--			AutoUpdate.on_complete_callback();
+--		end
+--		AutoUpdate.clear();
+--		return
+--	end
+--
+--	local obj = AutoUpdate.versionLst[AutoUpdate.versionLstIndex];
+--
+--	if obj.type == 1 or obj.type == 2 then
+--		app.log(obj.type.."==[AutoUpdate version_list_handle] download item: "..obj.path);
+--		gupdate.add_down(AutoUpdate.deviceId, "AutoUpdate.on_auto_downing", "AutoUpdate.on_auto_complete", obj.path);
+--	elseif obj.type == 3 then
+--		app.log("[AutoUpdate version_list_handle] delete item: "..obj.path);
+--		file.delete(obj.path);
+--		AutoUpdate.item_handle_complete();
+--	else
+--		app.log("[AutoUpdate version_list_handle] ignore item: "..obj.path);
+--		AutoUpdate.item_handle_complete();
+--	end
+--end
+--
+--
+--function AutoUpdate.item_handle_complete()
+--	AutoUpdate.write_version(AutoUpdate.versionLst[AutoUpdate.versionLstIndex].oid + 1);
+--
+--	AutoUpdate.versionLstIndex = AutoUpdate.versionLstIndex + 1;
+--	AutoUpdate.version_list_handle();
+--end
+--
+--
+--function AutoUpdate.start_check_op()
+--	AutoUpdate.is_check = true;
+--	--step 2
+--	app.log("[AutoUpdate start_check_op] version number: "..AutoUpdate.versionNumber);
+--	timer.create("AutoUpdate.check_file_list", 100, 1);
+--end
+--
+----[[check file list]]
+--function AutoUpdate.check_file_list()
+--	if AutoUpdate.check_filelist_num_now >= AppConfig.get_check_max_num() then
+--		UpdateDownload.set_fonts("Check File Fail！Please contact GM and Try again later！");
+--		--[[内部测试 如果连接不上文件服务器就直接进入游戏]]
+----		AutoUpdate.on_complete_callback();
+--		return;
+--	end
+--
+--	AutoUpdate.check_filelist_num_now = AutoUpdate.check_filelist_num_now + 1;
+--	UpdateDownload.set_fonts("Check File....  "..AutoUpdate.check_filelist_num_now);
+--	gupdate.check_op(AutoUpdate.versionNumber);
+--	timer.create("AutoUpdate.check_and_goon", 1000, 1);
+--end
+--
+----[[check and go on]]
+--function AutoUpdate.check_and_goon()
+--	if not AutoUpdate.is_get_filelist then
+--		gupdate.close_connect();
+--		timer.create("AutoUpdate.init", 1000, 1);
+--	end
+--end
+--
+--function AutoUpdate.on_op_version(t)
+--
+--	AutoUpdate.is_get_filelist = true;
+--
+--	--step 2 response
+--	app.log("[AutoUpdate on_op_version]all_fsize:" .. t.all_fsize .. ", count:" .. #t );
+--
+--	app.log("original list: "..#t);
+--
+--	UpdateDownload.set_fonts(string.format("There are %s files need to be updated，Total：%s",#t,math.ceil(t.all_fsize / 1024)));
+--
+--	AutoUpdate.lst_print(t);
+--
+--	AutoUpdate.versionLst = AutoUpdate.filter_op_list(t);
+--
+--	app.log("filter list: "..#AutoUpdate.versionLst);
+--	AutoUpdate.lst_print(AutoUpdate.versionLst);
+--
+--	--start handle
+--	AutoUpdate.version_list_handle();
+--end
+--
+--
+--function AutoUpdate.on_auto_downing(t)
+--	--app.log(string.format("on_downing: %s %d %d", t.filepath, t.fsize, t.current));
+--
+--	if AutoUpdate.on_downing_callback ~= nil then
+--		AutoUpdate.on_downing_callback(t.filepath, t.fsize, t.current);
+--	end
+--end
+--
+--
+--function AutoUpdate.on_auto_complete(t)
+--	--app.log(string.format("on_complete: filepath=%s, fsize=%d, result=%d, current=%d, down_count=%d, finish_count=%d, error_count=%d",
+--	--  t.filepath, t.fsize, t.result, t.current, t.down_count, t.finish_count, t.error_count) );
+--
+--	if AutoUpdate.on_download_callback ~= nil then
+--		AutoUpdate.on_download_callback(t.filepath, t.fsize, t.current, t.down_count, t.finish_count);
+--	end
+--
+--	AutoUpdate.item_handle_complete();
+--end
+--
+--
+--function AutoUpdate.lst_print(list)
+--	for i, v in ipairs( list ) do
+--		local str = "";
+--		str = str .. string.format("oid=%d, path=%s, fsize=%d, type=%d \n", v.oid, v.path, v.fsize, v.type );
+----		app.log("list_file:" .. str);
+--	end
+--end
+--
+--
+--function AutoUpdate.lst_exist(list, path)
+--	for i, v in ipairs( list ) do
+----		app.log("lst_exist = "..v.path);
+--		if v.path == path then
+--			return true
+--		end
+--	end
+--
+--	return false
+--end
+--
+--
+--function AutoUpdate.lst_remove(list, path)
+--  local obj = nil;
+--
+--  for i, v in ipairs( list ) do
+--    if v.path == path then
+--      obj = v;
+--      table.remove(list, i)
+--    end
+--  end
+--
+--  return obj;
+--end
+--
+--
+--function AutoUpdate.read_version()
+--	local file_handler = file.open(AutoUpdate.versionUrl,4)
+--	if file_handler ~= nil then
+--		local version = file_handler:read_string();
+--		if version ~= nil and version ~= "" then
+--			--[[check num]]
+--			if tonumber(version) ~= nil then
+--				if tonumber(version) > 0 then
+--					AutoUpdate.versionNumber = tonumber(version);
+--				end
+--			end
+--			app.log("read version number:"..tostring(AutoUpdate.versionNumber));
+--		end
+--		file_handler:close();
+--	end
+--    return AutoUpdate.versionNumber;
+--end
+--
+--
+--function AutoUpdate.write_version(version)
+--	local file_handler = file.open(AutoUpdate.versionUrl,2)
+--	if file_handler == nil then
+--		app.log("no have version.txt");
+--		return;
+--	end
+--
+--	file_handler:write_string(tostring(version))
+--	file_handler:close()
+--end
+--
+--
+--------------------------------[[对外接口]]----------------------------
+--function AutoUpdate.set_update_ip(s_ip)
+--	if s_ip == nil then return end;
+--	AutoUpdate.ip = s_ip;
+--end
+--function AutoUpdate.set_version_url(s_url)
+--	if s_url == nil then return end;
+--	AutoUpdate.versionUrl = s_url;
+--end
+--function AutoUpdate.set_port(n_port)
+--	if n_port == nil then return end;
+--	AutoUpdate.port = n_port;
+--end
+--function AutoUpdate.set_deviceid(n_deviceid)
+--	if n_deviceid == nil then return end;
+--	AutoUpdate.deviceId = n_deviceid;
+--end
+--function AutoUpdate.set_versionnumber(n_versionnumber)
+--	if n_versionnumber == nil then return end;
+--	AutoUpdate.versionNumber = n_versionnumber;
+--end
+--
+--
+--
+--function AutoUpdate.set_on_close_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_close_callback = call_back;
+--end
+--function AutoUpdate.set_on_error_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_error_callback = call_back;
+--end
+--function AutoUpdate.set_on_device_error_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_device_error_callback = call_back;
+--end
+--function AutoUpdate.set_on_downing_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_downing_callback = call_back;
+--end
+--function AutoUpdate.set_on_download_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_download_callback = call_back;
+--end
+--function AutoUpdate.set_on_complete_callback(call_back)
+--	if call_back == nil then return end;
+--	if not type(call_back) == "function" then return end;
+--	AutoUpdate.on_complete_callback = call_back;
+--end

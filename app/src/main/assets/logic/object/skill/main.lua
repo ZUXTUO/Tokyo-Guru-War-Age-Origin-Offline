@@ -1,0 +1,17 @@
+script.run("logic/object/skill/skill_def.lua");
+script.run("logic/object/skill/buff_def.lua");
+script.run("logic/object/skill/base_action.lua");
+script.run("logic/object/skill/action_group.lua");
+script.run("logic/object/skill/skill_ex.lua");
+script.run("logic/object/skill/skill_ctree.lua");
+script.run("logic/object/skill/trigger_ex.lua");
+script.run("logic/object/skill/buffex.lua");
+script.run("logic/object/skill/buff_manager.lua");
+script.run("logic/object/skill/skill_manager.lua");
+script.run("logic/object/skill/skill_config/skill_targets_data.lua");
+script.run("logic/object/skill/buff_config/buff_group.lua");
+script.run("logic/object/skill/buff_config/buff_data.lua");
+script.run("logic/object/skill/buff_config/buff_data_post_processing.lua");
+script.run("logic/object/skill/skill_config/skill_condition_data.lua");
+script.run("logic/object/skill/skill_config/skill_data.lua");
+script.run("logic/object/skill/skill_config/skill_data_post_processing.lua");

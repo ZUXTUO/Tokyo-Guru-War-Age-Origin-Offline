@@ -1,0 +1,69 @@
+gd_hurdle_60001087_monster = {	{p_type = 'Monster',obj_name = 'boss' , px = -0.3, py = 0, pz = -56.86,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014320,flag = 2,anim_id = 0,group_name = 'monster_5',  },
+	{p_type = 'Monster',obj_name = 'roadblock_2' , px = -0.27, py = -0.53, pz = 22.86,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 12,id = 31029932,flag = 2,anim_id = 0,param = {delete_delay_time = '3800', },group_name = 'Obstacle',  }
+}
+gd_hurdle_60001087_burchmonster = {
+	{p_type = 'BurchMonster',obj_name = 'jingying_1' , px = 0.8, py = 0, pz = -17.65,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014310,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_1' , px = 2.1, py = 0, pz = 70.56,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014300,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_10' , px = -1.46, py = 0, pz = 28.85,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_2',  },
+	{p_type = 'BurchMonster',obj_name = 're_11' , px = 0.27, py = 0, pz = 26.26,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_2',  },
+	{p_type = 'BurchMonster',obj_name = 're_12' , px = -1.95, py = 0, pz = 24.6,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_2',  },
+	{p_type = 'BurchMonster',obj_name = 're_13' , px = 4.18, py = 0, pz = -14.2,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014300,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_14' , px = 6.45, py = 0, pz = -18.86,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014300,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_15' , px = 6.71, py = 0, pz = -23,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014300,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_16' , px = -1.8, py = 0, pz = -14.31,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_17' , px = -2.29, py = 0, pz = -18.31,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_18' , px = -2.34, py = 0, pz = -22.44,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_3',  },
+	{p_type = 'BurchMonster',obj_name = 're_19' , px = 1.8, py = 0, pz = -33.89,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_4',  },
+	{p_type = 'BurchMonster',obj_name = 're_2' , px = -1.5, py = 0, pz = 71.56,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014300,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_20' , px = 3.72, py = 0, pz = -36.54,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_4',  },
+	{p_type = 'BurchMonster',obj_name = 're_21' , px = -3.61, py = 0, pz = -33.89,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_4',  },
+	{p_type = 'BurchMonster',obj_name = 're_22' , px = -3.96, py = 0, pz = -37.14,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_4',  },
+	{p_type = 'BurchMonster',obj_name = 're_3' , px = 4.71, py = 0, pz = 63.45,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_4' , px = 5.29, py = 0, pz = 60.08,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_5' , px = -6.56, py = 0, pz = 62.34,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_6' , px = -4.18, py = 0, pz = 59.86,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_7' , px = -7.33, py = 0, pz = 58.31,rx = 0, ry = 90.00001, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014301,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_1',  },
+	{p_type = 'BurchMonster',obj_name = 're_8' , px = -1.3, py = 0, pz = 37.06,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_2',  },
+	{p_type = 'BurchMonster',obj_name = 're_9' , px = 1.44, py = 0, pz = 34.64,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 33014302,flag = 2,at = 0,time = 0,count = 0,anim_id = 30,group_name = 'monster_2',  },
+	{p_type = 'BurchMonster',obj_name = 'roadblock_1' , px = -0.52, py = 0, pz = 24.2,rx = 0, ry = 270, rz = 0,sx = 1, sy = 1, sz = 1,id = 31029928,flag = 2,at = 0,time = 0,count = 0,anim_id = 0,group_name = 'Obstacle',  },
+	{p_type = 'BurchMonster',obj_name = 'wall_1' , px = -1.79, py = 0, pz = -44.42,rx = 0, ry = 0, rz = 0,sx = 8, sy = 1, sz = 1,id = 31029941,flag = 2,at = 0,time = 0,count = 0,anim_id = 0,group_name = 'wall',  }
+}
+gd_hurdle_60001087_item = {
+	{p_type = 'Item',obj_name = 'area_1' , px = -0.1, py = 0, pz = 30.19,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208704,flag = 0,item_modelid = 0,item_effectid = 19005,world_item_id = 0,sphere_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 3.4, py = 0, pz = 38.3,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 100007,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 3.4, py = 0, pz = 38.3,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 100008,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = -1.2, py = 0, pz = 32.1,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208703,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 0.82, py = 0, pz = -14.87,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208705,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 8,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = -0.91, py = 0, pz = -37.54,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208706,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 8,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = -0.33, py = 0, pz = 69.05,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208701,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 8,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 1.17, py = 0, pz = 89.94,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208700,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = -0.33, py = 0, pz = -56.86,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 100037,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 3,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 0, py = 0, pz = -29.8,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208707,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = 0, py = 0, pz = -29.8,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208708,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 0.5,height = 2,direction = 1,}, },
+	{p_type = 'Item',obj_name = 'Cylinder' , px = -0.02, py = 0, pz = 36.71,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,id = 208702,flag = 0,item_modelid = 0,item_effectid = 0,world_item_id = 0,capsule_collider = {center = { x = 0, y = 0, z = 0},radius = 8,height = 2,direction = 1,}, }
+}
+gd_hurdle_60001087_entity = {
+}
+gd_hurdle_60001087_burchhero = {
+	{p_type = 'BurchHero',obj_name = 'begin_camera' , px = -5.57, py = 4.13, pz = 94.36,rx = 36.475, ry = 73.99821, rz = 0,sx = 1, sy = 1, sz = 1,flag = 0 },
+	{p_type = 'BurchHero',obj_name = 'hbp_1' , px = -0.2, py = 0, pz = 95.9,rx = 0, ry = 180, rz = 0,sx = 1, sy = 1, sz = 1,flag = 1 },
+	{p_type = 'BurchHero',obj_name = 'hbp_2' , px = 0.7, py = 0, pz = 97.2,rx = 0, ry = 180, rz = 0,sx = 1, sy = 1, sz = 1,flag = 1 },
+	{p_type = 'BurchHero',obj_name = 'hbp_3' , px = -0.9, py = 0, pz = 97.2,rx = 0, ry = 180, rz = 0,sx = 1, sy = 1, sz = 1,flag = 1 },
+	{p_type = 'BurchHero',obj_name = 'hero_lose' , px = 3.2, py = 0, pz = 86.7,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,flag = 0 },
+	{p_type = 'BurchHero',obj_name = 'hero_win' , px = 3.2, py = 0, pz = 86.7,rx = 0, ry = 0, rz = 0,sx = 1, sy = 1, sz = 1,flag = 0 }
+}
+gd_hurdle_60001087_pathpoint = {
+	{p_type = 'PathPoint',obj_name = 'hwp_1_1' , px = -0.4, py = 0, pz = -59.13,rx = 0, ry = 0, rz = 0,sx = 2, sy = 1, sz = 2, }
+}
+gd_hurdle_60001087_npc = {
+}
+gd_hurdle_60001087_translation_point = {
+}
+gd_hurdle_60001087_map_info = {
+}
+gd_hurdle_60001087_task_destination = {
+}
+gd_hurdle_60001087_map_monster = {
+}
+gd_hurdle_60001087_safe_area = {
+}

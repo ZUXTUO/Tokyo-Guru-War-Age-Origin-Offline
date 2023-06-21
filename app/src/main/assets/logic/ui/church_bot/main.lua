@@ -1,0 +1,8 @@
+script.run("logic/ui/church_bot/church_main.lua")
+script.run("logic/ui/church_bot/church_main_ui.lua")
+script.run("logic/ui/church_bot/church_select.lua")
+script.run("logic/ui/church_bot/church_load.lua")
+script.run("logic/ui/church_bot/church_lineup.lua")
+script.run("logic/ui/church_bot/church_record.lua")
+script.run("logic/ui/church_bot/church_tip.lua")
+script.run("logic/ui/church_bot/church_battlelist.lua")

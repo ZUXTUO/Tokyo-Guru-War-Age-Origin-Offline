@@ -1,0 +1,1 @@
+script.run("logic/ui/fx_clicked/fx_clicked.lua")

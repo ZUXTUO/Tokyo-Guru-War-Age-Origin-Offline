@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>东京战纪-动画正版授权3D战斗手游</title>
+    <link rel="stylesheet" href="./cdn-m/static/component/swiper-3.4.2.min.css">
+    <!--<link rel="stylesheet" href="component/anime.min.css">-->
+    <link rel="stylesheet" href="./cdn-m/static/component/anime.css">
+    <link rel="stylesheet" href="./cdn-m/static/css/index.css">
+    <script src="./cdn-m/static/js/resize.js"></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  //hm.src = "https://hm.baidu.com/hm.js?8bb661d42765b08edf0e4162480f28db";
+		  var s = document.getElementsByTagName("script")[0];
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+    <style>
+         body{
+            background-image: url("./cdn-m/static/image/landing.png");
+            /* background-position: center; */
+            background-size: contain;
+            background-repeat: no-repeat
+        }
+        .headMoudle{
+            background:transparent
+        }
+        .feature{
+            background:transparent
+        }
+        footer{
+            height: auto
+        }
+        .headMoudle nav{
+            position: relative;
+            width: 100%;
+            height:50px;
+        }
+        .headMoudle nav div{
+            display: inline-block;
+            height: 28px;
+            top: 10px;
+            position: absolute;
+        }
+        .downloadTop{
+            width: 85px;
+            left: 200px;
+        }
+        .toIndex{
+            width: 65px;
+            left: 300px;
+        }
+        .feature{
+            position: relative
+        }
+
+		.wechat_mask {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			z-index: 9999;
+			background: rgba(255,255,255,1);
+			display: none;
+		}
+		.wechat_mask img {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+    </style>
+</head>
+ <div class="main-wraper">
+    <!--头图-->
+    <div class="headMoudle" id="header">
+        <nav>
+            <div class="downloadTop" onclick="downloadAPP()"></div>
+            <div class="toIndex"></div>
+        </nav>
+        <div class="headbody">
+            <div class="play">
+                <img src="./cdn-m/static/image/btn/playPV.png" alt="">
+            </div>
+            <div class="download" onclick="downloadAPP()">
+                <img src="./cdn-m/static/image/btn/download.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!---------------- PV播放 ---------------->
+     <div class="pvPlayer">
+        <span class="closePV">X</span>
+     </div>
+
+   <!-- 游戏特色 -->
+   <div class="feature" id="gameFeature">
+        <div class="bnei"><img src="./cdn-m/static/image/bnei.png" alt=""></div>
+        <div class="swiper-container2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide featrue-swiper">
+                    <div class="one-middle con con-fadeInLeft">
+                        <img src="./cdn-m/static/image/feature/one/middle.png" alt="">
+                    </div>
+                    <div class="one-title con con-bounceInLeft delay">
+                        <img src="./cdn-m/static/image/feature/one/title.png" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide featrue-swiper swiper_two">
+                    <div class="one-right con-fadeInRight con animated">
+                        <img src="./cdn-m/static/image/feature/two/right.png" alt="">
+                    </div>
+                    <div class="one-left con-fadeInLeft con animated">
+                        <img src="./cdn-m/static/image/feature/two/left.png" alt="">
+                    </div>
+                    <div class="one-title animated con con-bounceInLeft delay">
+                        <img src="./cdn-m/static/image/feature/two/title.png" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide featrue-swiper swiper_three">
+                    <div class="one-right three-right con-fadeInRight con animated">
+                        <img src="./cdn-m/static/image/feature/three/right.png" alt="">
+                    </div>
+                    <div class="one-left three-left con-fadeInLeft con animated">
+                        <img src="./cdn-m/static/image/feature/three/left.png" alt="">
+                    </div>
+                    <div class="one-title three-title animated con con-bounceInLeft delay">
+                        <img src="./cdn-m/static/image/feature/three/title.png" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide featrue-swiper swiper_four">
+                    <div class="one-right con-fadeInRight con animated">
+                        <img src="./cdn-m/static/image/feature/four/right.png" alt="">
+                    </div>
+                    <div class="one-left con-fadeInLeft con animated">
+                        <img src="./cdn-m/static/image/feature/four/left.png" alt="">
+                    </div>
+                    <div class="one-title animated con con-bounceInLeft delay">
+                        <img src="./cdn-m/static/image/feature/four/title.png" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide featrue-swiper swiper_five">
+                    <div class="one-right con-fadeInRight con animated">
+                        <img src="./cdn-m/static/image/feature/five/right.png" alt="">
+                    </div>
+                    <div class="one-left con-fadeInLeft con animated">
+                        <img src="./cdn-m/static/image/feature/five/left.png" alt="">
+                    </div>
+                    <div class="one-title animated con con-bounceInLeft delay">
+                        <img src="./cdn-m/static/image/feature/five/title.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-prev"><img src="./cdn-m/static/image/btn/left.png" alt=""></div>
+            <div class="swiper-button-next"><img src="./cdn-m/static/image/btn/right.png" alt=""></div>
+        </div>
+   </div>
+    <div class="wechat_mask">
+    	<img src="./cdn-m/static/image/wechat_android.jpg" alt=""/>
+    </div>
+   <footer>
+       <p class="bottomP">成都数字天空科技有限公司</p>
+       <img src="./cdn-m/static/image/footer.png" alt="">
+       <a class="totop">
+           <img src="./cdn-m/static/image/btn/toTop.png" alt="">
+       </a>
+   </footer>
+ </div>
+<script src="./cdn-m/static/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="./cdn-m/static/jquery/3.3.7/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./cdn-m/static/component/swiper-3.4.2.jquery.min.js " type="text/javascript" charset="UTF-8"></script>
+ <script src="./cdn-m/static/js/share.js" type="text/javascript" charset="utf-8"></script>
+ <script src="./cdn-m/static/js/constant.js" type="text/javascript" charset="utf-8"></script>
+ <!-- <script src="http://djzj-qa-cdn.ppgame.com/cdn-m/static/js/main.js" type="text/javascript" charset="utf-8"></script> -->
+ <script src="./cdn-m/static/js/index.js" type="text/javascript" charset="UTF-8"></script>
+<script>
+    var galleryTop;
+    var galleryTop2;
+    var swiper2 = new Swiper('.swiper-container2', {
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        loop:true,
+        autoplayDisableOnInteraction : false,
+        autoplay : 5000,
+    });
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+$(window).on('load',function(){
+    if(getQueryString('mark')){
+    	if(getQueryString('mark')==='tencent' || getQueryString('mark')==='baidusem'){
+        	$('.bottomP').show();
+    	}
+    }
+})
+$('.play').on('click',function () {
+    //location.href="./video.html"
+/*
+    $('.pvPlayer').show();
+    $.post(URL_VIDEO_BY_PAGE, {page:1, rows:1}, function(res){
+        var data = JSON.parse(res).data;
+        // console.log(data[0].mp4)
+        $('.pvPlayer').html('<span class="closePV" style="color:#a40000">X</span> ')
+        $('.pvPlayer').append(' <video controls="controls" style="width: 100%;margin-top: 50%" src="'+video/ghoul_start.mp4+'"></video>> ')
+        closePV();
+    });
+*/
+})
+function closePV() {
+    $('.closePV').on('click',function () {
+        $('.pvPlayer').hide();
+        $('.pvPlayer').html('')
+    })
+}
+$('.totop').on('click',function () {
+    $('body,html').animate({ scrollTop: 0 }, 600);
+    return false;
+})
+$('.toIndex').on('click',function () {
+    location.href="./index.html"
+})
+
+var userAgent = navigator.userAgent; //获取系统
+
+function downloadAPP() {
+    var url = window.location.search||window.location.href.match(/\?+?.*/);
+    var mark = '';
+    if(url){
+        function getUrlParam(paramName) {
+            var reg = new RegExp('(^|&)' + paramName + '=([^&]*)(&|$)', 'i');
+            var r = url.substr(1).match(reg);
+            if(r != null) { return unescape(r[2]); }
+            return '';
+        }
+        if(getUrlParam('mark')){
+            mark = getUrlParam('mark');
+        }
+    }
+
+    if(mark === ''){
+            queryDownload();
+    }else{
+        switch(mark){
+            case 'common': markDownload('./index.html','./index.html');break;
+            case 'baidusem': markDownload('./index.html','./index.html');break;
+            case 'sina': markDownload('./index.html','./index.html');break;
+            case 'tieba': markDownload('./index.html','./index.html');break;
+            case 'aqiyi1': markDownload('./index.html','./index.html');break;
+            case 'aqiyi2': markDownload('./index.html','./index.html');break;
+            case 'aqiyi3': markDownload('./index.html','./index.html');break;
+            case 'tencent': markDownload('./index.html','./index.html');break;
+            case 'youku1': markDownload('./index.html','./index.html');break;
+            case 'youku2': markDownload('./index.html','./index.html');break;
+            case 'dilidili': markDownload('/./index.html','./index.html');break;
+            case 'dn': markDownload('./index.html','./index.html');break;
+            default: queryDownload();break;
+        }
+    }
+
+    function markDownload(url_ios,url_android){
+        if (userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+            window.location.href = '' + url_ios + '';
+        } else {
+        	if(userAgent.indexOf('MicroMessenger') > -1){
+        		$('.wechat_mask').fadeIn();
+        	}else{
+            	window.location.href = '' + url_android + '';
+           	}
+        }
+    }
+
+    function queryDownload(){
+        $.post(URL_DOWNLOAD_BY_PAGE, { page: 1, rows: 5 }, function (res) {
+            var site = JSON.parse(res).data[0];
+            var android_site = site.android_site;
+            var ios_site = site.ios_site;
+            if (userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+                window.location.href = '' + ios_site + '';
+            } else {
+            	if(userAgent.indexOf('MicroMessenger') > -1){
+            		$('.wechat_mask').fadeIn();
+            	}else{
+                	window.location.href = '' + android_site + '';
+               	}
+            }
+        });
+    }
+};
+</script>
+</body>
+</html><!--
+     FILE ARCHIVED ON 11:38:43 Aug 02, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 07:08:29 Jan 04, 2021.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  CDXLines.iter: 23.727 (3)
+  PetaboxLoader3.datanode: 389.988 (5)
+  exclusion.robots.policy: 0.358
+  RedisCDXSource: 64.351
+  captures_list: 445.37
+  LoadShardBlock: 350.712 (3)
+  esindex: 0.014
+  PetaboxLoader3.resolve: 52.453
+  load_resource: 129.902 (2)
+  exclusion.robots: 0.373
+-->

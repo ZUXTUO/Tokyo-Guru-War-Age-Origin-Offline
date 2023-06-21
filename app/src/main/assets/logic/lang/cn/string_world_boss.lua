@@ -1,0 +1,13 @@
+gs_string_world_boss = gs_string_world_boss or {}
+gs_string_world_boss[1] = '非法操作'
+gs_string_world_boss[2] = '世界BOSS未开启'
+gs_string_world_boss[3] = '找不到BOSS地图'
+gs_string_world_boss[4] = '购买鼓舞次数最大值'
+gs_string_world_boss[5] = '购买鼓舞水晶不够'
+gs_string_world_boss[6] = '没有参与次数'
+gs_string_world_boss[7] = '服务器奖励已经领取过'
+gs_string_world_boss[8] = '红水晶不够'
+gs_string_world_boss[9] = 'BOSS等级不够'
+gs_string_world_boss[10] = '未选择出战角色'
+gs_string_world_boss['report_0'] = '#name#对世界首领造成幸运一击，意外获得#award#'
+gs_string_world_boss['report_1'] = '#name#打出最后一击，将垂死挣扎的世界首领彻底终结，获得#award#'

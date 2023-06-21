@@ -1,0 +1,11 @@
+script.run("logic/ui/expedition_trial/expedition_trial_map.lua");
+script.run("logic/ui/expedition_trial/expedition_trial_data_logic.lua");
+script.run("logic/ui/expedition_trial/trial_scene.lua");
+script.run("logic/ui/expedition_trial/trial_choose_difficult.lua");
+script.run("logic/ui/expedition_trial/trial_choose_role.lua");
+script.run("logic/ui/expedition_trial/trial_single_mystery_box.lua");
+script.run("logic/ui/expedition_trial/trial_mult_mystery_box.lua");
+script.run("logic/ui/expedition_trial/trial_buy_buff.lua");
+script.run("logic/ui/expedition_trial/trial_exchange_award.lua");
+script.run("logic/ui/expedition_trial/trial_buff_list.lua");
+script.run("logic/ui/expedition_trial/trial_recover_role.lua");

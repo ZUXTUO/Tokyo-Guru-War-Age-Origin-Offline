@@ -1,0 +1,1 @@
+script.run("logic/scene/fight_scene_management/clownplan/clownplan_fight_manager.lua");

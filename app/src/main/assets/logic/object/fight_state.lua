@@ -1,0 +1,30 @@
+-- FightState = { }
+
+-- EFIGHT = EnumState(FightState, 'FightState')
+-- --战斗开始状态
+-- FightState.Begin = {
+-- 	OnBegin = function(obj)		
+-- 	end,
+-- 	OnUpdate = function(obj)
+-- 	end,
+-- 	OnEnd = function(obj)
+-- 	end,
+-- }
+-- --空状态
+-- FightState.Empty = 
+-- {
+-- 	OnBegin = function(obj) end,
+-- 	OnUpdate = function(obj) end,
+-- 	OnEnd = function(obj) end,
+-- }
+-- --结束状态
+-- FightState.Over = 
+-- {
+-- 	OnBegin = function(obj) 
+-- 		for k,v in pairs(PlayerManager.roleList) do
+-- 			v:SetState(ESTATE.Stand)
+-- 		end	
+-- 	end,
+-- 	OnUpdate = function(obj) end,
+-- 	OnEnd = function(obj) end,
+-- }

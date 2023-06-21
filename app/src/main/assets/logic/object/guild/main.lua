@@ -1,0 +1,8 @@
+script.run("logic/object/guild/guild.lua")
+script.run("logic/object/guild/guild_simple.lua")
+script.run("logic/object/guild/guild_detail.lua")
+script.run("logic/object/guild/guild_member.lua")
+script.run("logic/object/guild/guild_boss_data.lua")
+script.run("logic/object/guild/guild_war.lua")
+script.run("logic/object/guild/guild_war_fight.lua")
+script.run("logic/object/guild/guild_find_ls.lua")

@@ -1,0 +1,293 @@
+--InfoUi = 
+--{
+--	main_obj = nil,
+--	ui_control = {},
+--	ui_skill_control = {},
+--	ui_equip_control = {},
+--	ui_nature_control = {},
+--    need_update_skill = true,
+--    need_update_equip = true
+--};
+
+
+--function InfoUi.Destroy()
+--	InfoUi.main_obj = nil;
+--	for k, v in pairs(InfoUi.ui_control) do
+--		InfoUi.ui_control[k] = nil;
+--	end
+--	for k, v in pairs(InfoUi.ui_skill_control) do
+--		InfoUi.ui_skill_control[k] = nil;
+--	end
+--	for k, v in pairs(InfoUi.ui_equip_control) do
+--		InfoUi.ui_equip_control[k] = nil;
+--	end
+--	for k, v in pairs(InfoUi.ui_nature_control) do
+--		InfoUi.ui_nature_control[k] = nil;
+--	end
+--	InfoUi.Show(false);
+--end
+
+----[[初始化]]
+--function InfoUi.init()
+--    do return end
+--	InfoUi.main_obj = FightUI.get_infomation();
+--	InfoUi.ui_control.spr_skill  = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/bk1" );
+--	InfoUi.ui_control.spr_equip  = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/bk2" );
+--	InfoUi.ui_control.spr_nature = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/bk3" );
+--	InfoUi.ui_control.btn_skill  = ngui.find_button(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_skill/button" );
+--	InfoUi.ui_control.btn_equip  = ngui.find_button(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_equip/button" );
+--	InfoUi.ui_control.btn_nature = ngui.find_button(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_nature/button" );
+--	InfoUi.ui_control.btn_bcak   = ngui.find_button(InfoUi.main_obj, "skill_panel/mark" );
+--	InfoUi.ui_control.lab_name   = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/sp_name_bk/lab_name" );
+--    InfoUi.ui_control.lab_name1  = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/content/lab_name1");
+--    InfoUi.ui_control.lab_pro = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/content/lab_name2");
+
+--    InfoUi.ui_control.lab_level  = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/content/sp_bk1/lab_lv");
+--    InfoUi.ui_control.lab_exp    = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/content/sp_bk1/lab_exp");
+
+--	InfoUi.ui_control.btn_head  = ngui.find_button(InfoUi.main_obj, "skill_panel/Sprite/content/new_big_card_item" );
+--    InfoUi.ui_small_card = SmallCardUi:new({obj=InfoUi.ui_control.btn_head:get_game_object(), res_group=nil})
+--	InfoUi.ui_control.go_skill   = InfoUi.ui_control.spr_skill:get_game_object();
+--	InfoUi.ui_control.go_equip   = InfoUi.ui_control.spr_equip:get_game_object();
+--	InfoUi.ui_control.go_nature  = InfoUi.ui_control.spr_nature:get_game_object();
+--	InfoUi.ui_control.toggle_skill = ngui.find_toggle(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_skill/button");
+--    InfoUi.ui_control.toggle_equip = ngui.find_toggle(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_equip/button");
+--    InfoUi.ui_control.toggle_nature = ngui.find_toggle(InfoUi.main_obj, "skill_panel/Sprite/yeka/yeka_nature/button");
+
+--	InfoUi.ui_control.btn_skill:set_on_click("InfoUi.SkillClick");
+--	InfoUi.ui_control.btn_equip:set_on_click("InfoUi.EquipClick");
+--	InfoUi.ui_control.btn_nature:set_on_click("InfoUi.NatureClick");
+--	InfoUi.ui_control.btn_bcak:set_on_click("InfoUi.BackClick");
+--	--技能
+--	for i = 1,3 do
+--		InfoUi.ui_skill_control['name'..i] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk1/sp_skill_di"..i.."/lab_skill_name");
+--		InfoUi.ui_skill_control['icon'..i] = ngui.find_texture(InfoUi.main_obj, "skill_panel/Sprite/bk1/sp_skill_di"..i.."/sp_skill_bk/sp_skill_icon");
+--		InfoUi.ui_skill_control['desc'..i] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk1/sp_skill_di"..i.."/lab_state1");
+--	end
+--	--装备
+--	for i = 1,6 do
+--        InfoUi.ui_equip_control['root'..i] = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i);
+--		InfoUi.ui_equip_control['name'..i] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i.."/equip_name");
+--		InfoUi.ui_equip_control['scale'..i] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i.."/equip_scale");
+--		InfoUi.ui_equip_control['icon'..i] = ngui.find_texture(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i.."/new_small_card_item/sp_back/human/texture");
+--		InfoUi.ui_equip_control['progress'..i] = ngui.find_progress_bar(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i.."/pro_xuetiao/sp_xuetiao");
+--        InfoUi.ui_equip_control['frame'..i] = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/bk2/bk2_panel/grid/sp_bk"..i.."/new_small_card_item/sp_back/sp_frame");
+--	end
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.cur_hp] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill1");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.normal_attack_1] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill2");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_at_power] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill3");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_at_power] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill4");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_def_power] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill5");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_def_power] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill6");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.move_speed] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill7");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_pene] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill8");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_pene] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill9");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_bloodsuck] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill10");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_bloodsuck] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill11");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.crit_rate] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill12");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.crit_hurt] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill13");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.attack_speed] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill14");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.cool_down_dec] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill15");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.attack_plus] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill16");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_defense] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill17");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_defense] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill18");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_rally] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill19");
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_rally] = ngui.find_label(InfoUi.main_obj, "skill_panel/Sprite/bk3/bk3_panel/bk3/lab_skill20");
+--	--星级
+--	if FightUI.is_ckeckpoints then
+--		for i = 1,6 do
+--			InfoUi.ui_equip_control['scale'..i]:set_text('有效属性比例100%');
+--			InfoUi.ui_equip_control['progress'..i]:set_value(1);
+--		end
+--	end
+--	InfoUi.ui_control.spr_stars = {}
+--    for i = 1,5 do
+--        InfoUi.ui_control.spr_stars[i] = ngui.find_sprite(InfoUi.main_obj, "skill_panel/Sprite/content/sp_bk2/star_di"..i.."/star");
+--    end
+--	InfoUi.SkillClick();
+--end
+
+--function InfoUi.SkillClick(t)
+--	InfoUi.ui_control.go_skill:set_active(true);
+--	InfoUi.ui_control.go_equip:set_active(false);
+--	InfoUi.ui_control.go_nature:set_active(false);
+--	InfoUi.UpdateSkill();
+----    PublicStruct.Open_Follow = not PublicStruct.Open_Follow
+----    ObjectManager.OnFollowChanged()
+--end
+
+--function InfoUi.EquipClick(t)
+--	InfoUi.ui_control.go_skill:set_active(false);
+--	InfoUi.ui_control.go_equip:set_active(true);
+--	InfoUi.ui_control.go_nature:set_active(false);
+--	InfoUi.UpdateEquip();
+--end
+
+--function InfoUi.NatureClick(t)
+--	InfoUi.ui_control.go_skill:set_active(false);
+--	InfoUi.ui_control.go_equip:set_active(false);
+--	InfoUi.ui_control.go_nature:set_active(true);
+--	InfoUi.UpdateNature();
+
+--    FightScene.SetCheckPrintEntityStateClick(not FightScene.GetCheckPrintEntityStateClick());
+--end
+
+--function InfoUi.BackClick(t)
+--	InfoUi.Show(false);
+--end
+
+--function InfoUi.UpdateSkill()
+--    do return end
+--	if InfoUi.entity == nil or not InfoUi.need_update_skill then
+--        return
+--    end
+--    local phy_at_power = InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_at_power)
+--    local energy_at_power = InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_at_power)
+--    local skill = ConfigManager.Get(EConfigIndex.t_skill_info,InfoUi.entity.config.skill6);
+--    if skill then
+--        item_manager.texturePadding(InfoUi.ui_skill_control['icon1'], skill.small_icon);
+--        InfoUi.ui_skill_control['name1']:set_text("技能1")
+--        InfoUi.ui_skill_control['desc1']:set_text(SkillManager.GetSkillIntroduce(phy_at_power, energy_at_power, InfoUi.entity.config.skill6, 1))
+--    end
+--    skill = ConfigManager.Get(EConfigIndex.t_skill_info,InfoUi.entity.config.skill5);
+--    if skill then
+--        item_manager.texturePadding(InfoUi.ui_skill_control['icon2'], skill.small_icon);
+--        InfoUi.ui_skill_control['name2']:set_text("技能2")
+--        InfoUi.ui_skill_control['desc2']:set_text(SkillManager.GetSkillIntroduce(phy_at_power, energy_at_power, InfoUi.entity.config.skill5, 1))
+--    end
+--    skill = ConfigManager.Get(EConfigIndex.t_skill_info,InfoUi.entity.config.skill4);
+--    if skill then
+--        item_manager.texturePadding(InfoUi.ui_skill_control['icon3'], skill.small_icon);
+--        InfoUi.ui_skill_control['name3']:set_text("技能3")
+--        InfoUi.ui_skill_control['desc3']:set_text(SkillManager.GetSkillIntroduce(phy_at_power, energy_at_power, InfoUi.entity.config.skill4, 1))
+--    end
+--    InfoUi.need_update_skill = false
+--end
+
+--function InfoUi.UpdateEquip()
+--    do return end
+--    if InfoUi.entity == nil or not InfoUi.need_update_equip then
+--        return
+--    end
+--	--[[if FightUI.is_ckeckpoints then
+--		return;
+--	end]]
+
+--	--[[local player = Fight.GetPlayer(1);
+--	local value = player.soul_value / 100;
+--	for i = 1,6 do
+--		InfoUi.ui_equip_control['scale'..i]:set_text('有效属性比例'..tostring(player.soul_value)..'%');
+--		InfoUi.ui_equip_control['progress'..i]:set_value(value);
+--	end]]
+
+--	-- local role = FightManager.GetMyCaptain();
+--	-- if not role then return end;
+--	-- local card = g_package.find_card(g_package[1],role.uuid);
+--	-- if not card then return end;
+--	-- local length = table.getn(card.equipment);
+--    local equip_index = 1
+--	local card_human = InfoUi.entity.card
+--    if card_human then
+--	    for i = 1,6 do
+--		    if card_human.equipment[i] then
+--			    local equip = g_dataCenter.package:find_card(2,card_human.equipment[i]);
+--			    if(equip) then
+--                    InfoUi.ui_equip_control['root'..equip_index]:set_active(true)
+--				    InfoUi.ui_equip_control['name'..equip_index]:set_text(equip.name);
+--                    item_manager.texturePadding(InfoUi.ui_equip_control['icon'..equip_index], equip.config.small_icon);
+--                    PublicFunc.SetIconFrameSprite(InfoUi.ui_equip_control['frame'..equip_index], equip.config.rarity)
+--                    equip_index = equip_index+1
+--			    end
+--		    end
+--	    end
+--    end
+--    if equip_index ~= 6 then
+--        for i=equip_index, 6 do
+--            InfoUi.ui_equip_control['root'..i]:set_active(false)
+--        end
+--    end
+--    InfoUi.need_update_equip = false
+--end
+
+--function InfoUi.UpdateNature()
+--    do return end
+--	if InfoUi.entity == nil or not InfoUi.need_update_nature then
+--        return
+--    end
+
+--	InfoUi.ui_nature_control[ENUM.EHeroAttribute.cur_hp]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.cur_hp)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.normal_attack_1]:set_text(""..math.floor(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.normal_attack_1)).."/"..math.floor(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.normal_attack_2)).."/"..math.floor(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.normal_attack_3)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_at_power]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_at_power)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_at_power]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_at_power)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_def_power]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_def_power)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_def_power]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_def_power)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.move_speed]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.move_speed)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_pene]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_pene)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_pene]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_pene)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_bloodsuck]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_bloodsuck)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_bloodsuck]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_bloodsuck)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.crit_rate]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.crit_rate)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.crit_hurt]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.crit_hurt)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.attack_speed]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.attack_speed)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.cool_down_dec]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.cool_down_dec)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.attack_plus]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.attack_plus)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_defense]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_defense)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_defense]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_defense)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.phy_rally]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.phy_rally)));
+--    InfoUi.ui_nature_control[ENUM.EHeroAttribute.energy_rally]:set_text(tostring(InfoUi.entity:GetPropertyVal(ENUM.EHeroAttribute.energy_rally)));
+--    InfoUi.need_update_nature = false
+--end
+
+----[[信息面板显示]]
+--function InfoUi.Show(is_show)
+--    do return end
+--	if InfoUi.main_obj == nil then return end;
+--	if is_show then
+--		local role = FightManager.GetMyCaptain();
+--        InfoUi.entity = role
+--		if role then
+
+--		end
+--        InfoUi.OnShow()
+--    else
+--        InfoUi.entity = nil
+--	end
+
+--	InfoUi.main_obj:set_active(is_show);
+--end
+
+--function InfoUi.OnShow()
+--    do return end
+--    if InfoUi.entity == nil then
+--        return
+--    end
+--    local small_icon = nil
+--    if InfoUi.entity.card == nil then
+--        small_icon = InfoUi.entity.config.small_icon
+--    end
+--    InfoUi.ui_small_card:SetData(InfoUi.entity.card, nil, small_icon)
+--    PublicFunc.SetProType(InfoUi.ui_control.lab_pro, InfoUi.entity.config.pro_type)
+--    InfoUi.ui_control.lab_name:set_text('当前英雄-'..InfoUi.entity.config.name);
+--    InfoUi.ui_control.lab_name1:set_text(InfoUi.entity.config.name);
+--    InfoUi.ui_control.lab_level:set_text("Lv."..InfoUi.entity.level);
+--    if InfoUi.entity.card then
+--        InfoUi.ui_control.lab_exp:set_text("Exp "..InfoUi.entity.card.cur_exp.."/"..InfoUi.entity.card.upexp);
+--    end
+--    for i = 1,5 do
+--        if InfoUi.ui_control.spr_stars[i] then
+--            if i <= InfoUi.entity.config.rarity then
+--                InfoUi.ui_control.spr_stars[i]:set_active(true)
+--            else
+--                InfoUi.ui_control.spr_stars[i]:set_active(false)
+--            end
+--        end
+--    end
+--    InfoUi.need_update_skill = true
+--    InfoUi.need_update_equip = true
+--    InfoUi.need_update_nature = true
+--    --InfoUi.ui_control.toggle_equip:set_value(false)
+--    --InfoUi.ui_control.toggle_nature:set_value(false)
+--    --InfoUi.ui_control.toggle_skill:set_value(true)
+
+--    InfoUi.SkillClick()
+--end

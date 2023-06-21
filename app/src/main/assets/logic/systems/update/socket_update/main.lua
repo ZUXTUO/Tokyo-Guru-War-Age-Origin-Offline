@@ -1,0 +1,2 @@
+--script.run("logic/systems/update/socket_update/auto_update.lua");
+--script.run("logic/systems/update/socket_update/update_download.lua");

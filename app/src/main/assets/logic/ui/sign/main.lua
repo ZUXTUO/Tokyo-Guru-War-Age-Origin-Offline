@@ -1,0 +1,8 @@
+script.run("logic/ui/sign/checkin_enum.lua")
+script.run("logic/ui/sign/checkin_dlg_ui.lua")
+script.run("logic/ui/sign/seven_sign_ui.lua")
+script.run("logic/ui/sign/seven_sign_ui_sign_in.lua")
+script.run("logic/ui/sign/month_sign_ui.lua")
+script.run("logic/ui/sign/seven_sign_mubiao_ui.lua")
+script.run("logic/ui/sign/seven_sign_back_ui.lua")
+script.run("logic/ui/sign/seven_sign_mubiao_back_ui.lua")

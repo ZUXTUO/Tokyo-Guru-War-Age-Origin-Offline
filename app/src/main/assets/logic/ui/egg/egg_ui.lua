@@ -1,0 +1,504 @@
+-- EggUi = Class('EggUi', UiBaseClass);
+-- function EggUi:Init(data)
+-- 	self.pathRes = "assetbundles/prefabs/ui/egg/ui_2601_egg.assetbundle";
+-- 	UiBaseClass.Init(self, data);
+-- end
+
+-- function EggUi:InitData(data)
+-- 	UiBaseClass.InitData(self, data);
+-- 	self.timeId = nil;
+-- 	self.heroTimeId = nil;
+-- 	self.freeHeroTimes = 0;
+-- 	self.heroCD = 0;
+-- 	self.equipTimeId = nil;
+-- 	self.freeEquipTimes = 0;
+-- 	self.equipCD = 0;
+-- 	self.isDraging = false;
+-- 	self.begin_egg_type = 0;
+-- end
+
+-- function EggUi:RegistFunc()
+-- 	UiBaseClass.RegistFunc(self);
+-- 	self.bindfunc["on_time_show"] = Utility.bind_callback(self,EggUi.on_time_show);
+-- 	self.bindfunc["on_hero_time"] = Utility.bind_callback(self,EggUi.on_hero_time);
+-- 	self.bindfunc["on_equip_time"] = Utility.bind_callback(self,EggUi.on_equip_time);
+-- 	self.bindfunc["on_back"] = Utility.bind_callback(self,EggUi.on_back);
+-- 	self.bindfunc["on_arrows_click"] = Utility.bind_callback(self,EggUi.on_arrows_click);
+-- 	self.bindfunc["init_item"] = Utility.bind_callback(self,EggUi.init_item);
+-- 	self.bindfunc["on_rule"] = Utility.bind_callback(self,EggUi.on_rule);
+
+-- 	self.bindfunc["on_drag_begin"] = Utility.bind_callback(self, EggUi.on_drag_begin);
+-- 	self.bindfunc["on_drag_move"] = Utility.bind_callback(self, EggUi.on_drag_move);
+-- 	self.bindfunc["on_drag_end"] = Utility.bind_callback(self, EggUi.on_drag_end);
+
+-- 	self.bindfunc["on_equip_1"] = Utility.bind_callback(self,EggUi.on_equip_1);
+-- 	self.bindfunc["on_equip_10"] = Utility.bind_callback(self,EggUi.on_equip_10);
+-- 	self.bindfunc["on_hero_1"] = Utility.bind_callback(self,EggUi.on_hero_1);
+-- 	self.bindfunc["on_hero_10"] = Utility.bind_callback(self,EggUi.on_hero_10);
+
+-- 	self.bindfunc["on_exchange_equip"] = Utility.bind_callback(self,EggUi.on_exchange_equip);
+-- 	self.bindfunc["on_exchange_hero"] = Utility.bind_callback(self,EggUi.on_exchange_hero);
+-- 	self.bindfunc["gc_exchange_hero"] = Utility.bind_callback(self,EggUi.gc_exchange_hero);
+
+-- 	self.bindfunc["gc_hero_info"] = Utility.bind_callback(self,EggUi.gc_hero_info);
+-- 	self.bindfunc["gc_equip_info"] = Utility.bind_callback(self,EggUi.gc_equip_info);
+-- 	self.bindfunc["gc_use"] = Utility.bind_callback(self,EggUi.gc_use);
+-- end
+
+-- function EggUi:MsgRegist()
+-- 	UiBaseClass.MsgRegist(self);
+--     PublicFunc.msg_regist(msg_activity.gc_niudan_sync_role_info,self.bindfunc['gc_hero_info']);
+--     PublicFunc.msg_regist(msg_activity.gc_niudan_sync_equip_info,self.bindfunc['gc_equip_info']);
+--     PublicFunc.msg_regist(msg_activity.gc_niudan_use,self.bindfunc['gc_use']);
+--     PublicFunc.msg_regist(msg_activity.gc_activity_config,self.bindfunc['gc_exchange_hero']);
+-- end
+
+-- function EggUi:MsgUnRegist()
+-- 	UiBaseClass.MsgUnRegist(self);
+--     PublicFunc.msg_unregist(msg_activity.gc_niudan_sync_role_info,self.bindfunc['gc_hero_info']);
+--     PublicFunc.msg_unregist(msg_activity.gc_niudan_sync_equip_info,self.bindfunc['gc_equip_info']);
+--     PublicFunc.msg_unregist(msg_activity.gc_niudan_use,self.bindfunc['gc_use']);
+--     PublicFunc.msg_unregist(msg_activity.gc_activity_config,self.bindfunc['gc_exchange_hero']);
+-- end
+
+-- function EggUi:InitUI(asset_obj)
+-- 	UiBaseClass.InitUI(self, asset_obj)
+-- 	self.ui:set_parent(Root.get_root_ui_2d());
+-- 	self.ui:set_local_scale(Utility.SetUIAdaptation());
+-- 	self.ui:set_local_position(0,0,0);
+-- 	self.ui:set_name("ui_egg")
+	
+-- 	-- local _btnBack = ngui.find_button(self.ui,"top_other/animation/Panel/btn_rule");
+-- 	-- _btnBack:set_on_click(self.bindfunc["on_rule"]);
+
+
+-- 	-- local _btnRule = ngui.find_button(self.ui,"btn_rule[6]");
+-- 	-- local _btnExchange = ngui.find_button(self.ui,"");
+-- 	local _btnRight = ngui.find_button(self.ui,"btn_right_arrows[41]")
+-- 	_btnRight:set_on_click(self.bindfunc["on_arrows_click"]);
+-- 	local _btnLeft = ngui.find_button(self.ui,"btn_left_arrows[39]")
+-- 	_btnLeft:set_on_click(self.bindfunc["on_arrows_click"]);
+-- 	self.wrapContent = ngui.find_wrap_content(self.ui,"wrap_content[47]");
+-- 	self.scorll = ngui.find_scroll_view(self.ui,"bk[24]");
+-- 	self.wrapContent:set_on_initialize_item(self.bindfunc["init_item"]);
+-- 	self.wrapContent:reset();
+
+-- 	-- self.proEquip = {};
+-- 	self.lab_soul_equip = {};
+-- 	self.nodeEquip = {};
+-- 	self.btn_exchange_equip = {};
+-- 	self.btnEquipRule = {};
+-- 	self.nodeEquipBtn10 = {};
+-- 	self.btnGetEquip1 = {};
+-- 	self.btnGetEquip10 = {};
+-- 	self.labGetEquip10Num = {};
+-- 	self.labGetEquip10Text = {};
+-- 	self.nodeEquipBtn1 = {};
+-- 	self.labGetEquip1Num = {};
+-- 	self.labGetEquip1Text = {};
+-- 	self.nodeEquipCost = {};
+-- 	self.labEquipCost = {};
+-- 	self.lab_soul_hero = {};
+-- 	self.labEquipCnt = {};
+-- 	-- self.topHero = {};
+-- 	-- self.labHeroNum = {};
+-- 	self.nodeHero = {};
+-- 	self.btn_exchange_hero = {};
+-- 	self.btnHeroRule = {};
+-- 	self.nodeHeroBtn10 = {};
+-- 	self.btnGetHero1 = {};
+-- 	self.btnGetHero10 = {};
+-- 	self.labGetHero10Num = {};
+-- 	self.labGetHero10Text = {};
+-- 	self.nodeHeroBtn1 = {};
+-- 	self.labGetHero1Num = {};
+-- 	self.labGetHero1Text = {};
+-- 	self.nodeHeroCost = {};
+-- 	self.labHeroCost = {};
+-- 	self.cont_exchang_soul = {};
+-- 	self.labHeroCnt = {};
+
+-- 	local level = g_dataCenter.player:GetLevel();
+-- 	local vip = ConfigManager.Get(EConfigIndex.t_vip_data,level);
+-- 	local dis = 1;
+-- 	if vip then
+-- 		if vip.niudan_dis then
+-- 			dis = vip.niudan_dis;
+-- 		end
+-- 	end
+
+-- 	for i=1,2 do
+-- 		---------------equip-------------
+-- 		local equip = self.ui:get_child_by_name("content"..i.."/equip[51]");
+-- 		self.nodeEquip[i] = ngui.find_sprite(equip,equip:get_name());
+-- 		self.nodeEquip[i]:set_on_ngui_drag_start(self.bindfunc["on_drag_begin"]);
+-- 		self.nodeEquip[i]:set_on_ngui_drag_move(self.bindfunc["on_drag_move"]);
+-- 		self.nodeEquip[i]:set_on_ngui_drag_end(self.bindfunc["on_drag_end"]);
+-- 		-- self.proEquip[i] = ngui.find_progress_bar(equip, "/content/sp_di/pro_di");
+-- 		self.lab_soul_equip[i] = ngui.find_label(equip, "content/sp_di/lab");
+-- 		self.btn_exchange_equip[i] = ngui.find_button(equip, "content/sp_di/btn");
+-- 		self.btn_exchange_equip[i]:set_on_click(self.bindfunc["on_exchange_equip"]);
+-- 		self.btnEquipRule[i] = ngui.find_button(equip,"btn_rule");
+-- 		self.btnEquipRule[i]:set_event_value("",ENUM.ERuleDesType.ZhuangBeiKu);
+-- 		self.btnEquipRule[i]:set_on_click(self.bindfunc["on_rule"]);
+
+-- 		self.nodeEquipBtn10[i] = equip:get_child_by_name("content_ten[32]");
+-- 		self.btnGetEquip10[i] = ngui.find_button(self.nodeEquipBtn10[i],"btn_ten[52]");
+-- 		self.btnGetEquip10[i]:set_on_click(self.bindfunc["on_equip_10"]);
+-- 		self.labGetEquip10Num[i] = ngui.find_label(self.nodeEquipBtn10[i],"txt[64]");
+-- 		self.labGetEquip10Num[i]:set_text("x"..ConfigManager.Get(EConfigIndex.t_niudan_cost,2).ten_cost*dis);
+-- 		self.labGetEquip10Text[i] = ngui.find_label(self.nodeEquipBtn10[i],"lab[55]");
+
+-- 		self.nodeEquipBtn1[i] = equip:get_child_by_name("content_one[26]");
+-- 		self.btnGetEquip1[i] = ngui.find_button(self.nodeEquipBtn1[i],"btn_one[52]");
+-- 		self.btnGetEquip1[i]:set_on_click(self.bindfunc["on_equip_1"]);
+-- 		self.labGetEquip1Num[i] = ngui.find_label(self.nodeEquipBtn1[i],"txt[53]");
+-- 		self.labGetEquip1Text[i] = ngui.find_label(self.nodeEquipBtn1[i],"lab[55]");
+-- 		self.nodeEquipCost[i] = ngui.find_sprite(self.nodeEquipBtn1[i],"content[63]");
+-- 		self.labEquipCost[i] = ngui.find_label(self.nodeEquipBtn1[i],"txt[64]");
+-- 		self.labEquipCost[i]:set_text("x"..ConfigManager.Get(EConfigIndex.t_niudan_cost,2).once_cost*dis)
+-- 		self.labEquipCnt[i] = ngui.find_label(equip,"equip[51]/lab");
+-- 		---------------hero--------------
+-- 		local hero = self.ui:get_child_by_name("content"..i.."/hero[50]");
+-- 		-- self.topHero[i] = ngui.find_sprite(hero,"content1[13]");
+-- 		-- self.labHeroNum[i] = ngui.find_label(hero,"lab[15]");
+-- 		self.nodeHero[i] = ngui.find_sprite(hero,hero:get_name());
+-- 		self.nodeHero[i]:set_on_ngui_drag_start(self.bindfunc["on_drag_begin"]);
+-- 		self.nodeHero[i]:set_on_ngui_drag_move(self.bindfunc["on_drag_move"]);
+-- 		self.nodeHero[i]:set_on_ngui_drag_end(self.bindfunc["on_drag_end"]);
+-- 		self.cont_exchang_soul[i] = ngui.find_sprite(hero, "content");
+-- 		self.cont_exchang_soul[i]:set_active(false);
+-- 		self.lab_soul_hero[i] = ngui.find_label(hero, "content/sp_di/lab");
+-- 		self.btn_exchange_hero[i] = ngui.find_button(hero, "content/sp_di/btn");
+-- 		self.btn_exchange_hero[i]:set_on_click(self.bindfunc["on_exchange_hero"]);
+-- 		self.btnHeroRule[i] = ngui.find_button(hero,"btn_rule");
+-- 		self.btnHeroRule[i]:set_event_value("",ENUM.ERuleDesType.ZhaoMuZhongXin);
+-- 		self.btnHeroRule[i]:set_on_click(self.bindfunc["on_rule"]);
+
+-- 		self.nodeHeroBtn10[i] = hero:get_child_by_name("content_ten[32]");
+-- 		self.btnGetHero10[i] = ngui.find_button(self.nodeHeroBtn10[i],"btn_ten[52]");
+-- 		self.btnGetHero10[i]:set_on_click(self.bindfunc["on_hero_10"]);
+-- 		self.labGetHero10Num[i] = ngui.find_label(self.nodeHeroBtn10[i],"txt[64]");
+-- 		self.labGetHero10Num[i]:set_text("x"..ConfigManager.Get(EConfigIndex.t_niudan_cost,1).ten_cost*dis);
+-- 		self.labGetHero10Text[i] = ngui.find_label(self.nodeHeroBtn10[i],"lab[55]");
+
+-- 		self.nodeHeroBtn1[i] = hero:get_child_by_name("content_one[26]");
+-- 		self.btnGetHero1[i] = ngui.find_button(self.nodeHeroBtn1[i],"btn_one[52]");
+-- 		self.btnGetHero1[i]:set_on_click(self.bindfunc["on_hero_1"]);
+-- 		self.labGetHero1Num[i] = ngui.find_label(self.nodeHeroBtn1[i],"txt[53]");
+-- 		self.labGetHero1Text[i] = ngui.find_label(self.nodeHeroBtn1[i],"lab[55]");
+-- 		self.nodeHeroCost[i] = ngui.find_sprite(self.nodeHeroBtn1[i],"content[63]");
+-- 		self.labHeroCost[i] = ngui.find_label(self.nodeHeroBtn1[i],"txt[64]");
+-- 		self.labHeroCost[i]:set_text("x"..ConfigManager.Get(EConfigIndex.t_niudan_cost,1).once_cost*dis)
+-- 		self.labHeroCnt[i] = ngui.find_label(hero,"hero[50]/lab");
+-- 	end
+
+-- 	self:UpdateUi();
+-- end
+
+-- function EggUi:init_item(obj,b,real_id)
+-- 	local id = math.abs(real_id);
+-- 	self.egg_type = math.mod(id,2);
+-- 	local equip = ngui.find_sprite(obj,"equip[51]");
+-- 	local hero = ngui.find_sprite(obj,"hero[50]");
+-- 	if self.egg_type == self.begin_egg_type then
+-- 		equip:set_active(false);
+-- 		hero:set_active(true);
+-- 	else
+-- 		equip:set_active(true);
+-- 		hero:set_active(false);
+-- 	end
+-- end
+
+-- function EggUi:on_arrows_click()
+-- 	if not self.isDraging then
+-- 		if self.egg_type == 1 then
+-- 			local def = self.begin_egg_type + 1;
+-- 			self.begin_egg_type = math.mod(def,2);
+-- 		end
+-- 		self.wrapContent:reset();
+-- 		self.scorll:reset_position();
+-- 	end
+-- end
+
+-- function EggUi:UpdateUi()
+-- 	if not UiBaseClass.UpdateUi(self) then
+-- 		return;
+-- 	end
+-- 	self:UpdateTime();
+
+-- 	self.lab_soul_hero[1]:set_text(tostring(PropsEnum.GetValue(IdConfig.PsychicSoul)));
+-- 	self.lab_soul_hero[2]:set_text(tostring(PropsEnum.GetValue(IdConfig.PsychicSoul)));
+-- 	local max = ConfigManager.Get(EConfigIndex.t_discrete,83000040).data or 1;
+-- 	local cur = PropsEnum.GetValue(IdConfig.EquipDebris) or 0;
+-- 	self.lab_soul_equip[1]:set_text(tostring(cur).."/"..tostring(max));
+-- 	self.lab_soul_equip[2]:set_text(tostring(cur).."/"..tostring(max));
+-- 	local pro = cur/max;
+-- 	for i=1,2 do 
+-- 		local equipCnt = g_dataCenter.egg:surplusMustGetEquipCnt();
+-- 		if equipCnt == 10 then
+-- 			self.labEquipCnt[i]:set_text("本次必得紫色装备");
+-- 		else
+-- 			self.labEquipCnt[i]:set_text(equipCnt.."次后必得紫色装备");
+-- 		end
+-- 		local heroCnt = g_dataCenter.egg:surplusMustGetHeroCnt();
+-- 		if heroCnt == 10 then
+-- 			self.labHeroCnt[i]:set_text("本次必得2星以上英雄");
+-- 		else
+-- 			self.labHeroCnt[i]:set_text(heroCnt.."次后必得2星以上英雄");
+-- 		end
+-- 	end
+-- 	-- self.proEquip[1]:set_value(pro);
+-- 	-- self.proEquip[2]:set_value(pro);
+-- end
+
+-- function EggUi:UpdateTime()
+-- 	if not self.ui then return end
+-- 	if self.freeHeroTimes <= 0 then
+-- 		local str = "[ff0000]"..self:_GetTime(self.heroCD).."[-]后免费抽取";
+-- 		for i = 1,2 do
+-- 			self.labGetHero1Text[i]:set_active(true);
+-- 			self.labGetHero1Text[i]:set_text(str);
+-- 			self.labGetHero1Num[i]:set_active(false);
+-- 			self.nodeHeroCost[i]:set_active(true);
+-- 		end
+-- 	else
+-- 		for i=1,2 do
+-- 			self.labGetHero1Text[i]:set_active(false);
+-- 			self.labGetHero1Num[i]:set_active(true);
+-- 			self.nodeHeroCost[i]:set_active(false);
+-- 		end
+-- 	end
+-- 	if self.freeEquipTimes <= 0 then
+-- 		local str = "[ff0000]"..self:_GetTime(self.equipCD).."[-]后免费抽取";
+-- 		for i=1,2 do
+-- 			self.labGetEquip1Text[i]:set_active(true);
+-- 			self.labGetEquip1Text[i]:set_text(str);
+-- 			self.labGetEquip1Num[i]:set_active(false);
+-- 			self.nodeEquipCost[i]:set_active(true);
+-- 		end
+-- 	else
+-- 		for i=1,2 do
+-- 			self.labGetEquip1Text[i]:set_active(false);
+-- 			self.labGetEquip1Num[i]:set_active(true);
+-- 			self.nodeEquipCost[i]:set_active(false);
+-- 		end
+-- 	end
+-- end
+
+-- function EggUi:on_drag_begin()
+-- 	if self.timeId then
+-- 		timer.stop(self.timeId);
+-- 		self.timeId = nil;
+-- 	end
+-- end
+
+-- function EggUi:on_drag_move()
+-- 	for i=1,2 do
+-- 		self.nodeHeroBtn1[i]:set_active(false);
+-- 		self.nodeHeroBtn10[i]:set_active(false);
+-- 		self.nodeEquipBtn1[i]:set_active(false);
+-- 		self.nodeEquipBtn10[i]:set_active(false);
+-- 		self.btnHeroRule[i]:set_active(false);
+-- 		self.btnEquipRule[i]:set_active(false);
+-- 	end
+-- 	self.isDraging = true;
+-- end
+
+-- function EggUi:on_drag_end()
+-- 	self.timeId = timer.create(self.bindfunc["on_time_show"],300,1);
+-- 	self.isDraging = false;
+-- end
+
+-- function EggUi:on_time_show()
+-- 	self.timeId = nil;
+-- 	for i=1,2 do
+-- 		self.nodeHeroBtn1[i]:set_active(true);
+-- 		self.nodeHeroBtn10[i]:set_active(true);
+-- 		self.nodeEquipBtn1[i]:set_active(true);
+-- 		self.nodeEquipBtn10[i]:set_active(true);
+-- 		self.btnHeroRule[i]:set_active(true);
+-- 		self.btnEquipRule[i]:set_active(true);
+-- 	end
+-- end
+
+-- function EggUi:on_equip_1()
+-- 	if self.click then return end;
+-- 	self.click = true;
+-- 	msg_activity.cg_niudan_use(ENUM.NiuDanType.Equip,false);
+-- end
+
+-- function EggUi:on_equip_10()
+-- 	if self.click then return end;
+-- 	self.click = true;
+-- 	msg_activity.cg_niudan_use(ENUM.NiuDanType.Equip,true);
+-- end
+
+-- function EggUi:on_hero_1()
+-- 	if self.click then return end;
+-- 	self.click = true;
+-- 	msg_activity.cg_niudan_use(ENUM.NiuDanType.Hero,false);
+-- end
+
+-- function EggUi:on_hero_10()
+-- 	if self.click then return end;
+-- 	self.click = true;
+-- 	msg_activity.cg_niudan_use(ENUM.NiuDanType.Hero,true);
+-- end
+
+-- function EggUi:on_exchange_equip()
+-- 	--uiManager:PushUi(EUI.EggEquipExchangeUI);
+-- 	self.begin_egg_type = 1;
+-- end
+
+-- function EggUi:on_exchange_hero()
+-- 	msg_activity.cg_activity_config(MsgEnum.eactivity_time.eActivityTime_tongLinZhiHunDuiHuan)
+-- 	--uiManager:PushUi(EUI.UiHeroStarUpEgg);
+-- end
+
+-- function EggUi:gc_exchange_hero(result, system_id, cf)
+-- 	uiManager:PushUi(EUI.UiHeroStarUpEgg);
+-- 	self.begin_egg_type = 0;
+-- end
+
+-- function EggUi:on_hero_time()
+-- 	self.heroCD = self.heroCD - 1;
+-- 	if self.heroCD <= 0 then
+-- 		timer.stop(self.heroTimeId);
+-- 		self.heroTimeId = nil;
+-- 	end
+-- 	self:UpdateTime();
+-- end
+
+-- function EggUi:on_equip_time()
+-- 	self.equipCD = self.equipCD - 1;
+-- 	if self.equipCD <= 0 then
+-- 		timer.stop(self.equipTimeId);	
+-- 		self.equipTimeId = nil;
+-- 	end
+-- 	self:UpdateTime();
+-- end
+
+-- function EggUi:on_back()
+-- 	uiManager:PopUi();
+-- end
+-- function EggUi:gc_hero_info(byfreeTime,CDLeftTime,useOnceTimes,userTenTimes)
+-- 	self.heroCD = CDLeftTime;
+-- 	self.freeHeroTimes = byfreeTime;
+-- 	if byfreeTime <= 0 then
+-- 		self.heroTimeId = timer.create(self.bindfunc["on_hero_time"],1000,-1);
+-- 	end
+-- 	self:UpdateTime();
+-- end
+
+-- function EggUi:gc_equip_info(byfreeTime,CDLeftTime,useOnceTimes,userTenTimes)
+-- 	self.equipCD = CDLeftTime;
+-- 	self.freeEquipTimes = byfreeTime;
+-- 	if byfreeTime <= 0 then
+-- 		self.equipTimeId = timer.create(self.bindfunc["on_equip_time"],1000,-1);
+-- 	end
+-- 	self:UpdateTime();
+-- end
+
+-- function EggUi:gc_use(result, egg_type, bTen, vecReward, vecItem)
+-- 	if tonumber(result) ~= 0 then
+-- 		self.click = false;
+-- 		PublicFunc.GetErrorString(result);
+-- 		return;
+-- 	end
+-- 	if tonumber(egg_type) == ENUM.NiuDanType.Hero then
+-- 		-- 英雄
+-- 		if bTen then
+-- 			--CommonHeroAward.Start(vecReward,vecItem,10,true);
+-- 			EggHeroGetTen.Start({vecReward = vecReward, vecItem = vecItem})
+-- 			EggHeroGetTen.SetCallback(self.on_hero_10, self,self.UnlockBtn,self);
+-- 		else
+-- 			--CommonHeroAward.Start(vecReward,vecItem,1,true);
+-- 			if PropsEnum.IsRole(vecReward[1].id) then
+-- 				EggHeroGetOne.Start({vecReward = vecReward, vecItem = vecItem});
+-- 				EggHeroGetOne.SetCallback(self.on_hero_1, self,self.UnlockBtn,self);
+-- 			else
+-- 				CommonAward.Start(vecReward, 1);
+-- 			end
+-- 		end
+-- 		--CommonHeroAward.SetDeployCallback(EggUi.Deploy, self, {type=egg_type,bTen=bTen,});
+-- 	else
+-- 		-- 装备
+-- 		if bTen then
+-- 			--CommonAward.Start(vecReward,1,10,true);
+-- 			EggEquipGetTen.Start({vecReward = vecReward})
+-- 			EggEquipGetTen.SetCallback(self.on_equip_10, self,self.UnlockBtn,self)
+-- 		else
+-- 			EggEquipGetOne.Start({vecReward = vecReward})
+-- 			EggEquipGetOne.SetCallback(self.on_equip_1, self,self.UnlockBtn,self)
+-- 			--CommonAward.Start(vecReward,1,0,true);
+-- 		end
+-- 		--CommonAward.SetDeployCallback(EggUi.Deploy, self, {type=egg_type,bTen=bTen,});
+-- 	end
+-- 	-- self:UpdateUi();
+--     -- app.log(table.tostring({result,type,bTen, vecReward}))
+-- end
+
+-- function EggUi:UnlockBtn()
+-- 	self.click = false;
+-- 	self:UpdateUi();
+-- end
+
+-- function EggUi:on_rule(t)
+-- 	UiRuleDes.Start(t.float_value);
+-- end
+
+-- function EggUi:Deploy(param)
+-- 	if tonumber(param.type) == 0 then
+-- 		if param.bTen then
+-- 			EggUi:on_hero_10();
+-- 		else
+-- 			EggUi:on_hero_1();
+-- 		end
+-- 	else
+-- 		if param.bTen then
+-- 			EggUi:on_equip_10();
+-- 		else
+-- 			EggUi:on_equip_1();
+-- 		end
+-- 	end
+-- end
+
+-- function EggUi:_GetTime(sec)
+-- 	local day,hour,min,sec = TimeAnalysis.ConvertSecToDayHourMin(sec);
+-- 	local str;
+-- 	if tonumber(day) ~= 0 then
+-- 		str = string.format("%d天 %02d:%02d:%02d",tonumber(day),tonumber(hour),tonumber(min),tonumber(sec));
+-- 		-- str = day.."澶?"..hour..":"..min..":"..sec;
+-- 	else
+-- 		str = string.format("%02d:%02d:%02d",tonumber(hour),tonumber(min),tonumber(sec));
+-- 		-- str = hour..":"..min..":"..sec;
+-- 	end
+-- 	return str;
+-- end
+
+
+-- function EggUi:DestroyUi()
+-- 	UiBaseClass.DestroyUi(self);
+--     self.begin_egg_type = 0;
+--     self.btnGetHero1 = nil;
+--     self.btnGetEquip1 = nil;
+--     if self.timeId then
+--     	timer.stop(self.timeId);
+--     end
+--     if self.heroTimeId then
+--     	timer.stop(self.heroTimeId );
+--     	self.heroTimeId = nil;
+--     end
+--     if self.equipTimeId then
+--     	timer.stop(self.equipTimeId );
+--     	self.equipTimeId = nil;
+--     end
+-- end
+
+-- function EggUi:Restart(data)
+-- 	if UiBaseClass.Restart(self, data) then
+-- 		msg_activity.cg_niudan_request_role_info();
+--     	msg_activity.cg_niudan_request_equip_info();
+-- 	end
+-- end

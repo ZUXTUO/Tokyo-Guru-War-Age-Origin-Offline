@@ -1,0 +1,128 @@
+----
+---- Created by IntelliJ IDEA.
+---- User: pokong
+---- Date: 2015/11/20
+---- Time: 15:22
+---- To change this template use File | Settings | File Templates.
+----
+--
+--script.run "logic/app_config/app_config.lua"
+--
+--get_update_max = {
+--	--[[外网]]
+--	ip = "103.17.41.91";
+--	port = 8081;
+----	[[ATR]]
+----	ip = "192.168.2.9";
+----	port = 7050;
+--
+--	deviceId = 30000;
+--	check_max_num = 5;--[[自动重连最大次数]]
+--	connect_num_now = 0;--[[连接文件服务器当前次数]]
+--	check_filelist_num_now = 0;--[[获取文件例表当前次数]]
+--
+--	is_connect = false;--[[是否已经连接上]]
+--	is_check = false;--[[是否已经开始check]]
+--	is_get_filelist = false;--[[是否得到文件更新例表]]
+--
+--	versionNumber = 0;
+--	versionLstIndex = 1;
+--	versionLst = {};
+--
+--	update_callback = nil;
+--};
+--
+--
+--function get_update_max.init()
+--
+----	get_update_max.ip = AppConfig.socket.art.update_ip;
+----	get_update_max.port = AppConfig.socket.art.update_port;
+----	get_update_max.deviceId = AppConfig.socket.art.update_device_id;
+--
+--	app.log(string.format("ip = %s,port = %s,deviceID = %s",tostring(get_update_max.ip),tostring(get_update_max.port),tostring(get_update_max.deviceId)));
+--
+--
+--	get_update_max.connect_num_now = get_update_max.connect_num_now + 1;
+--	gupdate.set_op_listener("get_update_max.on_connect", "get_update_max.on_close", "get_update_max.on_error", "get_update_max.on_device_error", "get_update_max.on_op_version");
+--	gupdate.set_device_id(get_update_max.deviceId);
+--
+--	--step 1
+--	gupdate.async_connect(get_update_max.ip, get_update_max.port);
+--	timer.create("get_update_max.async_connect", 1000, 1);
+--end
+--
+--function get_update_max.on_close()
+--	app.log("[get_update_max.on_close] on_close");
+--end
+--function get_update_max.on_error()
+--	app.log("[get_update_max.on_error] on_error");
+--end
+--function get_update_max.on_device_error()
+--	app.log("[get_update_max.on_device_error] on_device_error");
+--end
+--
+--function get_update_max.async_connect()
+--	if get_update_max.is_connect then return end;
+--	if get_update_max.connect_num_now >= get_update_max.check_max_num then
+--		app.log("Connect Fail！Please contact GM and Try again later！");
+--		return;
+--	end
+--	get_update_max.connect_num_now = get_update_max.connect_num_now + 1;
+--	app.log("async_connect Connect....  "..get_update_max.connect_num_now);
+--	gupdate.close_connect();
+--	gupdate.async_connect(get_update_max.ip, get_update_max.port);
+--	timer.create("get_update_max.async_connect", 1000, 1);
+--end
+--
+--function get_update_max.on_connect()
+--	get_update_max.is_connect = true;
+--	--step 1 response
+--	app.log("[get_update_max.on_connect] on_connect");
+--	timer.create("get_update_max.start_check_op", 500, 1);
+--end
+--
+--function get_update_max.start_check_op()
+--	get_update_max.is_check = true;
+--	--step 2
+--	app.log("[get_update_max start_check_op] version number: "..get_update_max.versionNumber);
+--	timer.create("get_update_max.check_file_list", 100, 1);
+--end
+--
+----[[check file list]]
+--function get_update_max.check_file_list()
+--	if get_update_max.check_filelist_num_now >= get_update_max.check_max_num then
+--		app.log("Check File Fail！Please contact GM and Try again later！");
+--		--[[内部测试 如果连接不上文件服务器就直接进入游戏]]
+--		--		get_update_max.on_complete_callback();
+--		return;
+--	end
+--
+--	get_update_max.check_filelist_num_now = get_update_max.check_filelist_num_now + 1;
+--	app.log("Check File....  "..get_update_max.check_filelist_num_now);
+--	gupdate.check_op(get_update_max.versionNumber);
+--	timer.create("get_update_max.check_and_goon", 1000, 1);
+--end
+--
+----[[check and go on]]
+--function get_update_max.check_and_goon()
+--	if not get_update_max.is_get_filelist then
+--		gupdate.close_connect();
+--		timer.create("get_update_max.init", 1000, 1);
+--	end
+--end
+--
+--function get_update_max.on_op_version(t)
+--	get_update_max.is_get_filelist = true;
+--
+--	--step 2 response
+--	app.log("original list: "..#t);
+--
+--	if #t > 0 then
+--		get_update_max.versionNumber = get_update_max.versionNumber + #t;
+--		app.log("[get_update_max start_check_op] version number: "..get_update_max.versionNumber);
+--		gupdate.check_op(get_update_max.versionNumber);
+--	else
+--		app.log("*************Update MAX NUM*************"..tostring(get_update_max.versionNumber));
+--		return;
+--	end
+--end

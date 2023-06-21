@@ -1,0 +1,5 @@
+script.run("logic/object/play_method/fuzion/fuzion.lua")
+script.run("logic/object/play_method/fuzion/fuzion_player.lua")
+script.run("logic/object/play_method/fuzion/fuzion_fighter.lua")
+script.run("logic/object/play_method/fuzion/fuzion_champion.lua")
+script.run("logic/object/play_method/fuzion/fuzion_rank.lua")
