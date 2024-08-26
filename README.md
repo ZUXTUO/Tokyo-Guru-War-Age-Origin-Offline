@@ -16,6 +16,7 @@ Tokyo Guru War Age Origin Source Code
 2023/1/5------------[修复]帧数限制<br>
 2023/5.28-----------[修复]背包无法储存角色数据egg_hero_ui.lua的751行。有测试函数。<br>
 2023/6/20-----------3V3暂时没法正常工作。<br>
+2024/8/26-----------[修复]序章读取存在问题<br>
 
 # 关键点
 game_begin.lua 的 GameBegin.load_first_res() 函数里有序章和新手教程的加载和跳过功能。<br><br>
