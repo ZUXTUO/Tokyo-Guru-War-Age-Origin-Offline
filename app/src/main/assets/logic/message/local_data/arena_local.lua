@@ -7,7 +7,7 @@ local _promote_player = nil;
 for i = 1, 21 do
 	_playerData[i] = {};
 	_playerData[i].playerGid = tostring(9990000 + i);
-	_playerData[i].szPlayerName = "电脑" .. i;			-- 玩家名
+	_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
 	_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
 	_playerData[i].rankIndexID = i;						-- 排名		new
 	
@@ -44,17 +44,16 @@ local function _SetLocalPlayerData()
 	_playerData[15].playerGid = player.playerid;
 	_playerData[15].szPlayerName = player.name;
 	_playerData[15].teamInfo.cards=player:GetDefTeam()
-	--[[
 	local heroLineup = {}
 	for i, v in ipairs(_playerData[15].teamInfo.cards) do
 		table.insert(heroLineup, 5+i)
 	end
-	]]
+
 	-- 构造1个晋级战对手
 	_promote_player = {
 		playerGid = tostring(9990100);
 		szPlayerName = "晋级测试对手";			-- 玩家名
-		fightPoint = 10100;						-- 战力		new
+		fightPoint = 10100;				-- 战力		new
 		rankIndexID = 100;						-- 排名		new
 		vecCardsRole = {};
 		vecCardsEquip = {};

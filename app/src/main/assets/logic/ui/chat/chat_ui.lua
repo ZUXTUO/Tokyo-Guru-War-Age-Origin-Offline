@@ -452,11 +452,9 @@ function ChatUI:HandleChatFightUI()
 end
 
 function ChatUI:UpdateChatFightTimes()
-    --[[
     local info = g_dataCenter.chatFight:GetAwardInfo()
     self.lblChatFightTimes:set_text(string.format(_UIText[23], info.fightTimes))
     self.lblChatFightWinTimes:set_text(string.format(_UIText[24], info.winTimes))
-    --]]
 end
 
 function ChatUI:CheckChatFightTime()

@@ -133,7 +133,7 @@ function MobaReadyEnterUI:UpdateUi()
 		local data = self.playerData[v]
 		if data == nil then return end
 		if data.image == nil then
-			self.playerList[i].uiPlayer:SetRoleId(data.image)
+		self.playerList[i].uiPlayer:SetRoleId(data.image)
 		end
 		self.playerList[i].name:set_text(data.name)
 

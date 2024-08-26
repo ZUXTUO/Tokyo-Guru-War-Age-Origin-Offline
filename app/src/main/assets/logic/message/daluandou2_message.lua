@@ -4,7 +4,7 @@ msg_daluandou2 = msg_daluandou2 or {}
 local isLocalData = true;
 
 
--- 请求我的大乱逗信息
+-- 请求我的大乱斗信息
 function msg_daluandou2.cg_request_my_daluandou2_data()
     GLoading.Show(GLoading.EType.msg)
     if isLocalData then

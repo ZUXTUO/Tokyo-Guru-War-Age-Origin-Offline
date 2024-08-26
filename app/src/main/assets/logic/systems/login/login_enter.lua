@@ -654,9 +654,7 @@ function login_enter.enter_ok_goon()
 --	if AppConfig.get_enable_update_file() then
 --		Root.update_file();
 --	else
-
 		app.log("Resourceload.Start");
-
 		--[[recource_load]]
 		script.run("logic/systems/load/resource_load.lua");
 		Resourceload.Start();

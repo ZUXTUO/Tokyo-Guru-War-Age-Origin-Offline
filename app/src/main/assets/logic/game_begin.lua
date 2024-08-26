@@ -36,16 +36,6 @@ function GameBegin.load_first_res()
 		SmallCardUi.SetAtlas120(Root.ui_picture_human_120_atlas);
 		--初始化视频播放插件
 		-- util.media_player_init()
-
-		app.log("修改新手教程和序章");
-		--有新手教程
-		--NoticeManager.GetTeach();
-		--无新手教程
-		NoticeManager.NoTeach();
-		--跳过序章
-		NoticeManager.SkipScence();
-		--不跳过序章
-		--NoticeManager.NoSkipScence();
 	end
 end
 
@@ -319,9 +309,6 @@ end
 --[[游戏加载完成后必要数据初始化]]
 function GameBegin.initData()
 	app.log("GameBegin.initData")
-
-	--script.run("logic/systems/log/main.lua");
-	--g_dataCenter.init()
 	
 	--[[音效]]
 	AudioManager.Stop(nil, true);
@@ -341,7 +328,7 @@ function GameBegin.initData()
 	g_uiManager = UiManager:new()
     uiManager = g_uiManager
 	ObjectGroupManager.Init()
-
+	
 --  local data = {};
 --	data.item_id = 20000006;
 --  data.number = 1;

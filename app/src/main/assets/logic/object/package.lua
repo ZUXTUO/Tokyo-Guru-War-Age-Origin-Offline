@@ -25,6 +25,8 @@ function Package:Init()
 	self.initDataFlag = false;
 end
 
+
+
 -----------------------------------------外部接口-------------------------------------
 function Package:Foreach(list_id, func)
     for k, v in pairs(self.list[list_id]) do
@@ -92,7 +94,7 @@ function Package:DeletCard(list_id,uuid,count)
 	if card then
 		if list_id == ENUM.EPackageType.Hero then
 			--满星加一个数量
-			local maxRarityLevel = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteId_upgradeStarMaxLevel).data;
+						local maxRarityLevel = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteId_upgradeStarMaxLevel).data;
 			if card.rarity == maxRarityLevel then
 				self.manStarCount = self.manStarCount - 1;
 			end
@@ -189,7 +191,7 @@ function Package:AddCard(list_id,card)
 		if list_id == ENUM.EPackageType.Hero then
 			card = CardHuman:new(card);
 			--满星加一个数量
-			local maxRarityLevel = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteId_upgradeStarMaxLevel).data;
+						local maxRarityLevel = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteId_upgradeStarMaxLevel).data;
 			local isMaxStar = false;
 			if card.rarity == maxRarityLevel then
 				self.manStarCount = self.manStarCount + 1;

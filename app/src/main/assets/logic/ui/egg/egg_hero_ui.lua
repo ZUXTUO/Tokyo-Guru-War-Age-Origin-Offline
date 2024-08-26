@@ -641,8 +641,9 @@ function EggHeroUi:on_buy_1(t)
         --local heroCid = ConfigManager.Get(EConfigIndex.t_discrete,MsgEnum.ediscrete_id.eDiscreteID_guide_first_egg_hero_id).data -- 第一个英雄
 
         local heroCid = 30005000;
-        if g_dataCenter.egg.useOnceHeroTimes == 0 then
-            app.log("第一次抽卡，释放假扭蛋");
+    if g_dataCenter.egg.useOnceHeroTimes == 0 then
+        self.isGuide = true
+        app.log("第一次抽卡，释放假扭蛋");
             g_dataCenter.egg.useOnceHeroTimes = 1;
             heroCid = 30005000;
         else
@@ -767,7 +768,6 @@ function EggHeroUi:on_buy_1(t)
 
     self:BuyEgg(buyType, false);
 end
-
 function EggHeroUi:on_buy_10(t)
     --[[
     local buyType;

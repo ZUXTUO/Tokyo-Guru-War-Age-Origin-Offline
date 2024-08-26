@@ -100,7 +100,7 @@ end
 
 
 
---初始化
+
 
 function CardHuman:Init(data)
 	if not data.not_init_data then

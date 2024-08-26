@@ -109,7 +109,6 @@ function Role3d:LoadObjFromRole()
 			
 		else
 			if modelID == self.modelID then
-				--self.isGray = true
 				if self.isGray ~= true then 
 					self.time_id1 = timer.create(self.bindfunc["on_begin_animator"],100,1);
 				else 

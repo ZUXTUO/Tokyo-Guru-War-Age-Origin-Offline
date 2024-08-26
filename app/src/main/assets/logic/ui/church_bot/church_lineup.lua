@@ -663,7 +663,7 @@ end
 
 function ChurchBotlineup:on_team_change1()
     
-    --self:clearteam()
+    self:clearteam()
     local prayindex = g_dataCenter.ChurchBot:getmyprayIndex()
     
     if prayindex == 1 then
@@ -705,7 +705,7 @@ end
 
 function ChurchBotlineup:on_team_change2()
     
-    --self:clearteam()
+    self:clearteam()
     local prayindex = g_dataCenter.ChurchBot:getmyprayIndex()
     
     if prayindex == 1 then

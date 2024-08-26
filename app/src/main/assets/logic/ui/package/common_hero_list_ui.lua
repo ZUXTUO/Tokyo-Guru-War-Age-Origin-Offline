@@ -128,15 +128,12 @@ function CommonHeroListUI:UpdateUi(ccgType)
 end
 
 --[[显示英雄列表]]
-function CommonHeroListUI:init_item_wrap_content(obj, index)
+function CommonHeroListUI:init_item_wrap_content(obj, index)  
     local row = obj:get_instance_id();
 
     local heroData = self.heroDataList[index]
     local heroCard = self.heroSmallCardList[row]
     local fightPower = self.heroFightPower[row];
-
-    --obj:set_name(tostring(heroData.index));
-
     if heroCard == nil then        
         fightPower = {
             --objDi = obj:get_child_by_name("big_card_item_80/sp_di"),

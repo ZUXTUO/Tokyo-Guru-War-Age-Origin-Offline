@@ -353,15 +353,14 @@ function ArenaMainUI:UpdateUi()
 		if cardInfo == nil then
 			fightPoint = 9999999
 		else
-			fightPoint = fightPoint + cardInfo:GetFightValue(--[[ENUM.ETeamType.arena]])
-		end
+		fightPoint = fightPoint + cardInfo:GetFightValue(--[[ENUM.ETeamType.arena]])
+	end
 	end
 	self.labFightPoint:set_text("" .. fightPoint)
 
 	-- 我的排名
 	--[[
 	local showRank = self.dataCenter.rank
-	
 	-- 特殊规则说明：20000以后都显示假排名
 	if showRank > 20000 or showRank == nil then
 		showRank = self.dataCenter.maskRank

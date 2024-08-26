@@ -87,13 +87,13 @@ function HeroTrial:GetRecommendPowerLevel(cardInfo)
     local fightValue = cardInfo:GetFightValue()
     local config = ConfigManager.Get(EConfigIndex.t_hero_trial_power, g_dataCenter.player:GetLevel())
     if not config == nil then 
-        for i=1, 6 do
-            if fightValue >= config["diff_"..i.."_start"] and
-                fightValue <= config["diff_"..i.."_end"] then
-                result = i
-                break;
-            end
+    for i=1, 6 do
+        if fightValue >= config["diff_"..i.."_start"] and
+           fightValue <= config["diff_"..i.."_end"] then
+            result = i
+            break;
         end
+    end
     end
 
     return result

@@ -51,6 +51,7 @@ function EnterShow.Start(startLoadCallback, enterGameCallback)
        _last_record = _record
     end
 
+
     if _record == -1 then
     elseif _record == 0 then
         app.log("GameBegin 巅峰展示");
@@ -69,12 +70,23 @@ function EnterShow.Start(startLoadCallback, enterGameCallback)
         app.log("EnterShow.Start [3] 进入游戏");
         EnterShow.CallStartBack()
 
+        --g_dataCenter.player.gold = 999999;
+        --g_dataCenter.player.crystal = 999999;
+        --g_dataCenter.player.red_crystal = 999999;
+
         --g_player_local.cg_rand_name();--随机名称
         --g_player_local.cg_set_name();--设置角色名
         g_player_local.cg_create_player_info();--创建本地角色
-        
         GameBegin.login_bg_destroy();
         SceneManager.PushMainCityScene();
+
+        --[[
+        app.log("前往主城");
+        GameInfoForThis.LoadNum = 1;
+        GameInfoForThis.SceneInfo = "61000000";
+        client_proxy.pc_enter_game(0);--主城预制体搭建主要函数
+        GameBegin.login_bg_destroy();
+        ]]
     end
 end
 

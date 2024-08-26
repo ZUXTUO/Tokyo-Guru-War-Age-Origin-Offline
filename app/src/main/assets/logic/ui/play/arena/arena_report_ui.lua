@@ -86,9 +86,9 @@ end
 function ArenaReportUI:SetReportList(reportList)
 	self.reportList = {}
 	if not reportList == nil then
-		for i, v in ipairs(reportList) do
-			table.insert(self.reportList, ArenaFightReport:new(v));
-		end
+	for i, v in ipairs(reportList) do
+		table.insert(self.reportList, ArenaFightReport:new(v));
+	end
 	end
 	self:SortReportData()
 end

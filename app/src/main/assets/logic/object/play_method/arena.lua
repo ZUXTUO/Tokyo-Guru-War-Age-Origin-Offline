@@ -3,35 +3,6 @@
 ArenaPlayer = Class('ArenaPlayer')
 
 function ArenaPlayer:Init(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "电脑" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	self.rank		= data.rankIndexID or 0
 	self.leaderId	= data.LeaderNumber or 0
 	self.fightPoint	= data.fightPoint or 0
@@ -48,35 +19,6 @@ function ArenaPlayer:Init(data)
 end
 
 function ArenaPlayer:UpdateData(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	if data.rankIndexID then 	self.rank = data.rankIndexID end
 	if data.LeaderNumber then 	self.leaderId = data.LeaderNumber end
 	if data.fightPoint then 	self.fightPoint = data.fightPoint end
@@ -92,35 +34,6 @@ end
 ArenaFighter = Class('ArenaFighter')
 
 function ArenaFighter:Init(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	self.rank		= data.rankIndexID or 0
 	self.fightPoint	= data.fightPoint or 0
 	self.playerid 	= data.playerGid or 0
@@ -138,35 +51,6 @@ function ArenaFighter:Init(data)
 end
 
 function ArenaFighter:UpdateOtherData(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	if data == nil then
 		app.log("没有挑战的竞技场对手数据")
 		return;
@@ -180,35 +64,6 @@ end
 ArenaFightReport = Class('ArenaFightReport')
 
 function ArenaFightReport:Init(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	self.rankChange		= data.rankIndexChange or 0
 	self.curRank		= data.curRankIndex or 0
 	self.oldRank		= data.oldRankIndex or 0
@@ -233,35 +88,6 @@ Arena = Class("Arena", PlayMethodBase)
 
 -- 初始化
 function Arena:Init(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	PlayMethodBase.Init(self, data)
 	
 	self.msgEnumId = MsgEnum.eactivity_time.eActivityTime_arena;
@@ -309,35 +135,6 @@ function Arena:GetVipTimes()
 end
 
 function Arena:ClearData(data)
-	local _playerData = {};
-	for i = 1, 21 do
-		_playerData[i] = {};
-		_playerData[i].playerGid = tostring(9990000 + i);
-		_playerData[i].szPlayerName = "单机测试" .. i;			-- 玩家名
-		_playerData[i].fightPoint = 10000 - i * 100;	-- 战力		new
-		_playerData[i].rankIndexID = i;						-- 排名		new
-		
-		if i > 10 then
-			_playerData[i].rankIndexID = 2 * i;
-		end
-		_playerData[i].vecCardsRole = {}
-		_playerData[i].vecCardsEquip = {}
-		for j = 1, 3 do
-			_playerData[i].vecCardsRole[j] = {
-				dataid = "1000000" + j,
-				number = 30001000 + 5 * (j - 1),
-				level = 20,
-			}
-		end
-	
-		_playerData[i].teamInfo = {
-			teamid=8,
-			cards=_playerData[i].vecCardsRole,
-			heroLineup={6,7,8},
-			soldierLineup={2,3,4,11,12},
-		}
-	end
-	data			= _playerData
 	PlayMethodBase.ClearData(self, data);
 
 	self.fightResult = nil
@@ -499,8 +296,8 @@ function Arena:SetMyData(myRank, buyTimes, thirdTimes, coldTime, refreshTimes, p
 	self.cleanCDtimes = cleanCDtimes or 0
 	self.historyTopRank = historyRankIndex or 0
 	if not pointRewardInfo == nil then
-		for i, v in ipairs(pointRewardInfo) do
-			table.insert(self.pointRewardInfo, Utility.to_bool(v))
+	for i, v in ipairs(pointRewardInfo) do
+		table.insert(self.pointRewardInfo, Utility.to_bool(v))
 		end
 	end
     local pointrewardconfig = ConfigManager._GetConfigTable(EConfigIndex.t_arena_day_point_reward)
@@ -833,7 +630,6 @@ end
 function Arena:GetShowRank()
 	--[[
 	local result = self.rank
-
     -- 特殊规则说明：20000以后都显示假排名
     if result > 20000 then
         result = self.maskRank

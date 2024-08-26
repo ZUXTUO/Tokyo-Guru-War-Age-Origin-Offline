@@ -108,7 +108,6 @@ function Loading:Show(delay, auto_close_time, can_click)
 		self.isLoading = true;
 		app.log("#lhf#show true no delay."..tostring(uuid));
 	end
-	
 	self.timeout[uuid] = timer.create(
 		Utility.create_obj_callback(self,self.on_time_out,0,uuid),
 		auto_close_time, 1);

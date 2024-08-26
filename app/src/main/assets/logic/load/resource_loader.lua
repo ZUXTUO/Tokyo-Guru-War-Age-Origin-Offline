@@ -101,7 +101,7 @@ function ResourceLoader.LoadAsset(path, callback, group, unloadRawFile)
     else
         ResourceLoader.SetAssetLoadedCallback(path, group, callback, unloadRawFile)
         if not ResourceManager.IsLoading(path) then
-            --app.log("start load file .."..path.." "..PublicFunc.QueryCurTime())
+            app.log("start load file .."..path.." "..PublicFunc.QueryCurTime())
             ResourceManager.AddLoading(path)
             ResourceLoader.assetObjLoader:load(path)
             ResourceRecord.Add(path)
@@ -286,13 +286,13 @@ function ResourceLoader.__GO(index)
     if #params.asset_task > 0 then
         app.log("开始加载assetbundle")
         for i=1, #params.asset_task do
-            --app.log("assetloader preload asset : " .. params.asset_task[i])
+            app.log("assetloader preload asset : " .. params.asset_task[i])
             local funcAssetLoaded = Utility.create_callback_ex(ResourceLoader.OnGroupAssetLoaded, true, 4, index)
             ResourceLoader.LoadAsset(params.asset_task[i], funcAssetLoaded, ResourceLoader.group_loader);
         end
 
         while params.finish_asset_num ~= #params.asset_task do
-            --app.log(" wait complete.."..params.finish_asset_num)
+            app.log(" wait complete.."..params.finish_asset_num)
             coroutine.yield()
         end
     end

@@ -12,100 +12,100 @@ badges_local = {};
 local _timerId = nil
 
 -------------------------------------返回抢夺队伍列表-------------------------------------
-local _contingentData = {
-	[1] = {
-		player_id = 101; --玩家ID
-		player_name = "测试玩家名字1"; --玩家名字
-		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
-		fight = 101; --战力值
-		reward_id = 20000001;--奖励物品ID
-		reward_num = 1; --奖励物品数量
-		cards_list = {
-			{
-				id = 30000001; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000002; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000003; --卡ID
-				lv = 1; --等级
-			};
-		}
-	};
-
-	[2] = {
-		player_id = 102; --玩家ID
-		player_name = "测试玩家名字2"; --玩家名字
-		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
-		fight = 102; --战力值
-		reward_id = 20000001;--奖励物品ID
-		reward_num = 1; --奖励物品数量
-		cards_list = {
-			{
-				id = 30000001; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000002; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000003; --卡ID
-				lv = 1; --等级
-			};
-		}
-	};
-
-	[3] = {
-		player_id = 103; --玩家ID
-		player_name = "测试玩家名字3"; --玩家名字
-		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
-		fight = 103; --战力值
-		reward_id = 20000001;--奖励物品ID
-		reward_num = 1; --奖励物品数量
-		cards_list = {
-			{
-				id = 30000001; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000002; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000003; --卡ID
-				lv = 1; --等级
-			};
-		}
-	};
-
-	[4] = {
-		player_id = 104; --玩家ID
-		player_name = "测试玩家名字4"; --玩家名字
-		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
-		fight = 104; --战力值
-		reward_id = 20000001;--奖励物品ID
-		reward_num = 1; --奖励物品数量
-		cards_list = {
-			{
-				id = 30000001; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000002; --卡ID
-				lv = 1; --等级
-			};
-			{
-				id = 30000003; --卡ID
-				lv = 1; --等级
-			};
-		}
-	};
-
-};
+--local _contingentData = {
+--	[1] = {
+--		player_id = 101; --玩家ID
+--		player_name = "测试玩家名字1"; --玩家名字
+--		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
+--		fight = 101; --战力值
+--		reward_id = 20000001;--奖励物品ID
+--		reward_num = 1; --奖励物品数量
+--		cards_list = {
+--			{
+--				id = 30000001; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000002; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000003; --卡ID
+--				lv = 1; --等级
+--			};
+--		}
+--	};
+--
+--	[2] = {
+--		player_id = 102; --玩家ID
+--		player_name = "测试玩家名字2"; --玩家名字
+--		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
+--		fight = 102; --战力值
+--		reward_id = 20000001;--奖励物品ID
+--		reward_num = 1; --奖励物品数量
+--		cards_list = {
+--			{
+--				id = 30000001; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000002; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000003; --卡ID
+--				lv = 1; --等级
+--			};
+--		}
+--	};
+--
+--	[3] = {
+--		player_id = 103; --玩家ID
+--		player_name = "测试玩家名字3"; --玩家名字
+--		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
+--		fight = 103; --战力值
+--		reward_id = 20000001;--奖励物品ID
+--		reward_num = 1; --奖励物品数量
+--		cards_list = {
+--			{
+--				id = 30000001; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000002; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000003; --卡ID
+--				lv = 1; --等级
+--			};
+--		}
+--	};
+--
+--	[4] = {
+--		player_id = 104; --玩家ID
+--		player_name = "测试玩家名字4"; --玩家名字
+--		player_icon = "assetbundles/prefabs/ui/image/icon/small_icon/human/anjiuheinai_y.png"; --玩家ICON
+--		fight = 104; --战力值
+--		reward_id = 20000001;--奖励物品ID
+--		reward_num = 1; --奖励物品数量
+--		cards_list = {
+--			{
+--				id = 30000001; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000002; --卡ID
+--				lv = 1; --等级
+--			};
+--			{
+--				id = 30000003; --卡ID
+--				lv = 1; --等级
+--			};
+--		}
+--	};
+--
+--};
 
 
 

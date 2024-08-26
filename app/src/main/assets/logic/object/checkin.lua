@@ -1,46 +1,8 @@
 
-g_checkin = 
-{
-	check_seven = 
-	{
-		check_type = 1,
-		last_check_date = 1437643003,
-		check_day  = 1,
-		check_periodic = 1,
-		latesign_times = 0,
-	},
-
-	check_month = 
-	{
-		check_type = 2,
-		last_check_date = 1437643003,
-		check_day  = 1,
-		check_periodic = 1,
-		latesign_times = 0,
-	},
-
-	checkin_ret = 
-	{
-		{
-			check_type = 1,
-			last_check_date = system.time(),
-			check_day  = 1,
-			check_periodic = 1,
-			latesign_times = 0,
-		},
-	
-		{
-			check_type = 2,
-			last_check_date = system.time(),
-			check_day  = 2,
-			check_periodic = 2,
-			latesign_times = 1,
-		},
-	},
-	countTimer = nil,
-	isWeekDataInit = false,
-	isMonthDataInit = false,
-};
+g_checkin = {};
+g_checkin.countTimer = nil;
+g_checkin.isWeekDataInit = false
+g_checkin.isMonthDataInit = false
 
 function g_checkin.SetData(check_week,check_month)
 	if check_week then

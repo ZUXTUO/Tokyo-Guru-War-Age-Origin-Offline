@@ -420,7 +420,7 @@ function PublicFunc.GetIllumstrationAllHero()
     return herolist;    
 end
 
---[[ 获得英雄列表 ]]--
+--[[ 获得英雄列表 ]]
 -- show_type 参见ENUM.EShowHeroType
 function PublicFunc.GetAllHero(show_type, package, team, souls_asc)
     --if souls_asc == nil then
@@ -542,7 +542,6 @@ end
 -- rarity, 指定某个品质
 -- remove_list, 排除指定的uuid的装备
 function PublicFunc.GetEquipment(pos_id, sort_func, role_pri, rarity_pri, star_pri, lv_pri, pri_list, rarity, remove_list)
-    pos_id = 0
     if role_pri == nil then
         role_pri = true;
     end
@@ -698,7 +697,7 @@ end
 
 local EPassiveSkillRank =
 {
-    -- [1] = "[8aff00]初[-]",
+        -- [1] = "[8aff00]初[-]",
     -- [2] = "[00f6ff]中[-]",
     -- [3] = "[ff00fc]高[-]",
     -- [4] = "[ff2323]特[-]",

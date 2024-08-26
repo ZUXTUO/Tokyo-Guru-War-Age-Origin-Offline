@@ -631,17 +631,17 @@ function CommonFormationUI:on_choose_hero(obj, info, pos)
             for i = 1, 3 do
                 local cardData = self.teamData[i]
                 if cardData and cardData.index == info.index then
-                    app.log("on_choose_hero 已选(下阵)队伍："..i);
-                    if teamInfo[1] == pos then
-                        teamInfo[1] = 999;
-                        self:on_down_formation({float_value = 1})
-                    elseif teamInfo[2] == pos then
-                        teamInfo[2] = 999;
-                        self:on_down_formation({float_value = 2})
-                    elseif teamInfo[3] == pos then
-                        teamInfo[3] = 999;
-                        self:on_down_formation({float_value = 3})
-                    end
+                        app.log("on_choose_hero 已选(下阵)队伍："..i);
+                        if teamInfo[1] == pos then
+                            teamInfo[1] = 999;
+                            self:on_down_formation({float_value = 1})
+                        elseif teamInfo[2] == pos then
+                            teamInfo[2] = 999;
+                            self:on_down_formation({float_value = 2})
+                        elseif teamInfo[3] == pos then
+                            teamInfo[3] = 999;
+                            self:on_down_formation({float_value = 3})
+                        end
                     break
                 end
             end
@@ -679,7 +679,6 @@ function CommonFormationUI:on_choose_hero(obj, info, pos)
             return
         end
     end
-
     self:set_choose_hero(_param)
 end
 
@@ -706,8 +705,9 @@ function CommonFormationUI:set_choose_hero(_param)
         for _, vv in pairs(v) do
             local flag = vv.heroCard:GetParam() == self.selectedPos
             vv.heroCard:ChoseItem(flag)
+            --if flag then
+            --打勾
             if flag then
-                --打勾
                 vv.heroCard:SetFormationIcon(true)
                 AudioManager.PlayUiAudio(ENUM.EUiAudioType.InsertTeam);
             else
@@ -1068,7 +1068,7 @@ function CommonFormationUI:on_save_formation(t)
     if self.data.heroMaxNum == 3 then
         leaderData = self.teamData[1]
         app.log("选择英雄1");
-    --1个英雄
+        --1个英雄
     else
         leaderData = self.teamData[2]
         app.log("选择英雄2");

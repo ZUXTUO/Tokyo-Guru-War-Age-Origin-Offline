@@ -14,20 +14,9 @@ local this = NoticeManager;
 function NoticeManager.GetTeach()
 	GameInfoForThis.IsTeach = true;
 end
-
 --无新手教程
 function NoticeManager.NoTeach()
 	GameInfoForThis.IsTeach = false;
-end
-
---跳过序章
-function NoticeManager.SkipScence()
-	GameInfoForThis.SceneTest = 3;
-end
-
---不跳过序章
-function NoticeManager.NoSkipScence()
-	GameInfoForThis.SceneTest = 0;
 end
 
 --[[ 广播通知

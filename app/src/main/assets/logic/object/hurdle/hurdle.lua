@@ -104,7 +104,6 @@ function Hurdle:CheckAnimIdCanFight(hurdleType)
 end
 
 function Hurdle:CheckAnimIdRedPoint(hurdleType)
-	--[[
 	if self.group_anim_id[hurdleType] == 0 then
 		return false;
 	end
@@ -113,7 +112,6 @@ function Hurdle:CheckAnimIdRedPoint(hurdleType)
 	if playerLevel < levelList[1].need_level then
 		return false;
 	end
-	]]
 	return true;
 end
 

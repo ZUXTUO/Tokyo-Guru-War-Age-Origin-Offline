@@ -282,7 +282,7 @@ function UiLevel:OnLoadUI()
     --]]
     app.log("selectTab="..tostring(self.selectTab).." curGroup="..tostring(curGroup).." curSection="..
                 tostring(self.curSection).." curLevel="..tostring(self.curLevel))
-    -- 先加载章节底图
+    -- 先加载章节底图	
     local sectionInfo = UiLevel:GetSectionInfo();
     --local sectionInfo = self.sectionList[self.selectTab][self.curSection];--local sectionInfo = { id = 0, chapter_num = 1, chapter = 1, }
     local sectionConfig = ConfigManager.Get(EConfigIndex.t_hurdle_group,sectionInfo.id);

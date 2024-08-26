@@ -952,9 +952,9 @@ end
 -------------------------------------------通过URL取得必要游戏信息----------------------------------------------
 --[[ 通过URL得到游戏更新信息 ]]
 function Root.url_get_system_info()
-    Root.push_web_info("sys_002", "通过URL得到游戏更新信息");
+    --Root.push_web_info("sys_002", "通过URL得到游戏更新信息");
 	--[[公司日志：游戏启动信息]]
-	SystemLog.AppStartClose(500000001);
+	--SystemLog.AppStartClose(500000001);
 
     --app.log("更新URL地址：（单机）");
 
