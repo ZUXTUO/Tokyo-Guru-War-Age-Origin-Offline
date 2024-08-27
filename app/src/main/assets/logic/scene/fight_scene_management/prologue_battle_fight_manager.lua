@@ -237,7 +237,6 @@ function PrologueBattleFightManager:CallFightStart()
         ScreenPlay.SetCallback(function ()
             self:EndScreePlay();
             
-
             if 60020000 == FightScene.GetCurHurdleID() then
                 --[[序章0-1剧情动画播放完毕]]
                  SystemLog.AppStartClose(500000014);

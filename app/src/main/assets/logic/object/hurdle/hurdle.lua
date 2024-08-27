@@ -55,6 +55,15 @@ end
 --获取服务器上当前章节
 function Hurdle:GetServerCurGroup(hurdleType)
 	hurdleType = hurdleType or EHurdleType.eHurdleType_normal;
+
+	if hurdleType == nil then
+		hurdleType = 1
+	end
+
+	if hurdleType == 0 then
+		hurdleType = 1
+	end
+
 	return self.curGroup[hurdleType];
 end
 
@@ -104,6 +113,7 @@ function Hurdle:CheckAnimIdCanFight(hurdleType)
 end
 
 function Hurdle:CheckAnimIdRedPoint(hurdleType)
+	--[[
 	if self.group_anim_id[hurdleType] == 0 then
 		return false;
 	end
@@ -112,6 +122,7 @@ function Hurdle:CheckAnimIdRedPoint(hurdleType)
 	if playerLevel < levelList[1].need_level then
 		return false;
 	end
+	]]
 	return true;
 end
 

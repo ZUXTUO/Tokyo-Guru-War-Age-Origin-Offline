@@ -45,9 +45,9 @@ local function _SetLocalPlayerData()
 	_playerData[15].szPlayerName = player.name;
 	_playerData[15].teamInfo.cards=player:GetDefTeam()
 	local heroLineup = {}
-	for i, v in ipairs(_playerData[15].teamInfo.cards) do
-		table.insert(heroLineup, 5+i)
-	end
+	-- for i, v in ipairs(_playerData[15].teamInfo.cards) do
+	-- 	table.insert(heroLineup, 5+i)
+	-- end
 
 	-- 构造1个晋级战对手
 	_promote_player = {

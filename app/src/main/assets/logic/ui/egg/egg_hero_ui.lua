@@ -649,79 +649,79 @@ function EggHeroUi:on_buy_1(t)
         else
             local num = math.random(1,46);
             if num == 1 then
-                heroCid = 30001000;
+                heroCid = 30001000;--泷泽政道
             elseif num == 2 then
-                heroCid = 30002000;
+                heroCid = 30002000;--太郎
             elseif num == 3 then
-                heroCid = 30003000;
+                heroCid = 30003000;--万丈数一
             elseif num == 4 then
-                heroCid = 30004000;
+                heroCid = 30004000;--笛口凉子
             elseif num == 5 then
-                heroCid = 30005000;
+                heroCid = 30005000;--金木研
             elseif num == 6 then
-                heroCid = 30006000;
+                heroCid = 30006000;--西尾锦
             elseif num == 7 then
-                heroCid = 30007000;
+                heroCid = 30007000;--纳基
             elseif num == 8 then
-                heroCid = 30008000;
+                heroCid = 30008000;--五里美香
             elseif num == 9 then
-                heroCid = 30009000;
+                heroCid = 30009000;--安久黑奈
             elseif num == 10 then
-                heroCid = 30010000;
+                heroCid = 30010000;--平子丈
             elseif num == 11 then
-                heroCid = 30011000;
+                heroCid = 30011000;--真户晓
             elseif num == 12 then
-                heroCid = 30012000;
+                heroCid = 30012000;--安久奈白
             elseif num == 13 then
-                heroCid = 30013000;
+                heroCid = 30013000;--笛口朝树
             elseif num == 14 then
-                heroCid = 30014000;
+                heroCid = 30014000;--大坪熏
             elseif num == 15 then
-                heroCid = 30015000;
+                heroCid = 30015000;--楠木遥人
             elseif num == 16 then
-                heroCid = 30016000;
+                heroCid = 30016000;--雾岛董香
             elseif num == 17 then
-                heroCid = 30017000;
+                heroCid = 30017000;--瓶兄
             elseif num == 18 then
-                heroCid = 30018000;
+                heroCid = 30018000;--瓶弟
             elseif num == 19 then
-                heroCid = 30019000;
+                heroCid = 30019000;--笛口雏实
             elseif num == 20 then
-                heroCid = 30020000;
+                heroCid = 30020000;--铃屋什造
             elseif num == 21 then
-                heroCid = 30021000;
+                heroCid = 30021000;--钵川忠
             elseif num == 22 then
-                heroCid = 30022000;
+                heroCid = 30022000;--月山习
             elseif num == 23 then
-                heroCid = 30023000;
+                heroCid = 30023000;--亚门钢太郎
             elseif num == 24 then
-                heroCid = 30024000;
+                heroCid = 30024000;--宇井郡
             elseif num == 25 then
-                heroCid = 30025000;
+                heroCid = 30025000;--神代利世
             elseif num == 26 then
-                heroCid = 30026000;
+                heroCid = 30026000;--真户吴绪
             elseif num == 27 then
-                heroCid = 30027000;
+                heroCid = 30027000;--雾岛绚都
             elseif num == 28 then
-                heroCid = 30028000;
+                heroCid = 30028000;--四方莲示
             elseif num == 29 then
-                heroCid = 30029000;
+                heroCid = 30029000;--魔猿
             elseif num == 30 then
-                heroCid = 30030000;
+                heroCid = 30030000;--杰森
             elseif num == 31 then
-                heroCid = 30040000;
+                heroCid = 30040000;--御坂
             elseif num == 32 then
-                heroCid = 30053000;
+                heroCid = 30053000;--白发金木
             elseif num == 33 then
-                heroCid = 30054000;
+                heroCid = 30054000;--变身杰森
             elseif num == 34 then
-                heroCid = 30057000;
+                heroCid = 30057000;--西服金木
             elseif num == 35 then
-                heroCid = 30058000;
+                heroCid = 30058000;--中岛康健
             elseif num == 36 then
-                heroCid = 30059000;
+                heroCid = 30059000;--地行甲乙
             elseif num == 37 then
-                heroCid = 30060000;
+                heroCid = 30060000;--村松希惠
             end
         end
                 --heroCid = 30042000;
