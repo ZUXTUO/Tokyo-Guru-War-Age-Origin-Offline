@@ -615,7 +615,11 @@ function ArenaMainUI:LoadItem(itemPlayer, index)
 		itemPlayer.labName:set_text(data.name)
 		itemPlayer.labFightValue:set_text(tostring(data.fightPoint))
 		itemPlayer.spRankBg:set_sprite_name(_EPlaneBg2Name[backIndex])
-		itemPlayer.textureRole:set_texture(ConfigHelper.GetRole(data.leaderId).icon300)
+		if ConfigHelper.GetRole(data.leaderId) ~= nil then
+			itemPlayer.textureRole:set_texture(ConfigHelper.GetRole(data.leaderId).icon300)
+		else
+			app.log("角色未找到，leaderId: " .. data.leaderId)
+		end
 
 		if canFightPlayer[data.playerid] and data.playerid ~= myplayerid then
 			itemPlayer.btnChallenge:set_event_value(data.playerid, 0);

@@ -122,7 +122,8 @@ end
 function ConfigHelper.GetRole(role_id)
 	local role_index = ConfigManager.Get(EConfigIndex.t_role_index, role_id)
 	if nil == role_index then
-		return nil
+		--return nil
+        role_index = { default_rarity = 1 }  -- 根据需要设置默认值
 	end
 	local lookup_table = "role_index_"..tostring(role_index.default_rarity)
 	local cfgIndexName = ConfigManager.SpliceIndexName(lookup_table)

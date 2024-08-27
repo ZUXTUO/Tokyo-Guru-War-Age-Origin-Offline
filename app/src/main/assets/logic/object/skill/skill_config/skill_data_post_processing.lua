@@ -190,9 +190,21 @@ end
 SkillCalculateSize()
 
 function SupplementResourceConfig(cfg)
+
+    -- 检查 cfg 是否为 nil
+    if cfg == nil then
+        -- 创建一个新的 cfg 表
+        cfg = {
+            all_skill_effect = {},
+            all_skill_model = {},
+            all_skill_sound = {}
+        }
+    end
+
     if cfg and cfg.all_skill_effect and cfg.all_skill_model and cfg.all_skill_sound then
         return
     end
+
     cfg.all_skill_effect = {}
     cfg.all_skill_model = {}
     cfg.all_skill_sound = {}

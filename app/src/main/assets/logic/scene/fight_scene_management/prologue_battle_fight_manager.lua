@@ -156,9 +156,13 @@ function PrologueBattleFightManager:OnShowFightResultUI()
         --SystemHintUI.SetAndShow(ESystemHintUIType.two, "资源文件信息为空！请重试！",
         --    { str = "是", func = Root.url_get_system_info }, { str = "否", func = Root.quit }
         --);
+
+        --[[
         SystemHintUI.SetAndShow(ESystemHintUIType.two, "是否继续新手教程？",
             { str = "是", func = NoticeManager.GetTeach },{ str = "否", func = NoticeManager.NoTeach }
         );
+        ]]
+
         SceneManager.PushMainCityScene();
         app.log("进入主城");
         GameBegin.login_bg_destroy(); 

@@ -20,6 +20,8 @@ function EggGetHero.SetFinishCallback(callback, obj)
     else
         app.log("类未初始化 请先调用start"..debug.traceback());
     end
+    
+    NoticeManager.NoTeach();--取消新手教程
 end
 
 ------------------------内部接口-------------------------
