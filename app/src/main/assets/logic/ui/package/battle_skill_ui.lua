@@ -596,6 +596,20 @@ function BattleSkillUI:initSkillInfo()
 	self.skillInfo = {};
 	--  主动技能
 	for i, v in ipairs(self.roleData.config.spe_skill) do
+
+		-- 如果learn_skill为nil，初始化为一个空表
+		if self.roleData.learn_skill == nil then
+			self.roleData.learn_skill = {};
+			for i, v in ipairs(self.roleData.config.spe_skill) do
+				-- 根据技能配置初始化learn_skill
+				local skill_id = v[1];
+				self.roleData.learn_skill[i] = {
+					id = skill_id,
+					level = 1  -- 默认等级为1
+				};
+			end
+		end
+
 		local learnSkill = self.roleData.learn_skill[i];
 		local skill_id = v[1];
 		local data = {};
@@ -617,8 +631,26 @@ function BattleSkillUI:initSkillInfo()
 	-- 被动技能
 		--学习了的被动技能
 	local learnlist = {};
-	for k,learnSkill in ipairs(self.roleData.learn_passivity_property) do
-		local cfg = ConfigManager.Get(EConfigIndex.t_role_passive_info,self.roleData.config.default_rarity);
+	if not self.roleData.learn_passivity_property then
+		self.roleData.learn_passivity_property = {};  -- 初始化为空表
+		
+		-- 根据配置初始化learn_passivity_property
+		local cfg = ConfigManager.Get(EConfigIndex.t_role_passive_info, self.roleData.config.default_rarity);
+		if cfg then
+			for i = 1, 5 do  -- 假设有5个被动技能
+				if cfg[i] then
+					local data = {
+						id = i,  -- 假设id为索引
+						level = 1  -- 默认等级为1
+					};
+					table.insert(self.roleData.learn_passivity_property, data);
+				end
+			end
+		end
+	end
+		
+	for k, learnSkill in ipairs(self.roleData.learn_passivity_property) do
+		local cfg = ConfigManager.Get(EConfigIndex.t_role_passive_info, self.roleData.config.default_rarity);
 		if cfg and cfg[learnSkill.id] then
 			local data = {};
 			data.skillType = 1;
@@ -627,9 +659,10 @@ function BattleSkillUI:initSkillInfo()
 			data.level_up_star = self.passiveSkillStar[data.id].level_up;
 			data.is_learn = true;
 			learnlist[data.id] = 1;
-			table.insert(learnSkillList, data );
+			table.insert(learnSkillList, data);
 		end
-	end
+	end		
+		
 		--未学习了的被动技能
 	for i=1,5 do
 		if learnlist[i] == nil then

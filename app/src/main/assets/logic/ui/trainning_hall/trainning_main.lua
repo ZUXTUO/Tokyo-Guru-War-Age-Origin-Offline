@@ -242,16 +242,24 @@ function TrainningMain:on_last_btn(t)
 end
 
 function TrainningMain:set_pagetext()
-    self.currentyema:set_text("页数"..tostring(self.currentgroup).."/"..tostring(#self.AllHerolist))
-    local titedata = ConfigManager.Get(EConfigIndex.t_training_hall_grouping_name,self.currentgroup).group_name
+    self.currentyema:set_text("页数" .. tostring(self.currentgroup) .. "/" .. tostring(#self.AllHerolist))
+    local titedata = ConfigManager.Get(EConfigIndex.t_training_hall_grouping_name, self.currentgroup).group_name
     self.groupnametitle:set_text(titedata)
-    
+
     local battledata = g_dataCenter.trainning:get_BattleLvl()[self.currentgroup]
-    local battleLvl = battledata.low
-    self.grouplvltitle:set_text("等级"..tostring(battleLvl))
+    local battleLvl = battledata and battledata.low or 0
+
+    if battledata == nil then
+        app.log("Warning: battledata is nil for currentgroup: " .. tostring(self.currentgroup))
+        -- 设置默认的 battleLvl
+        battleLvl = 1 -- 或者其他默认值
+    end
+
+    self.grouplvltitle:set_text("等级" .. tostring(battleLvl))
 
     self:set_red_point()
 end
+
 
 function TrainningMain:set_red_point()
     local nextcurrentgroup = 0
@@ -439,26 +447,40 @@ function TrainningMain:createItem(obj)
     		local dataid = self.trainningMain:isHaveHero(data[i][2])
     		if dataid ~= "" then
     		    local cardinfo = g_dataCenter.package:find_card(1, dataid);
-                --self["card"..i]:SetInfoType(1)
-    		    self["card"..i]:SetData(cardinfo);
-                local sprite_name = PublicFunc.computitemlevlsprite(cardinfo.default_rarity,cardinfo.trainingHallLevel)
 
-                --app.log("sprite_name1-------------"..sprite_name)
-                --self["card"..i]:SetFrameSpName(sprite_name)
-                self["card"..i]:SetTrainningRarity(sprite_name)
-    		    self["card"..i]:SetGray(false)
-                local isMax = g_dataCenter.trainning:computMax(cardinfo)
+                -- 检查 cardinfo 是否为 nil
+                if cardinfo == nil then
+                    app.log("Warning: cardinfo is nil for dataid: " .. tostring(dataid))
+                    -- 创建一个默认的 cardinfo
+                    cardinfo = CardHuman:new({
+                        number = data[i][2],
+                        default_rarity = 1, -- 默认稀有度
+                        trainingHallLevel = 1, -- 默认训练大厅等级
+                        name = "默认英雄", -- 默认名称
+                        -- 其他默认属性可以在这里添加
+                    })
+                else
+                    --self["card"..i]:SetInfoType(1)
+    		        self["card"..i]:SetData(cardinfo);
+                    local sprite_name = PublicFunc.computitemlevlsprite(cardinfo.default_rarity,cardinfo.trainingHallLevel)
 
-    		    if isCanUp and isMax == false then
-        			self["card"..i]:SetSpNew(true)
-    		    else
-        			self["card"..i]:SetSpNew(false)
-    		    end
-                -- app.log("cardinfo========1"..cardinfo.trainingHallLevel)
-                -- app.log("cardinfo========1rarity"..cardinfo.default_rarity)
-                local name,rarity = PublicFunc.ProcessNameSplit(cardinfo.name)
-                local playername = PublicFunc.computitemlevelName(cardinfo.default_rarity,cardinfo.trainingHallLevel,name)
-                --self["card"..i]:SetPlayerName(playername)
+                    --app.log("sprite_name1-------------"..sprite_name)
+                    --self["card"..i]:SetFrameSpName(sprite_name)
+                    self["card"..i]:SetTrainningRarity(sprite_name)
+    		        self["card"..i]:SetGray(false)
+                    local isMax = g_dataCenter.trainning:computMax(cardinfo)
+
+    		        if isCanUp and isMax == false then
+        		    	self["card"..i]:SetSpNew(true)
+    		        else
+        		    	self["card"..i]:SetSpNew(false)
+    		        end
+                    -- app.log("cardinfo========1"..cardinfo.trainingHallLevel)
+                    -- app.log("cardinfo========1rarity"..cardinfo.default_rarity)
+                    local name,rarity = PublicFunc.ProcessNameSplit(cardinfo.name)
+                    local playername = PublicFunc.computitemlevelName(cardinfo.default_rarity,cardinfo.trainingHallLevel,name)
+                    --self["card"..i]:SetPlayerName(playername)
+                end
     		else
     		    local cardinfo = CardHuman:new({number=data[i][2], isNotCalProperty = true});
     		    --self["card"..i]:SetInfoType(3)

@@ -809,7 +809,7 @@ function EquipPackageUI:on_click_equip(t)
 
     self.lastEquipItem = item
     item:SetShine(true)
-    app.log("equip number --- > " .. self.lastEquipItem:GetCardInfo().number)
+    --app.log("equip number --- > " .. self.lastEquipItem:GetCardInfo().number)
     self:UpdateRightPane()
 end
 

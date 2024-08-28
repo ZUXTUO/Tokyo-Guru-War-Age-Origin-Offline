@@ -453,9 +453,13 @@ end
 
 function ChatUI:UpdateChatFightTimes()
     local info = g_dataCenter.chatFight:GetAwardInfo()
+    if not info then
+        info = { fightTimes = 0, winTimes = 0 }  -- 初始化默认值
+    end
     self.lblChatFightTimes:set_text(string.format(_UIText[23], info.fightTimes))
     self.lblChatFightWinTimes:set_text(string.format(_UIText[24], info.winTimes))
 end
+
 
 function ChatUI:CheckChatFightTime()
     if not ChatUI.isChatFightUI then

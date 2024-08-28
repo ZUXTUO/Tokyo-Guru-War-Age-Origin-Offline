@@ -50,9 +50,13 @@ end
 function EquipPackageUI:ForeachNormalEquip(func)
 	for k, v in ipairs(self.equipSmallItemList) do    
         local cardInfo = v:GetCardInfo()   
-        if not cardInfo:IsSpecEquip() then
-            if func(cardInfo, v) == false then
-                break
+        if cardInfo == nil then
+            break
+        else
+            if not cardInfo:IsSpecEquip() then
+                if func(cardInfo, v) == false then
+                    break
+                end
             end
         end
     end
@@ -826,6 +830,13 @@ end
 
 --[[自动添加材料]]
 function EquipPackageUI:on_auto_add_material()
+    if not self.lastEquipItem then
+        self.lastEquipItem = {}  -- 初始化lastEquipItem为一个空表
+        self.lastEquipItem.GetCardInfo = function()
+            return { level = 0 }  -- 默认返回一个包含level的表
+        end
+    end
+
     local cardInfo = self.lastEquipItem:GetCardInfo()
     if cardInfo.level >= CardEquipment.GetMaxLevel() then
         return
@@ -835,13 +846,14 @@ function EquipPackageUI:on_auto_add_material()
         return
     end
     local material = {}
-    for i = 1,4 do
+    for i = 1, 4 do
         if data[i] ~= nil then
             material[i] = data[i]
         end
     end
     self:update_exp_and_material(material)
 end
+
 
 function EquipPackageUI:GetMaterialData(_GetCount, isExpand)
     local cardInfo = self.lastEquipItem:GetCardInfo()
@@ -862,7 +874,8 @@ function EquipPackageUI:GetMaterialData(_GetCount, isExpand)
 
     if #cardData == 0 then
         --材料获取途径
-        local number = cardInfo:GetSpecEquipMaterialNumber()
+        --local number = cardInfo:GetSpecEquipMaterialNumber() or 0  -- 如果返回值为nil，则使用0作为默认值
+        local number = 0
         self:on_find_way_material({float_value = number, string_value = 1})
         return retData
     end

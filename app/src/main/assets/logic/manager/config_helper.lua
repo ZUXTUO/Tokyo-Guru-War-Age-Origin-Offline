@@ -436,6 +436,7 @@ function ConfigHelper._CalcRoleLevelProperty(card_cfg, card_number, level)
             return l
         end
     end
+
     if nil == card_cfg then
         local cfgName = "role_index_" .. card_number
         card_cfg = ConfigHelper.GetRole(card_number)
@@ -452,6 +453,11 @@ function ConfigHelper._CalcRoleLevelProperty(card_cfg, card_number, level)
     local exp_config_name = "role_upgrade_exp_" .. tostring(card_cfg.upgrade_exp_cfg)
     
     local exp_cfg = ConfigManager.Get(ConfigManager.SpliceIndexName(exp_config_name), level)
+
+    if exp_cfg == nil then
+        exp_cfg = { upexp = 1 }
+    end
+
     local exp = 0 
     if level < ConfigHelper.role_max_level then
         exp = exp_cfg.upexp
@@ -466,6 +472,14 @@ function ConfigHelper._CalcRoleLevelProperty(card_cfg, card_number, level)
     end
     local level_property = card_levels[level]
     -- N级卡片属性=1级卡片属性+（N-1）*卡片属性等级成长
+    if card_cfg.default_max_hp == nil then card_cfg.default_max_hp = 100 end
+    if card_cfg.max_hp_level_factor == nil then card_cfg.max_hp_level_factor = 10 end
+    if card_cfg.default_atk_power == nil then card_cfg.default_atk_power = 20 end
+    if card_cfg.atk_power_level_factor == nil then card_cfg.atk_power_level_factor = 5 end
+    if card_cfg.default_def_power == nil then card_cfg.default_def_power = 15 end
+    if card_cfg.def_power_level_factor == nil then card_cfg.def_power_level_factor = 3 end
+    if card_cfg.config == nil then card_cfg.config = 1 end
+
     level_property.max_hp = card_cfg.default_max_hp + (level - 1) * card_cfg.max_hp_level_factor
     level_property.atk_power = card_cfg.default_atk_power + (level - 1) * card_cfg.atk_power_level_factor
     level_property.def_power = card_cfg.default_def_power + (level - 1) * card_cfg.def_power_level_factor

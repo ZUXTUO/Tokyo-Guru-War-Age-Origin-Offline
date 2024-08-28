@@ -856,7 +856,8 @@ function UiSmallItem:UpdateEquipUi()
 		-- 装备星级
 		if self.equip.star then
 			for i = 1, #slot_equip.sp_stars do
-				slot_equip.sp_stars[i]:set_active(i <= self.cardInfo.star)
+				--slot_equip.sp_stars[i]:set_active(i <= self.cardInfo.star)
+				slot_equip.sp_stars[i]:set_active(i <= 7)
 			end
 			slot_equip.grid_star:reposition_now()
 		end

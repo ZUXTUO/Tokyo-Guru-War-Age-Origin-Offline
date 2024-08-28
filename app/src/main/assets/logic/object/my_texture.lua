@@ -143,7 +143,9 @@ function MyTexture:set_texture(file_path,keepSize)
             if type(file_path) ~= "string" then
                 app.log(debug.traceback())
             end
-		    return self.obj:set_texture(file_path);
+			if type(file_path) == "userdata" then
+		    	return self.obj:set_texture(file_path);
+			end
         end
 	end
 end

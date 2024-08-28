@@ -471,141 +471,122 @@ end
 -- 更新章节
 function UiLevel:UpdateSection()
     if self.ui == nil then
-        return;
+        return
     end
-    local level = g_dataCenter.hurdle;
-    local maxSection = level:SectionIdToIndex(level:GetCurGroup(self.selectTab));
-    --if maxSection > g_open_level_count then
-    --    maxSection = g_open_level_count;
-    --end
 
-    g_open_level_count = maxSection;
-    local groupAwardList = self.groupAwardList;
-        local sectionInfo = UiLevel:GetSectionInfo();
-    --local sectionInfo = self.sectionList[self.selectTab][self.curSection];--local sectionInfo = { id = 0, chapter_num = 1, chapter = 1, }
-    if sectionInfo == nil then
-        return;
+    local level = g_dataCenter.hurdle
+    local maxSection = level:SectionIdToIndex(level:GetCurGroup(self.selectTab)) or 0  -- 确保maxSection有默认值
+    g_open_level_count = maxSection
+
+    local groupAwardList = self.groupAwardList
+    local sectionInfo = UiLevel:GetSectionInfo() or {}  -- 确保sectionInfo有默认值
+
+    if sectionInfo.id == nil then
+        return
     end
-    -- app.log("curSection="..tostring(self.curSection)..debug.traceback());
+
     -- 章节信息
     if self.selectTab == EHurdleType.eHurdleType_elite then
-        -- self.spGroupDi:set_sprite_name("gq_biaoti2");
-        self.labGroup:set_text(tostring(sectionInfo.chapter_num));
-        self.labGroupContent:set_text(tostring(sectionInfo.chapter));
-        -- self.labGroupContent:set_color(1, 0, 0, 1);
+        self.labGroup:set_text(tostring(sectionInfo.chapter_num or 0))
+        self.labGroupContent:set_text(tostring(sectionInfo.chapter or ""))
     else
-        -- self.spGroupDi:set_sprite_name("gq_biaoti1");
-        self.labGroup:set_text(tostring(sectionInfo.chapter_num));
-        self.labGroupContent:set_text(tostring(sectionInfo.chapter));
-        -- self.labGroupContent:set_color(0, 0, 1, 1);
+        self.labGroup:set_text(tostring(sectionInfo.chapter_num or 0))
+        self.labGroupContent:set_text(tostring(sectionInfo.chapter or ""))
     end
-    
+
     -- 章节底图
-    local sectionConfig = ConfigManager.Get(EConfigIndex.t_hurdle_group,sectionInfo.id);
-    if sectionConfig and self.textureObj then
-        self.textureObj:set_texture(sectionConfig.bk);
+    local sectionConfig = ConfigManager.Get(EConfigIndex.t_hurdle_group, sectionInfo.id) or {}
+    if sectionConfig.bk and self.textureObj then
+        self.textureObj:set_texture(sectionConfig.bk)
     end
+
     -- 章节奖励
-    local starNumber = level:GetGroupStarNum(sectionInfo.id);
-    -- app.log("id="..sectionInfo.id.."   starNumber="..starNumber);
-    groupAwardList.star:set_text(tostring(starNumber))-- .. "/" .. tostring(sectionInfo.max_star));
-    -- groupAwardList.pro:set_value(starNumber/sectionInfo.max_star);
-    local index = 3;
-    if self.selectTab == EHurdleType.eHurdleType_elite then
-        index = 1;
-    end
-    local notGroupAwards = false;
+    local starNumber = level:GetGroupStarNum(sectionInfo.id) or 0  -- 确保starNumber有默认值
+    groupAwardList.star:set_text(tostring(starNumber))
+
+    local index = (self.selectTab == EHurdleType.eHurdleType_elite) and 1 or 3
+    local notGroupAwards = false
+
     for i = 1, 3 do
-        if i > maxBoxCount[self.selectTab] or type(sectionInfo["award"..index.."_star"]) ~= "number" or sectionInfo["award"..index.."_star"] <= 0 then
-            groupAwardList["boxBtn"..i]:set_active(false);
+        if i > maxBoxCount[self.selectTab] or type(sectionInfo["award" .. index .. "_star"]) ~= "number" or sectionInfo["award" .. index .. "_star"] <= 0 then
+            groupAwardList["boxBtn" .. i]:set_active(false)
         else
-            notGroupAwards = true;
-            groupAwardList["boxBtn"..i]:set_active(true);
-            groupAwardList["boxBtn"..i]:set_event_value(tostring(index), 0);
-            local isAlreadyGet = level:IsAlreadyGetGroupAwards(sectionInfo.id, index);
-            local isCanGet = level:IsCanGetGroupAwards(sectionInfo.id, index);
-            local bBoxPoint = false;
+            notGroupAwards = true
+            groupAwardList["boxBtn" .. i]:set_active(true)
+            groupAwardList["boxBtn" .. i]:set_event_value(tostring(index), 0)
+
+            local isAlreadyGet = level:IsAlreadyGetGroupAwards(sectionInfo.id, index)
+            local isCanGet = level:IsCanGetGroupAwards(sectionInfo.id, index)
+            local bBoxPoint = false
+
             if isAlreadyGet then
-                groupAwardList["boxStaticSp"..i]:set_active(true);
-                groupAwardList["boxSp"..i]:set_active(false);
-                if i == 1 then
-                    groupAwardList["boxStaticSp"..i]:set_sprite_name("gq_baoxiang3_2");
-                else
-                    groupAwardList["boxStaticSp"..i]:set_sprite_name("gq_baoxiang1_2");
-                end
+                groupAwardList["boxStaticSp" .. i]:set_active(true)
+                groupAwardList["boxSp" .. i]:set_active(false)
+                groupAwardList["boxStaticSp" .. i]:set_sprite_name(i == 1 and "gq_baoxiang3_2" or "gq_baoxiang1_2")
             elseif isCanGet then
-                groupAwardList["boxStaticSp"..i]:set_active(false);
-                groupAwardList["boxSp"..i]:set_active(true);
-                if i == 1 then
-                    groupAwardList["boxSp"..i]:set_sprite_name("gq_baoxiang3");
-                else
-                    groupAwardList["boxSp"..i]:set_sprite_name("gq_baoxiang1");
-                end
-                bBoxPoint = true;
+                groupAwardList["boxStaticSp" .. i]:set_active(false)
+                groupAwardList["boxSp" .. i]:set_active(true)
+                groupAwardList["boxSp" .. i]:set_sprite_name(i == 1 and "gq_baoxiang3" or "gq_baoxiang1")
+                bBoxPoint = true
             else
-                groupAwardList["boxStaticSp"..i]:set_active(true);
-                groupAwardList["boxSp"..i]:set_active(false);
-                if i == 1 then
-                    groupAwardList["boxStaticSp"..i]:set_sprite_name("gq_baoxiang3");
-                else
-                    groupAwardList["boxStaticSp"..i]:set_sprite_name("gq_baoxiang1");
-                end
+                groupAwardList["boxStaticSp" .. i]:set_active(true)
+                groupAwardList["boxSp" .. i]:set_active(false)
+                groupAwardList["boxStaticSp" .. i]:set_sprite_name(i == 1 and "gq_baoxiang3" or "gq_baoxiang1")
             end
+
             if AppConfig.get_enable_guide_tip() then
-                groupAwardList["boxPoint"..i]:set_active(bBoxPoint);
+                groupAwardList["boxPoint" .. i]:set_active(bBoxPoint)
             end
-            groupAwardList["boxStar"..i]:set_text(tostring(sectionInfo["award"..index.."_star"]));
-            index = index - 1;
+
+            groupAwardList["boxStar" .. i]:set_text(tostring(sectionInfo["award" .. index .. "_star"] or 0))
+            index = index - 1
         end
     end
-    groupAwardList.grid:reposition_now();
-    -- groupAwardList.pro:set_active(notGroupAwards);
-    self.btnLeftArrow:set_active(self.curSection ~= 1);
-    local serverMaxSection = level:GetServerCurGroup();
-    --app.log(tostring(self.curSection).."...."..tostring(maxSection).."..."..tostring(serverMaxSection));
-    self.btnRightArrow:set_active(self.curSection ~= serverMaxSection);
 
-    self.curSection = 1;
+    groupAwardList.grid:reposition_now()
+    self.btnLeftArrow:set_active(self.curSection ~= 1)
 
-    --章节提示奖励
-    local showGroupAwards = false;
-    local tempSection = nil;
-    if maxSection == nil then
-        tempSection = self.curSection + 1;
-    else
-        tempSection = maxSection + 1;
-    end
-    local temp = self.sectionList[self.selectTab][tempSection];
+    local serverMaxSection = level:GetServerCurGroup() or 0  -- 确保serverMaxSection有默认值
+    self.btnRightArrow:set_active(self.curSection ~= serverMaxSection)
+
+    self.curSection = 1
+
+    -- 章节提示奖励
+    local showGroupAwards = false
+    local tempSection = (maxSection == nil) and (self.curSection + 1) or (maxSection + 1)
+    local temp = self.sectionList[self.selectTab][tempSection] or {}
+
     while temp do
         if temp.show_group_awards ~= 0 then
-            self.labGroupAwards:set_text(tostring(temp.show_gw_text));
-            showGroupAwards = true;
+            self.labGroupAwards:set_text(tostring(temp.show_gw_text or ""))
+            showGroupAwards = true
+
             if self.itemGroupAwards == nil then
-                self.itemGroupAwards = UiSmallItem:new({parent = self.objGroupAwards, cardInfo = nil, is_enable_goods_tip = true});
-                self.itemGroupAwards:SetCommonEffectScale(0.38, 0.38, 0.38);
-                self.itemGroupAwards:SetAsReward(true);
+                self.itemGroupAwards = UiSmallItem:new({ parent = self.objGroupAwards, cardInfo = nil, is_enable_goods_tip = true })
+                self.itemGroupAwards:SetCommonEffectScale(0.38, 0.38, 0.38)
+                self.itemGroupAwards:SetAsReward(true)
             end
-            self.itemGroupAwards:SetDataNumber(temp.show_group_awards, 0);
-            self.itemGroupAwards:SetShowNumber(false);
-            break;
+
+            self.itemGroupAwards:SetDataNumber(temp.show_group_awards, 0)
+            self.itemGroupAwards:SetShowNumber(false)
+            break
         end
-        tempSection = tempSection + 1;
-        temp = self.sectionList[self.selectTab][tempSection];
+        tempSection = tempSection + 1
+        temp = self.sectionList[self.selectTab][tempSection] or {}
     end
-    self.spGroupAwards:set_active(showGroupAwards);
-    
+
+    self.spGroupAwards:set_active(showGroupAwards)
+
     if AppConfig.get_enable_guide_tip() then
-        self.btnLeftPoint:set_active(level:IsAllGroupNotGetBox(sectionInfo.id, true));
-        local showHedPoint = level:IsAllGroupNotGetBox(sectionInfo.id, false);
-        if not showHedPoint then
-            showHedPoint = level:CheckAnimIdRedPoint(self.selectTab);
-        end
-        self.btnRightPoint:set_active(showHedPoint);
+        self.btnLeftPoint:set_active(level:IsAllGroupNotGetBox(sectionInfo.id, true))
+        local showHedPoint = level:IsAllGroupNotGetBox(sectionInfo.id, false) or level:CheckAnimIdRedPoint(self.selectTab)
+        self.btnRightPoint:set_active(showHedPoint)
     end
-        
+
     -- 关卡数据
-    self:UpdateLevel();
+    self:UpdateLevel()
 end
+
 local resource_type = 
 {
     [0]={boxOpen="gq_baoxiang2_2", boxClose="gq_baoxiang2", animSelect="ui_701_level_content1", zb="gq_zuobiao_pt1", boxDi="gq_zuobiao_pt3", headArrow="gq_quan4"},
@@ -614,20 +595,39 @@ local resource_type =
 -- 更新具体所有关卡
 function UiLevel:UpdateLevel()
     if self.ui == nil then
-        return;
+        --return;
     end
         local sectionInfo = UiLevel:GetSectionInfo();
     --local sectionInfo = self.sectionList[self.selectTab][self.curSection];--local sectionInfo = { id = 0, chapter_num = 1, chapter = 1, }
     if sectionInfo == nil then
-        return;
+        --return;
+        sectionInfo = { id = 1 }
     end
     section_id = sectionInfo.id;
+    
     local level = g_dataCenter.hurdle;
     -- 获取当前章节所有关卡配置
     local levelAll = level:GetGroupHurdleConfigList_NoKey(section_id);
+    --if levelAll == nil or #levelAll <= 0 then
+        --return;
+    --end
+
+    -- 初始化 levelAll
     if levelAll == nil or #levelAll <= 0 then
-        return;
+        levelAll = {}
+        for i = 1, 100 do  -- 假设 maxLevelCount 是关卡的最大数量
+            local levelData = {}  -- 创建一个新的关卡数据表
+            levelData.hurdleid = i * 1000  -- 示例：根据索引生成一个关卡ID
+            levelData.box_dropid = (i % 2 == 0) and 1 or 0  -- 示例：偶数关卡有宝箱
+            levelData.index = i
+            levelData.show_landscape = (i % 3 == 0) and 1 or 0  -- 示例：每三关显示不同的景观
+            levelData.show_icon = (i % 2 == 0) and "icon_role" or "icon_monster"  -- 示例：角色或怪物图标
+            levelData.show_first_pass = (i == 1) and 1 or 0  -- 示例：只有第一关有首通奖励
+
+            table.insert(levelAll, levelData)  -- 将关卡数据添加到 levelAll
+        end
     end
+
     self:ClearHurdleLineList();
     local hurdleTypeList = self:GetHurdleLineList(section_id);
     hurdleTypeList.objRoot:set_active(true);
@@ -743,6 +743,15 @@ function UiLevel:UpdateLevel()
                 -- cloneLevel.spHead:set_active(false);
                 local cf = PropsEnum.GetConfig(levelAll[i].show_icon);
                 --app.log(tostring(i).."  "..tostring(levelAll[i].hurdleid).."........"..table.tostring(cf))
+
+                -- 检查 cf 是否为 nil，如果是，则创建一个新的 cf 值
+                if cf == nil then
+                    cf = {
+                    small_icon = "default_icon"  -- 根据需要设置默认值
+                    -- 其他必要的属性...
+                    }
+                end
+                
                 if PropsEnum.IsRole(levelAll[i].show_icon) or PropsEnum.IsMonster(levelAll[i].show_icon) then
                     cloneLevel.spBk:set_active(false);
                     cloneLevel.spDi:set_active(true);

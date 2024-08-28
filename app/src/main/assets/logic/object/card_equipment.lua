@@ -232,26 +232,45 @@ end
 -------------------------------属性相关操作--------------------------------------------
 -- 设置属性值  property_type：ENUM.EHeroAttribute表中的值。可以用id，也可以用名字。
 function CardEquipment:SetProperty(property_table, property_type, newval)
-    if type(property_type) == 'string' then
-        property_type = ENUM.EHeroAttribute[property_type]
-    end
-    if not property_type then
-        app.log('属性id获取失败    '..debug.traceback());
-    end
-    local maxval = self:GetPropertyMaxVal(property_type)
-    local minval = self:GetPropertyMinVal(property_type)
-    local last = property_table[property_type]
-    -- 没有给值就付成最小值
-    property_table[property_type] = newval or 0;
-    
-    if not property_table[property_type] or property_table[property_type] < minval then
-        property_table[property_type] = minval;
-    elseif property_table[property_type] > maxval then
-        property_table[property_type] = maxval;
-    end
+
+	if property_type == nil then
+		return
+	end
+
+	if type(property_type) == 'userdata' then
+		return
+	end
+
+	if type(property_type) == 'string' then
+		property_type = ENUM.EHeroAttribute[property_type]
+	end
+	if not property_type then
+		app.log('属性id获取失败    '..debug.traceback());
+	end
+
+	local maxval = self:GetPropertyMaxVal(property_type)
+	local minval = self:GetPropertyMinVal(property_type)
+	local last = property_table[property_type]
+	-- 没有给值就付成最小值
+	property_table[property_type] = newval or 0;
+	
+	if not property_table[property_type] or property_table[property_type] < minval then
+		property_table[property_type] = minval;
+	elseif property_table[property_type] > maxval then
+		property_table[property_type] = maxval;
+	end
 end
 
 function CardEquipment:GetPropertyMaxVal(property_type)
+
+	if property_type == nil then
+		return
+	end
+
+	if type(property_type) == 'userdata' then
+		return
+	end
+
     if type(property_type) == 'string' then
         property_type = ENUM.EHeroAttribute[property_type]
     end
@@ -266,6 +285,15 @@ function CardEquipment:GetPropertyMaxVal(property_type)
 end
 
 function CardEquipment:GetPropertyMinVal(property_type)
+
+	if property_type == nil then
+		return
+	end
+
+	if type(property_type) == 'userdata' then
+		return
+	end
+
     if type(property_type) == 'string' then
         property_type = ENUM.EHeroAttribute[property_type]
     end
@@ -280,32 +308,56 @@ function CardEquipment:GetPropertyMinVal(property_type)
 end
 
 function CardEquipment:GetPropertyVal(property_type)
+
+    if property_type == nil then
+        return
+    end
+
+    if type(property_type) == 'userdata' then
+        return
+    end
+
+    -- 检查 self.property 是否为 nil，如果是，则初始化为一个空表
+    if self.property == nil then
+        self.property = {}
+    end
+
     if type(property_type) == 'string' then
         property_type = ENUM.EHeroAttribute[property_type]
     end
     if not property_type then
         app.log_warning('GetPropertyVal 有找不到的属性！ '..debug.traceback())
-		return;
+        return
     end
     local maxval = self:GetPropertyMaxVal(property_type)
     local minval = self:GetPropertyMinVal(property_type)
     if not self.property[property_type] then
-    	self.property[property_type] = 0
+        self.property[property_type] = 0
     end
     if self.property[property_type] < minval then
-        self.property[property_type] = minval;
+        self.property[property_type] = minval
     elseif self.property[property_type] > maxval then
-        self.property[property_type] = maxval;
+        self.property[property_type] = maxval
     end
-    local value = self.property[property_type];
+    local value = self.property[property_type]
     -- 数值类型取整
     if ENUM.EAttributeValueType[property_type] == 1 then
-    	value = PublicFunc.Round(self.property[property_type]);
+        value = PublicFunc.Round(self.property[property_type])
     end
-    return value;
+    return value
 end
 
+
 function CardEquipment:AddPropertyVal(property_type, addval)
+
+	if property_type == nil then
+		return
+	end
+
+	if type(property_type) == 'userdata' then
+		return
+	end
+
     if type(property_type) == 'string' then
         property_type = ENUM.EHeroAttribute[property_type]
     end

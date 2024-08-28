@@ -162,6 +162,11 @@ function InstituteUI:on_chose_item(name, x, y, go_obj,value)
     --local value2 = string.sub(datavalue,)
     --do return end
     local dataNumb = g_dataCenter.Institute:GetData(tonumber(value1))
+    
+    if dataNumb == nil then
+        dataNumb = { isUnLock = false }
+    end
+
     local datanext = nil;
     if tonumber(value1) > 1 then
 	   datanext = g_dataCenter.Institute:GetData(tonumber(value1)-1).isUnLock

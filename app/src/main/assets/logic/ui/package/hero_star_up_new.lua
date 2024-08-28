@@ -325,11 +325,22 @@ function HeroStarUpNew:OnBtnQnqh(t)
 end
 
 function HeroStarUpNew:OnBtnGetAway(t)
-	local data = { };
-	data.item_id = self.need_soul_id;
-	data.number = self.roleData.config.soul_count;
-	AcquiringWayUi.Start(data)
+    local data = {}
+    
+    -- 检查 self.roleData.config 是否为 nil
+    if self.roleData.config == nil then
+        -- 创建默认数据
+        self.roleData.config = {
+            soul_count = 999 -- 设置默认的 soul_count
+        }
+        app.log("Warning: self.roleData.config is nil, using default values.")
+    end
+
+    data.item_id = self.need_soul_id
+    data.number = self.roleData.config.soul_count
+    AcquiringWayUi.Start(data)
 end
+
 
 function HeroStarUpNew:on_initialize_item(obj, b, real_id)
 	-- app.log(string.format("HeroStarUpNew:on_initialize_item ojb=%s,b=%s,real_id=%s",tostring(obj),tostring(b),tostring(real_id)))

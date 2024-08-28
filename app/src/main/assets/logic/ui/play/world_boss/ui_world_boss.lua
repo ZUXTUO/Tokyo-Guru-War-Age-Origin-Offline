@@ -309,7 +309,11 @@ end
 function UiWorldBoss:onClickBuyTimes()
     local curVipLv = g_dataCenter.player:GetVip();
     local curTimes = g_dataCenter.worldBoss:GetBuyTimes();
-    local maxTimes = g_dataCenter.worldBoss:GetMaxBuyTimes(); 
+    local maxTimes = g_dataCenter.worldBoss:GetMaxBuyTimes();
+    
+    curTimes = 0
+    maxTimes = 0
+    
     if maxTimes-curTimes <= 0 then
         local num = ConfigManager.GetDataCount(EConfigIndex.t_vip_data);
         if curVipLv >= num then

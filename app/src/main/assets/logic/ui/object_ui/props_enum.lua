@@ -30,6 +30,7 @@ function PropsEnum.IsImprovedGems(id)
     if not id then
         app.log('调用PropsEnum.IsImprovedGems id 是空的，调用堆栈：'..debug.traceback())
     end
+
     if id == IdConfig.ImprovedGemsA or id == IdConfig.ImprovedGemsS or id == IdConfig.ImprovedGemsSS then
         return true;
     else
@@ -37,120 +38,329 @@ function PropsEnum.IsImprovedGems(id)
     end
 end
 function PropsEnum.IsRole(id)
+
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsRole id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.RoleMin = tonumber(IdConfig.RoleMin)
+	if IdConfig.RoleMin == nil then
+		IdConfig.RoleMin = 1
+	end
+
+	IdConfig.RoleMax = tonumber(IdConfig.RoleMax)
+	if IdConfig.RoleMax == nil then
+		IdConfig.RoleMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.RoleMin and id <= IdConfig.RoleMax then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 
 function PropsEnum.IsRoleSoul(id)
+	--[[
 	if id and type(id) == "number" then
+
+		IdConfig.RoleSoulMin = tonumber(IdConfig.RoleSoulMin)
+		if IdConfig.RoleSoulMin == nil then
+			IdConfig.RoleSoulMin = 1
+		end
+	
+		IdConfig.RoleSoulMax = tonumber(IdConfig.RoleSoulMax)
+		if IdConfig.RoleSoulMax == nil then
+			IdConfig.RoleSoulMax = 3
+		end
+
 		return id >= IdConfig.RoleSoulMin and id <= IdConfig.RoleSoulMax 
 	end
+	return false
+	]]
 	return false
 end
 
 function PropsEnum.IsSpecMonster(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
    	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsSpecMonster id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.SpecMonsterMin = tonumber(IdConfig.SpecMonsterMin)
+	if IdConfig.SpecMonsterMin == nil then
+		IdConfig.SpecMonsterMin = 1
+	end
+
+	IdConfig.SpecMonsterMax = tonumber(IdConfig.SpecMonsterMax)
+	if IdConfig.SpecMonsterMax == nil then
+		IdConfig.SpecMonsterMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.SpecMonsterMin and id <= IdConfig.SpecMonsterMax then
 		return true;
 	else
 		return false;
 	end 
+	]]
 end
 
 function PropsEnum.IsMonster(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsMonster id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.MonsterMin = tonumber(IdConfig.MonsterMin)
+	if IdConfig.MonsterMin == nil then
+		IdConfig.MonsterMin = 1
+	end
+
+	IdConfig.MonsterMax = tonumber(IdConfig.MonsterMax)
+	if IdConfig.MonsterMax == nil then
+		IdConfig.MonsterMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.MonsterMin and id <= IdConfig.MonsterMax  then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 
 function PropsEnum.IsNPC(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsNPC id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.NPCMin = tonumber(IdConfig.NPCMin)
+	if IdConfig.NPCMin == nil then
+		IdConfig.NPCMin = 1
+	end
+
+	IdConfig.NPCMax = tonumber(IdConfig.NPCMax)
+	if IdConfig.NPCMax == nil then
+		IdConfig.NPCMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.NPCMin and id <= IdConfig.NPCMax then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 
 function PropsEnum.IsMMONPC(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsNPC id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.MMONPCMin = tonumber(IdConfig.MMONPCMin)
+	if IdConfig.MMONPCMin == nil then
+		IdConfig.MMONPCMin = 1
+	end
+
+	IdConfig.MMONPCMax = tonumber(IdConfig.MMONPCMax)
+	if IdConfig.MMONPCMax == nil then
+		IdConfig.MMONPCMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.MMONPCMin and id <= IdConfig.MMONPCMax then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 
 function PropsEnum.IsEquip(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsEquip id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.EquipMin = tonumber(IdConfig.EquipMin)
+	if IdConfig.EquipMin == nil then
+		IdConfig.EquipMin = 1
+	end
+
+	IdConfig.EquipMax = tonumber(IdConfig.EquipMax)
+	if IdConfig.EquipMax == nil then
+		IdConfig.EquipMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.EquipMin and id <= IdConfig.EquipMax then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 function PropsEnum.IsItem(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsItem id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.ItemMin = tonumber(IdConfig.ItemMin)
+	if IdConfig.ItemMin == nil then
+		IdConfig.ItemMin = 1
+	end
+
+	IdConfig.ItemMax = tonumber(IdConfig.ItemMax)
+	if IdConfig.ItemMax == nil then
+		IdConfig.ItemMax = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id >= IdConfig.ItemMin and id <= IdConfig.ItemMax then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 function PropsEnum.IsVaria(id)
+		
+    if id == nil then
+        return false
+    end
+
+	return true;
+
+	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsVaria id 是空的，调用堆栈：'..debug.traceback())
 	end
     if id == nil then
         return false
     end
+
+	IdConfig.MaxVaria = tonumber(IdConfig.MaxVaria)
+	if IdConfig.MaxVaria == nil then
+		IdConfig.MaxVaria = 3
+	end
+
+	id = tonumber(id)
+	if id == nil then
+		id = 1
+	end
+
 	if id < IdConfig.MaxVaria and id > 0 then
 		return true;
 	else
 		return false;
 	end
+	]]
 end
 function PropsEnum.GetItemType(id)
     if type(id) ~= "number" then
