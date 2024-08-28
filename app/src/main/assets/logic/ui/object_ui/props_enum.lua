@@ -38,14 +38,6 @@ function PropsEnum.IsImprovedGems(id)
     end
 end
 function PropsEnum.IsRole(id)
-
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsRole id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -73,11 +65,9 @@ function PropsEnum.IsRole(id)
 	else
 		return false;
 	end
-	]]
 end
 
 function PropsEnum.IsRoleSoul(id)
-	--[[
 	if id and type(id) == "number" then
 
 		IdConfig.RoleSoulMin = tonumber(IdConfig.RoleSoulMin)
@@ -93,19 +83,9 @@ function PropsEnum.IsRoleSoul(id)
 		return id >= IdConfig.RoleSoulMin and id <= IdConfig.RoleSoulMax 
 	end
 	return false
-	]]
-	return false
 end
 
 function PropsEnum.IsSpecMonster(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
    	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsSpecMonster id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -132,19 +112,10 @@ function PropsEnum.IsSpecMonster(id)
 		return true;
 	else
 		return false;
-	end 
-	]]
+	end
 end
 
 function PropsEnum.IsMonster(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsMonster id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -172,18 +143,9 @@ function PropsEnum.IsMonster(id)
 	else
 		return false;
 	end
-	]]
 end
 
 function PropsEnum.IsNPC(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsNPC id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -211,18 +173,9 @@ function PropsEnum.IsNPC(id)
 	else
 		return false;
 	end
-	]]
 end
 
 function PropsEnum.IsMMONPC(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsNPC id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -250,18 +203,9 @@ function PropsEnum.IsMMONPC(id)
 	else
 		return false;
 	end
-	]]
 end
 
 function PropsEnum.IsEquip(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsEquip id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -289,17 +233,8 @@ function PropsEnum.IsEquip(id)
 	else
 		return false;
 	end
-	]]
 end
 function PropsEnum.IsItem(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsItem id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -327,17 +262,8 @@ function PropsEnum.IsItem(id)
 	else
 		return false;
 	end
-	]]
 end
 function PropsEnum.IsVaria(id)
-		
-    if id == nil then
-        return false
-    end
-
-	return true;
-
-	--[[
 	if type(id) ~= "number" then
 		app.log('调用PropsEnum.IsVaria id 是空的，调用堆栈：'..debug.traceback())
 	end
@@ -360,7 +286,6 @@ function PropsEnum.IsVaria(id)
 	else
 		return false;
 	end
-	]]
 end
 function PropsEnum.GetItemType(id)
     if type(id) ~= "number" then
