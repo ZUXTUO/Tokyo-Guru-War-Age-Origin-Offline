@@ -21,15 +21,15 @@ Tokyo Guru War Age Origin Source Code
 # 关键点
 game_begin.lua 的 GameBegin.load_first_res() 函数里有序章和新手教程的加载和跳过功能。<br><br>
 
-entershow.lua------------EnterShow.Start函数牵连初始进入场景信息。<br>
-notice_manager.lua-------传入的通知可跳过新手引导，但也会让新手引导卡住。<br>
+object\entershow.lua------------EnterShow.Start函数牵连初始进入场景信息。<br>
+manager\notice_manager.lua-------传入的通知可跳过新手引导，但也会让新手引导卡住。<br>
 ui\level\ui_701_level.lua---------闯关相关函数。<br>
 ui\egg\egg_hero_ui.lua----------EggHeroUi:on_buy_1抽卡（单抽），EggHeroUi:on_buy_10抽卡（十连）。<br>
-data_center.lua----------用户中心数据<br>
+object\data_center.lua----------用户中心数据<br>
 e.lua--------------------用户数据衍生【自定义出来的】<br>
-package.lua--------------背包信息<br>
-card_human.lua-----------角色信息<br>
-common_hero_list_ui.lua--队列信息<br>
+object\package.lua--------------背包信息<br>
+object\card_human.lua-----------角色信息<br>
+ui\package\common_hero_list_ui.lua--队列信息<br>
 scene\fight_scene_management\prologue_battle_fight_manager.lua---第103行有序章判断
 
 

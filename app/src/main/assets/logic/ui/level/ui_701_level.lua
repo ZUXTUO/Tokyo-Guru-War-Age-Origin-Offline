@@ -744,6 +744,8 @@ function UiLevel:UpdateLevel()
                 local cf = PropsEnum.GetConfig(levelAll[i].show_icon);
                 --app.log(tostring(i).."  "..tostring(levelAll[i].hurdleid).."........"..table.tostring(cf))
 
+                --临时取消，这一块需要设置small_icon
+                --[[
                 -- 检查 cf 是否为 nil，如果是，则创建一个新的 cf 值
                 if cf == nil then
                     cf = {
@@ -769,6 +771,7 @@ function UiLevel:UpdateLevel()
                     showHead = cloneLevel.textureItem;
                     cloneLevel.objRoot:set_local_scale(0.9, 0.9, 1);
                 end
+                ]]
             else
                 cloneLevel.spBk:set_active(true);
                 cloneLevel.spDi:set_active(false);

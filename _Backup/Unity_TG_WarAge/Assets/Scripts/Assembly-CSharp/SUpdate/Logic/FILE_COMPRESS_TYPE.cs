@@ -1,0 +1,10 @@
+namespace SUpdate.Logic
+{
+	internal enum FILE_COMPRESS_TYPE : byte
+	{
+		ENCRYPT_COMPRESS_NO = 0,
+		ENCRYPT_COMPRESS_7Z = 1,
+		ENCRYPT_COMPRESS_ZIP = 2,
+		ENCRYPT_COMPRESS_RAR = 4
+	}
+}
