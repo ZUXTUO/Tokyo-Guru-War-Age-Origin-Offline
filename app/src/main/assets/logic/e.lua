@@ -51,6 +51,7 @@ Root = {
     use_system_info_max_num = 2;--[[入口服URL重试次数]]
     use_system_url = "";--[[正在使用的入口服地址]]
 }
+
 --游戏信息
 GameInfoForThis = {
 	ServerName = "水晶大厦";
@@ -71,8 +72,46 @@ GameInfoForThis = {
     SceneTest = 0; --0是从头开始，3直接进入主城
     needSkip = true;--是否启动跳转序章选择窗口
     teams = {
-	    {"6167577387891490818","6167577387891474434","6169349534347444226"},{},{}
-	}
+        -- 键是 teamid (队伍ID)
+        [1] = { -- 队伍ID 1
+            teamid = 1,
+            -- cards: 一个表，键是位置（通常是数字1, 2, ...），值是卡牌的dataid（字符串）
+            cards = {
+                [1] = "6167577387891490818", -- 示例卡牌ID，请替换为实际有效的英雄dataid
+                [2] = "6167577387891474434",
+                [3] = "6169349534347444226"
+            },
+            -- heroLineup: 类似于cards，用于英雄布阵，键是位置，值是英雄dataid
+            heroLineup = {
+                [1] = "6167577387891490818",
+                [2] = "6167577387891474434",
+                [3] = "6169349534347444226"
+                -- 如果 heroLineup 与 cards 的主要英雄相同，可以这样设置
+                -- 如果有更复杂的布阵逻辑（比如特定位置的特定英雄），则按需填充
+            },
+            -- soldierLineup: 类似于heroLineup，用于士兵布阵
+            soldierLineup = {
+                -- [1] = "soldier_id_1", -- 示例
+            },
+            -- backup_cards: 备用卡牌，结构类似于cards或一个简单的ID列表，取决于具体用法
+            -- 如果 g_dataCenter.player:AddBackupTeam 的第二个参数 'kk' 是位置，则用map
+            backup_cards = {
+                -- [1] = "backup_hero_id_1", -- 示例
+            },
+            halo_property = {}, -- 光环属性，根据游戏设计填充
+            fight_value = 0 -- 战斗力，通常由其他属性计算得出，初始可为0
+        },
+        [2] = { -- 队伍ID 2 (示例空队伍)
+            teamid = 2,
+            cards = {},
+            heroLineup = {},
+            soldierLineup = {},
+            backup_cards = {},
+            halo_property = {},
+            fight_value = 0
+        },
+        -- 根据需要可以定义更多默认队伍
+    }
 }
 
 asset_loader.enable_shared_atlas_load(true);
